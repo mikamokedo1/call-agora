@@ -95,10 +95,9 @@
       "no-useless-return":"warn",
       "no-lonely-if":"warn",
       "no-else-return":"warn",
-      "no-restricted-properties":"warn"
-
-      
-
+      "no-restricted-properties":"warn",
+      "react/jsx-closing-tag-location":"warn",
+      "react/jsx-indent":"warn"
     }
   }
   

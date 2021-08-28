@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Box from '@material-ui/core/Box';
 import styled from 'styled-components';
 import AppAnimate from '../../../@crema/core/AppAnimate';
@@ -7,20 +7,19 @@ import BankSettingForm from '../container/BankSettingForm';
 
 const StyledBox = styled.div`
   display: flex;
-  width: calc((100% - 30px) / 2);
+  width: 450px;
 `;
 
 const PageOne = () => {
+  const [editBankFlag, setEditBankFlag] = useState(false);
   return (
     <AppAnimate animation='transition.slideUpIn' delay={200}>
-      <Box display='flex' justifyContent='space-between'>
+      <>
+        {editBankFlag && <BankSettingForm handleClose={() => setEditBankFlag(false)} />}
         <StyledBox>
-          <UserSettingForm />
+          <UserSettingForm handleEditBank={() => setEditBankFlag(true)} />
         </StyledBox>
-        <StyledBox>
-          <BankSettingForm />
-        </StyledBox>
-      </Box>
+      </>
     </AppAnimate>
   );
 };
