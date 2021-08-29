@@ -1,6 +1,6 @@
 import React from 'react';
-import {Provider} from 'react-redux';
-import {ConnectedRouter} from 'connected-react-router';
+import { Provider } from 'react-redux';
+import { ConnectedRouter } from 'connected-react-router';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import AppLayout from './@crema/core/AppLayout';
 import AuthRoutes from './@crema/utility/AuthRoutes';
@@ -9,7 +9,7 @@ import CremaThemeProvider from './@crema/utility/CremaThemeProvider';
 import CremaStyleProvider from './@crema/utility/CremaStyleProvider';
 import ContextProvider from './@crema/utility/ContextProvider';
 
-import configureStore, {history} from './redux/store';
+import configureStore, { history } from './redux/store';
 
 const store = configureStore();
 
