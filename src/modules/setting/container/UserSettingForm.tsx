@@ -23,9 +23,10 @@ const validationSchema = yup.object({
 
 interface UserSettingFormProps {
   handleEditBank: () => void;
+  handleEditPassword: () => void;
 }
 
-const UserSettingForm = ({ handleEditBank }: UserSettingFormProps) => {
+const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingFormProps) => {
   const formik = useFormik({
     initialValues: {
       fullName: '',
@@ -93,6 +94,28 @@ const UserSettingForm = ({ handleEditBank }: UserSettingFormProps) => {
           <Box ml='20px'>
             <Box color='#90A0B7'>Tài khoản</Box>
             <Box fontWeight='bold'>*****2222</Box>
+          </Box>
+        </Box>
+
+        <ArrowRightAltIcon />
+      </Box>
+      <Box
+        onClick={handleEditPassword}
+        mb='20px'
+        borderLeft='2px solid #109CF1'
+        bgcolor='#fff'
+        display='flex'
+        py='10px'
+        px='20px'
+        alignItems='center'
+        justifyContent='space-between'
+        borderBottom='1px solid #F5F6F8'
+        borderTop='1px solid #F5F6F8'>
+        <Box display='flex' alignItems='center' justifyContent='space-between'>
+          <img src='/assets/images/dasboard/lock.svg' alt='card' />
+          <Box ml='20px'>
+            <Box color='#90A0B7'>Mật khẩu</Box>
+            <Box fontWeight='bold'>*********</Box>
           </Box>
         </Box>
 
