@@ -67,11 +67,11 @@ const AppHeader: React.FC<AppHeaderProps> = () => {
           </Hidden>
           <AppLogo />
           <Box className={classes.grow} />
-          <SearchBar borderLight placeholder='Search…' />
+          {/* <SearchBar borderLight placeholder='Search…' /> */}
           <Box className={classes.sectionDesktop}>
             {/* <LanguageSwitcher /> */}
             {/* <HeaderMessages /> */}
-            <Notifications />
+            {/* <Notifications /> */}
           </Box>
           <Box className={classes.sectionMobile}>
             <IconButton
