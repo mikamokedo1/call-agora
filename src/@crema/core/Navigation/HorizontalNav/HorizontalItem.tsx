@@ -1,12 +1,12 @@
 import React from 'react';
-import {Icon, ListItem, ListItemText} from '@material-ui/core';
-import {Badge, NavLink} from '../../../../@crema';
+import { Icon, ListItem, ListItemText } from '@material-ui/core';
 import clsx from 'clsx';
+import Box from '@material-ui/core/Box';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Badge, NavLink } from '../../..';
 import IntlMessages from '../../../utility/IntlMessages';
 import useStyles from './HorizontalItem.style';
-import Box from '@material-ui/core/Box';
-import {NavItemProps} from '../../../../modules/routesConfig';
-import {RouteComponentProps, withRouter} from 'react-router-dom';
+import { NavItemProps } from '../../../../modules/routesConfig';
 
 interface HorizontalItemProps extends RouteComponentProps<any> {
   item: NavItemProps;
@@ -14,14 +14,9 @@ interface HorizontalItemProps extends RouteComponentProps<any> {
   location: any;
 }
 
-const HorizontalItem: React.FC<HorizontalItemProps> = ({
-  item,
-  location,
-  history,
-  dense,
-}) => {
+const HorizontalItem: React.FC<HorizontalItemProps> = ({ item, location, history, dense }) => {
   const classes = useStyles();
-  const {pathname} = location;
+  const { pathname } = location;
   const active = isUrlInChildren(item, pathname);
 
   function isUrlInChildren(parent: any, url: string) {
@@ -36,10 +31,7 @@ const HorizontalItem: React.FC<HorizontalItemProps> = ({
         }
       }
 
-      if (
-        parent.children[i].url === url ||
-        url.includes(parent.children[i].url)
-      ) {
+      if (parent.children[i].url === url || url.includes(parent.children[i].url)) {
         return true;
       }
     }
@@ -56,14 +48,11 @@ const HorizontalItem: React.FC<HorizontalItemProps> = ({
         active: pathname === item.url,
       })}>
       {item.icon && (
-        <Box fontSize={{xs: 16, xl: 18}} mr={3} clone>
-          <Icon style={{color: active ? 'white' : 'action'}}>{item.icon}</Icon>
+        <Box fontSize={{ xs: 16, xl: 18 }} mr={3} clone>
+          <Icon style={{ color: active ? 'white' : 'action' }}>{item.icon}</Icon>
         </Box>
       )}
-      <ListItemText
-        className='navLinkTextSubmenu'
-        primary={<IntlMessages id={item.messageId} />}
-      />
+      <ListItemText className='navLinkTextSubmenu' primary={<IntlMessages id={item.messageId} />} />
       {item.count && (
         <Box ml={4} clone>
           <Badge count={item.count} color={item.color} />

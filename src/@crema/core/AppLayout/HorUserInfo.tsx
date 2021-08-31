@@ -1,15 +1,15 @@
-import React, {FC} from 'react';
+import React, { FC } from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import {useDispatch} from 'react-redux';
-import {onJWTAuthSignout} from '../../../redux/actions';
-import {useAuthUser} from '../../utility/AppHooks';
-import {makeStyles} from '@material-ui/core';
+import { useDispatch } from 'react-redux';
+import { makeStyles } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Box from '@material-ui/core/Box';
-import {orange} from '@material-ui/core/colors';
-import {Fonts} from '../../../shared/constants/AppEnums';
+import { orange } from '@material-ui/core/colors';
 import Hidden from '@material-ui/core/Hidden';
+import { Fonts } from '../../../shared/constants/AppEnums';
+import { useAuthUser } from '../../utility/AppHooks';
+import { onJWTAuthSignout } from '../../../redux/actions';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -36,8 +36,7 @@ const useStyles = makeStyles((theme) => {
       whiteSpace: 'nowrap',
       fontSize: 15,
       fontWeight: Fonts.MEDIUM,
-      color: (props: {bgType: string}) =>
-        props.bgType === 'colored' ? 'white' : theme.palette.text.primary,
+      color: (props: { bgType: string }) => (props.bgType === 'colored' ? 'white' : theme.palette.text.primary),
     },
   };
 });
@@ -46,7 +45,7 @@ interface HorUserInfoProps {
   bgType?: string;
 }
 
-const HorUserInfo: FC<HorUserInfoProps> = ({bgType = 'colored'}) => {
+const HorUserInfo: FC<HorUserInfoProps> = ({ bgType = 'colored' }) => {
   const dispatch = useDispatch();
   const user = useAuthUser();
 
@@ -68,10 +67,10 @@ const HorUserInfo: FC<HorUserInfoProps> = ({bgType = 'colored'}) => {
       return user.email.charAt(0).toUpperCase();
     }
   };
-  const classes = useStyles({bgType});
+  const classes = useStyles({ bgType });
 
   return (
-    <Box py={2} pl={{xs: 2, sm: 3, md: 5}}>
+    <Box py={2} pl={{ xs: 2, sm: 3, md: 5 }}>
       <Box className={classes.userRoot} display='flex' onClick={handleClick}>
         {user && user.photoURL ? (
           <Avatar className={classes.avatar} src={user.photoURL} />
@@ -88,16 +87,9 @@ const HorUserInfo: FC<HorUserInfoProps> = ({bgType = 'colored'}) => {
         </Hidden>
       </Box>
       <Box className={classes.userInfo}>
-        <Menu
-          id='simple-menu'
-          anchorEl={anchorEl}
-          keepMounted
-          open={Boolean(anchorEl)}
-          onClose={handleClose}>
+        <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
           <MenuItem>My account</MenuItem>
-          <MenuItem onClick={() => dispatch(onJWTAuthSignout())}>
-            Logout
-          </MenuItem>
+          <MenuItem onClick={() => dispatch(onJWTAuthSignout())}>Logout</MenuItem>
         </Menu>
       </Box>
     </Box>

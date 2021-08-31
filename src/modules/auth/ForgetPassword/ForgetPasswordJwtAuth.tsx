@@ -1,198 +1,163 @@
-import React from 'react';
-import Card from '@material-ui/core/Card';
-import TextField from '@material-ui/core/TextField';
-import Button from '@material-ui/core/Button';
-import {Form, Formik, useField} from 'formik';
-import * as yup from 'yup';
+import React, { useState } from 'react';
 import Box from '@material-ui/core/Box';
-import Typography from '@material-ui/core/Typography';
-import {makeStyles} from '@material-ui/core';
-import {Link} from 'react-router-dom';
-import clsx from 'clsx';
-import {Fonts} from '../../../shared/constants/AppEnums';
-import IntlMessages from '../../../@crema/utility/IntlMessages';
-import InfoView from '../../../@crema/core/InfoView';
-import {CremaTheme} from '../../../types/AppContextPropsType';
+import { makeStyles } from '@material-ui/core/styles';
+import TextField from '@material-ui/core/TextField';
+import { Form, Formik, useField } from 'formik';
+import * as yup from 'yup';
+import { useHistory } from 'react-router-dom';
+import Button from '@material-ui/core/Button';
+import { useDispatch } from 'react-redux';
+import { Fonts } from '../../../shared/constants/AppEnums';
+import { CremaTheme } from '../../../types/AppContextPropsType';
+import OTPInput from './InputOtp';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
-  image: {
-    display: 'inline-block',
+  wrap: {
+    width: '1440px',
+    height: '810px',
+    display: 'flex',
+  },
+  left: {
+    width: '50%',
+    backgroundImage: 'url(/assets/images/login-left.png)',
+  },
+  right: {
+    background: '#fff',
+    width: '50%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  pointer: {
     cursor: 'pointer',
-    width: 140,
-  },
-  card: {
-    maxWidth: 576,
-    width: '100%',
-    textAlign: 'center',
-    padding: 24,
-    overflow: 'hidden',
-    position: 'relative',
-    boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
-    [theme.breakpoints.up('sm')]: {
-      padding: 40,
-    },
-    [theme.breakpoints.up('md')]: {
-      padding: 48,
-    },
-    [theme.breakpoints.up('xl')]: {
-      paddingLeft: 48,
-      paddingRight: 48,
-    },
-    '&:before': {
-      position: 'absolute',
-      left: 0,
-      right: 0,
-      top: 0,
-      width: 130,
-      height: 9,
-      borderBottomRightRadius: 80,
-      borderBottomLeftRadius: 80,
-      marginRight: 'auto',
-      marginLeft: 'auto',
-      backgroundColor: theme.palette.primary.main,
-    },
-  },
-  form: {
-    textAlign: 'left',
-  },
-  textField: {
-    width: '100%',
+    textAlign: 'right',
+    display: 'block',
+    marginBottom: '15px',
+    fontWeight: 'bold',
   },
   btnRoot: {
-    width: '100%',
-    fontWeight: Fonts.REGULAR,
-    textTransform: 'capitalize',
-    fontSize: 16,
-    paddingTop: 12,
-    paddingBottom: 12,
     borderRadius: theme.overrides.MuiCard.root.borderRadius,
-  },
-  textSecondary: {
-    color: theme.palette.primary.main,
-    marginLeft: 10,
-  },
-  underlineNone: {
-    textDecoration: 'none',
+    fontWeight: Fonts.REGULAR,
+    fontSize: 16,
+    textTransform: 'capitalize',
   },
   textGrey: {
     color: theme.palette.grey[500],
+  },
+  title: {
+    fontWeight: 'bold',
+    fontSize: '36px',
+    marginBottom: '10px',
+  },
+  texforgot: {
+    fontSize: '14px',
+    textAlign: 'right',
+    fontWeight: 'bold',
+  },
+  error: {
+    fontSize: '14px',
+    color: '#F7685B',
   },
 }));
 
 const MyTextField = (props: any) => {
   const [field, meta] = useField(props);
   const errorText = meta.error && meta.touched ? meta.error : '';
-  return (
-    <TextField
-      {...props}
-      {...field}
-      helperText={errorText}
-      error={!!errorText}
-    />
-  );
+  return <TextField {...props} {...field} helperText={errorText} error={!!errorText} />;
 };
-
 const validationSchema = yup.object({
-  email: yup
-    .string()
-    .email(`${(<IntlMessages id='validation.emailFormat' />)}`)
-    .required(`${(<IntlMessages id='validation.emailRequired' />)}`),
+  email: yup.string().email().required('Bạn quên nhập email!'),
 });
 
-interface ForgetPasswordProps {}
-
-const ForgetPasswordJwtAuth: React.FC<ForgetPasswordProps> = () => {
+const Signin: React.FC<{}> = () => {
   const classes = useStyles();
-
+  const dispatch = useDispatch();
+  const history = useHistory();
+  const [requested, setRequested] = useState(false);
+  const [submitEmail, setSubmitEmail] = useState('');
+  const [otp, setOtp] = React.useState('');
+  const onGoToSignIn = () => {
+    history.push('/signin');
+  };
+  const handleSubmitOtp = () => {
+    console.log('handleSubmitOtp');
+  };
   return (
-    <Box flex={1} display='flex' flexDirection='column' justifyContent='center'>
-      <Box mb={{xs: 6, md: 8, xl: 18}} textAlign='center'>
-        <img
-          className={classes.image}
-          src='/assets/images/logo-white-with-name.png'
-          alt='crema-logo'
-        />
-      </Box>
-
-      <Box
-        display='flex'
-        flexDirection='column'
-        justifyContent='center'
-        alignItems='center'>
-        <Card className={classes.card}>
-          <Box
-            component='h2'
-            mb={{xs: 6, xl: 8}}
-            color='text.primary'
-            fontWeight={Fonts.REGULAR}
-            fontSize={{xs: 24, xl: 26}}>
-            <IntlMessages id='common.forgetPassword' />
+    <Box className={classes.wrap}>
+      <Box className={classes.left} />
+      <Box className={classes.right}>
+        {requested ? (
+          <Box>
+            <Box className={classes.title}>Xác minh email</Box>
+            <Box fontSize='16px' color='#90A0B7' mb='30px'>
+              Nhập 4 mã code được gửi tới&nbsp;<b>{submitEmail}</b>
+            </Box>
+            <OTPInput
+              disabled={false}
+              error={false}
+              autoFocus
+              isNumberInput
+              length={6}
+              onChangeOTP={(otp) => setOtp(otp)}
+            />
+            <Button
+              onClick={handleSubmitOtp}
+              variant='contained'
+              color='primary'
+              disabled={false}
+              className={classes.btnRoot}
+              fullWidth
+              style={{ marginTop: '30px' }}>
+              Tìm lại mật khẩu
+            </Button>
           </Box>
-          <Box mb={{xs: 6, xl: 12}} fontSize={18}>
-            <Typography>
-              <IntlMessages id='common.forgetPasswordTextOne' /> <br />
-              <IntlMessages id='common.forgetPasswordTextTwo' />
-            </Typography>
+        ) : (
+          <Box>
+            <Box className={classes.title}>Tìm lại mật khẩu</Box>
+            <Box fontSize='16px' color='#90A0B7' mb='30px'>
+              Nhập mail bạn đã đăng ký cho tài khoản
+            </Box>
+            <Formik
+              validateOnChange
+              initialValues={{
+                email: '',
+              }}
+              validationSchema={validationSchema}
+              onSubmit={(data, { setSubmitting }) => {
+                setSubmitting(true);
+                console.log('foget password');
+                setSubmitting(false);
+                setSubmitEmail(data.email);
+                setRequested(true);
+              }}>
+              {({ isSubmitting }) => (
+                <Form noValidate autoComplete='off'>
+                  <Box mb={{ xs: 5, xl: 8 }}>
+                    <MyTextField placeholder='Nhập email' name='email' label='Email' fullWidth />
+                  </Box>
+                  <Box component='span' className={classes.pointer} onClick={onGoToSignIn} fontSize={15}>
+                    Đăng nhập
+                  </Box>
+                  <Box>
+                    <Button
+                      variant='contained'
+                      color='primary'
+                      type='submit'
+                      disabled={isSubmitting}
+                      className={classes.btnRoot}
+                      fullWidth>
+                      Tìm lại mật khẩu
+                    </Button>
+                  </Box>
+                </Form>
+              )}
+            </Formik>
           </Box>
-
-          <Formik
-            validateOnChange
-            initialValues={{
-              email: '',
-            }}
-            validationSchema={validationSchema}
-            onSubmit={(data, {setSubmitting, resetForm}) => {
-              setSubmitting(true);
-              // reset password api  call here
-              setSubmitting(false);
-              resetForm();
-            }}>
-            {({isSubmitting}) => (
-              <Form className={classes.form}>
-                <Box mb={{xs: 5, lg: 8}}>
-                  <MyTextField
-                    placeholder='Email'
-                    name='email'
-                    label={<IntlMessages id='common.emailAddress' />}
-                    className={classes.textField}
-                    variant='outlined'
-                  />
-                </Box>
-                <Box mb={4}>
-                  <Button
-                    variant='contained'
-                    color='secondary'
-                    disabled={isSubmitting}
-                    className={classes.btnRoot}
-                    type='submit'>
-                    <IntlMessages id='common.sendNewPassword' />
-                  </Button>
-                </Box>
-
-                <Box
-                  pt={3}
-                  textAlign='center'
-                  fontSize={15}
-                  className={classes.textGrey}>
-                  <IntlMessages id='common.alreadyHavePassword' />
-                  <Link
-                    to='/signin'
-                    className={clsx(
-                      classes.underlineNone,
-                      classes.textSecondary,
-                    )}>
-                    <IntlMessages id='common.signIn' />
-                  </Link>
-                </Box>
-              </Form>
-            )}
-          </Formik>
-
-          <InfoView />
-        </Card>
+        )}
       </Box>
     </Box>
   );
 };
 
-export default ForgetPasswordJwtAuth;
+export default Signin;
