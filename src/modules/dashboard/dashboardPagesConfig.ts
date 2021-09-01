@@ -2,7 +2,7 @@ import React from 'react';
 
 export const dashboardPagesConfig = [
   {
-    // auth: ['user'],
+    auth: ['user'],
     routes: [
       {
         path: '/dashboards/ctv',

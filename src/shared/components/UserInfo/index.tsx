@@ -1,19 +1,19 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import {useDispatch} from 'react-redux';
-import {onJWTAuthSignout} from '../../../redux/actions';
-import {useAuthUser} from '../../../@crema/utility/AppHooks';
-import AppContext from '../../../@crema/utility/AppContext';
+import { useDispatch } from 'react-redux';
 import clsx from 'clsx';
-import {makeStyles} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Box from '@material-ui/core/Box';
-import {orange} from '@material-ui/core/colors';
-import {Fonts, ThemeMode} from '../../constants/AppEnums';
+import { orange } from '@material-ui/core/colors';
+import AppContext from '../../../@crema/utility/AppContext';
+import { useAuthUser } from '../../../@crema/utility/AppHooks';
+import { onJWTAuthSignout } from '../../../redux/actions';
+import { Fonts, ThemeMode } from '../../constants/AppEnums';
 import AppContextPropsType from '../../../types/AppContextPropsType';
-import {AuthUser} from '../../../types/models/AuthUser';
+import { AuthUser } from '../../../types/models/AuthUser';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -44,8 +44,7 @@ const useStyles = makeStyles((theme) => {
       whiteSpace: 'nowrap',
       fontSize: 16,
       fontWeight: Fonts.MEDIUM,
-      color: (props: {themeMode: ThemeMode}) =>
-        props.themeMode === ThemeMode.LIGHT ? '#313541' : 'white',
+      color: (props: { themeMode: ThemeMode }) => (props.themeMode === ThemeMode.LIGHT ? '#313541' : 'white'),
     },
     designation: {
       marginTop: -2,
@@ -60,7 +59,7 @@ const useStyles = makeStyles((theme) => {
 });
 
 const UserInfo: React.FC<{}> = () => {
-  const {themeMode} = useContext<AppContextPropsType>(AppContext);
+  const { themeMode } = useContext<AppContextPropsType>(AppContext);
   const dispatch = useDispatch();
   const user: AuthUser | null = useAuthUser();
 
@@ -83,12 +82,10 @@ const UserInfo: React.FC<{}> = () => {
     }
   };
 
-  const classes = useStyles({themeMode});
+  const classes = useStyles({ themeMode });
 
   return (
-    <Box
-      px={{xs: 4, xl: 7}}
-      className={clsx(classes.crUserInfo, 'cr-user-info')}>
+    <Box px={{ xs: 4, xl: 7 }} className={clsx(classes.crUserInfo, 'cr-user-info')}>
       <Box display='flex' alignItems='center'>
         {user && user.photoURL ? (
           <Avatar className={classes.profilePic} src={user.photoURL} />
@@ -96,28 +93,15 @@ const UserInfo: React.FC<{}> = () => {
           <Avatar className={classes.profilePic}>{getUserAvatar()}</Avatar>
         )}
         <Box ml={4} className={clsx(classes.userInfo, 'user-info')}>
-          <Box
-            display='flex'
-            alignItems='center'
-            justifyContent='space-between'>
+          <Box display='flex' alignItems='center' justifyContent='space-between'>
             <Box mb={0} className={clsx(classes.userName)}>
               {user && (user.displayName ? user.displayName : 'Admin User ')}
             </Box>
-            <Box
-              ml={3}
-              className={classes.pointer}
-              color={themeMode === 'light' ? '#313541' : 'white'}>
+            <Box ml={3} className={classes.pointer} color={themeMode === 'light' ? '#313541' : 'white'}>
               <ExpandMoreIcon onClick={handleClick} />
-              <Menu
-                id='simple-menu'
-                anchorEl={anchorEl}
-                keepMounted
-                open={Boolean(anchorEl)}
-                onClose={handleClose}>
+              <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
                 <MenuItem>My account</MenuItem>
-                <MenuItem onClick={() => dispatch(onJWTAuthSignout())}>
-                  Logout
-                </MenuItem>
+                <MenuItem onClick={() => dispatch(onJWTAuthSignout())}>Logout</MenuItem>
               </Menu>
             </Box>
           </Box>

@@ -60,6 +60,26 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
       display: 'flex',
       alignItems: 'center',
       justifyContent: 'center',
+      flexShrink: 0,
+    },
+  },
+  sumItemHaft: {
+    display: 'flex',
+    backgroundColor: '#fff',
+    borderRadius: '5px',
+    padding: '15px',
+    marginBottom: '15px',
+    flexDirection: 'column',
+    width: 'calc((100% - 20px) / 2)',
+    '& .left': {
+      width: '30px',
+      height: '30px',
+      borderRadius: '50%',
+      marginRight: '10px',
+      display: 'flex',
+      alignItems: 'center',
+      justifyContent: 'center',
+      flexShrink: 0,
     },
   },
   bottom: {},
@@ -76,6 +96,9 @@ const PageOne = () => {
     <AppAnimate animation='transition.slideUpIn' delay={200}>
       <Box className={classes.wrap}>
         <Box className={classes.top}>
+          <Box className={classes.topRight}>
+            <TableDayOrder />
+          </Box>
           <Box className={classes.topLeft}>
             <Box className={classes.link}>
               <div className={classes.url} ref={boxRef}>
@@ -94,10 +117,10 @@ const PageOne = () => {
                 </Box>
                 <Box className='right'>
                   <Box color='#90A0B7' fontSize='16px'>
-                    Số tiền đã bán được
+                    Tổng số đơn
                   </Box>
                   <Box fontSize='18px' fontWeight='bold' color='334D6E'>
-                    20.000.000 vnd
+                    165 Đơn
                   </Box>
                 </Box>
               </Box>
@@ -107,30 +130,46 @@ const PageOne = () => {
                 </Box>
                 <Box className='right'>
                   <Box color='#90A0B7' fontSize='16px'>
-                    Tiền Hoa hồng
+                    Số tiền đã bán được
                   </Box>
                   <Box fontSize='18px' fontWeight='bold' color='334D6E'>
                     2.000.000 VND
                   </Box>
                 </Box>
               </Box>
-              <Box className={classes.sumItem}>
-                <Box className='left' bgcolor='rgb(136,90,248,0.2)'>
-                  <img src='/assets/images/dasboard/wallet.png' alt='icon-shit' />
-                </Box>
-                <Box className='right'>
-                  <Box color='#90A0B7' fontSize='16px'>
-                    Tổng số đơn
+              <Box display='flex' justifyContent='space-between'>
+                <Box className={classes.sumItemHaft}>
+                  <Box color='#90A0B7' fontSize='15px' mb='5px'>
+                    Tiền hoa hồng
                   </Box>
-                  <Box fontSize='18px' fontWeight='bold' color='334D6E'>
-                    165 Đơn
+                  <Box display='flex' alignItems='center'>
+                    <Box className='left' bgcolor='rgb(136,90,248,0.2)'>
+                      <img src='/assets/images/dasboard/wallet.png' alt='icon-shit' style={{ width: '15px' }} />
+                    </Box>
+                    <Box className='right'>
+                      <Box fontSize='14px' fontWeight='bold' color='334D6E'>
+                        20.000.000 VND
+                      </Box>
+                    </Box>
+                  </Box>
+                </Box>
+                <Box className={classes.sumItemHaft}>
+                  <Box color='#90A0B7' fontSize='15px' mb='5px'>
+                    Tiền đã nhận
+                  </Box>
+                  <Box display='flex' alignItems='center'>
+                    <Box className='left' bgcolor='rgb(255,187,70,0.2)'>
+                      <img src='/assets/images/dasboard/danhan.png' alt='icon-shit' style={{ width: '15px' }} />
+                    </Box>
+                    <Box className='right'>
+                      <Box fontSize='14px' fontWeight='bold' color='334D6E'>
+                        20.000.000 VND
+                      </Box>
+                    </Box>
                   </Box>
                 </Box>
               </Box>
             </Box>
-          </Box>
-          <Box className={classes.topRight}>
-            <TableDayOrder />
           </Box>
         </Box>
         <Box className={classes.bottom}>

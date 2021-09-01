@@ -2,7 +2,7 @@ import React from 'react';
 
 export const settingRouterConfig = [
   {
-    // auth: ['user'],
+    auth: ['user'],
     routes: [
       {
         path: '/setting',
