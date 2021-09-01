@@ -119,3 +119,15 @@ export const checkPermission = (routeAuth: any | null | undefined, userRole: any
   }
   return routeAuth.indexOf(userRole) >= 0;
 };
+
+export const reduxActionName = (scope: string, actionName: string) => {
+  return `${scope}/${actionName.toUpperCase()}`;
+};
+
+export const reduxRequestActionGenerator = (scope: string, actionName: string) => {
+  return {
+    pending: reduxActionName(scope, `${actionName}_pending`),
+    success: reduxActionName(scope, `${actionName}_success`),
+    error: reduxActionName(scope, `${actionName}_error`),
+  };
+};

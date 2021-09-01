@@ -1,6 +1,5 @@
 import { AuthType } from '../../shared/constants/AppEnums';
-import { AppActions } from '../../types';
-import { SET_AUTH_TOKEN, SIGNOUT_AUTH_SUCCESS, UPDATE_AUTH_USER } from '../../types/actions/Auth.actions';
+import { SET_AUTH_TOKEN, SIGNOUT_AUTH_SUCCESS, UPDATE_AUTH_USER, AuthActions } from '../../types/actions/Auth.actions';
 import { AuthUser } from '../../types/models/AuthUser';
 
 type ActionType = 'login';
@@ -21,7 +20,7 @@ const INIT_STATE: INIT_AUTH = {
   },
 };
 
-const Auth = (state: INIT_AUTH = INIT_STATE, action: AppActions): INIT_AUTH => {
+const Auth = (state: INIT_AUTH = INIT_STATE, action: AuthActions): INIT_AUTH => {
   switch (action.type) {
     case UPDATE_AUTH_USER: {
       return {

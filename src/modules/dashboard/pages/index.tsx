@@ -1,15 +1,21 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
+import { useDispatch } from 'react-redux';
+import { Bar } from 'react-chartjs-2';
 import AppAnimate from '../../../@crema/core/AppAnimate';
 import { CremaTheme } from '../../../types/AppContextPropsType';
 import TableDayOrder from '../container/TableDayOrder';
+import { fetchStatistic } from '../../../redux/actions/dashboard';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
-  wrap: {},
+  wrap: {
+    height: '100%',
+  },
   top: {
     display: 'flex',
     justifyContent: 'space-between',
+    marginBottom: '20px',
   },
   topLeft: {
     width: 'calc(30% - 30px)',
@@ -82,16 +88,94 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
       flexShrink: 0,
     },
   },
-  bottom: {},
-  bottomLeft: {},
-  bottomRight: {},
+  bottom: {
+    display: 'flex',
+    justifyContent: 'space-between',
+  },
+  bottomLeft: {
+    width: 'calc(30% - 30px)',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
+  bottomRight: {
+    width: '70%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+  },
 }));
 const PageOne = () => {
+  const dispatch = useDispatch();
   const boxRef = React.useRef<HTMLInputElement>(null);
   const classes = useStyles();
   const handleCopy = () => {
     navigator.clipboard.writeText(boxRef.current?.textContent ?? '');
   };
+
+  useEffect(() => {
+    dispatch(fetchStatistic());
+  }, [dispatch]);
+  const data = {
+    labels: ['1', '2', '3', '4', '5', '6'],
+    datasets: [
+      {
+        label: 'Tổng đơn',
+        data: [12, 19, 3, 5, 2, 3],
+        backgroundColor: '#F7685B',
+      },
+      {
+        label: 'Tổng tiền',
+        data: [2, 3, 20, 5, 1, 4],
+        backgroundColor: '#109CF1',
+      },
+    ],
+  };
+
+  const options = {
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: true,
+          },
+        },
+      ],
+    },
+    responsive: true,
+  };
+  const data2 = {
+    labels: ['1', '2', '3', '4', '5', '6'],
+    datasets: [
+      {
+        label: '3 Tháng',
+        data: [12, 19, 3, 5, 2, 3],
+        backgroundColor: '#FFB946',
+      },
+      {
+        label: '6 Tháng',
+        data: [2, 3, 20, 5, 1, 4],
+        backgroundColor: '#885AF8',
+      },
+      {
+        label: '12 Tháng',
+        data: [3, 10, 13, 15, 22, 30],
+        backgroundColor: '#34AC6D',
+      },
+    ],
+  };
+  const options2 = {
+    scales: {
+      x: {
+        stacked: true,
+      },
+      y: {
+        stacked: true,
+      },
+    },
+    responsive: true,
+  };
+
   return (
     <AppAnimate animation='transition.slideUpIn' delay={200}>
       <Box className={classes.wrap}>
@@ -173,8 +257,18 @@ const PageOne = () => {
           </Box>
         </Box>
         <Box className={classes.bottom}>
-          <Box className={classes.bottomLeft} />
-          <Box className={classes.bottomRight} />
+          <Box className={classes.bottomRight}>
+            <Box fontWeight='bold' color='#334D6E' mb='15px'>
+              Biểu đồ bán theo ngày
+            </Box>
+            <Bar data={data} options={options} />
+          </Box>
+          <Box className={classes.bottomLeft}>
+            <Box fontWeight='bold' color='#334D6E' mb='15px'>
+              Loại đơn
+            </Box>
+            <Bar data={data2} options={options2} />
+          </Box>
         </Box>
       </Box>
     </AppAnimate>
