@@ -1,13 +1,13 @@
-import React, {useContext} from 'react';
-import {useSelector} from 'react-redux';
+import React, { useContext } from 'react';
+import { useSelector } from 'react-redux';
 import Box from '@material-ui/core/Box';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 import AppContext from '../../utility/AppContext';
 import Layouts from './Layouts';
-import {ContentView} from '../../index';
+import { ContentView } from '../../index';
 import useStyles from '../../../shared/jss/common/common.style';
-import {AppState} from '../../../redux/store';
+import { AppState } from '../../../redux/store';
 import AppContextPropsType from '../../../types/AppContextPropsType';
 
 const useStyle = makeStyles(() => ({
@@ -39,8 +39,8 @@ interface CremaLayoutProps {}
 
 const CremaLayout: React.FC<CremaLayoutProps> = () => {
   useStyles();
-  const {navStyle} = useContext<AppContextPropsType>(AppContext);
-  const {user} = useSelector<AppState, AppState['auth']>(({auth}) => auth);
+  const { navStyle } = useContext<AppContextPropsType>(AppContext);
+  const { user } = useSelector<AppState, AppState['auth']>(({ auth }) => auth);
   const AppLayout = Layouts[navStyle];
 
   const classes = useStyle();
