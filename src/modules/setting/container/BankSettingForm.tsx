@@ -55,7 +55,7 @@ const BankSettingForm = ({ handleClose }: BankSettingFormProps) => {
           <Box fontWeight='bold' mb='10px'>
             Tài khoản nhận tiền
           </Box>
-          <CloseIcon onClick={handleClose} />
+          <CloseIcon onClick={handleClose} style={{ cursor: 'pointer' }} />
         </Box>
 
         <StyledTextField

@@ -6,7 +6,7 @@ import { Bar } from 'react-chartjs-2';
 import AppAnimate from '../../../@crema/core/AppAnimate';
 import { CremaTheme } from '../../../types/AppContextPropsType';
 import TableDayOrder from '../container/TableDayOrder';
-import { fetchStatistic } from '../../../redux/actions/dashboard';
+import { fetchStatistic, fetchOrders } from '../../../redux/actions/dashboard';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
   wrap: {
@@ -115,6 +115,9 @@ const PageOne = () => {
 
   useEffect(() => {
     dispatch(fetchStatistic());
+  }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchOrders());
   }, [dispatch]);
   const data = {
     labels: ['1', '2', '3', '4', '5', '6'],

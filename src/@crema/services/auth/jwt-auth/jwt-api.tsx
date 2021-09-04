@@ -1,14 +1,32 @@
 import axios from 'axios';
+import createAuthRefreshInterceptor from 'axios-auth-refresh';
 import { v4 as uuidv4 } from 'uuid';
 
 const BaseAPI = process.env.REACT_APP_API_URL;
+const axiosConfig = {
+  headers: { 'Content-Type': 'application/json', common: { 'x-requestid': uuidv4() } },
+};
+
+const refreshAuthLogic = (failedRequest: any) =>
+  axios
+    .post(`${BaseAPI}/users/refresh-token`, {}, axiosConfig)
+    .then((tokenRefreshResponse) => {
+      localStorage.setItem('token', tokenRefreshResponse.data.accessToken);
+      failedRequest.response.config.headers.Authorization = `Bearer ${tokenRefreshResponse.data.accessToken}`;
+      return Promise.resolve();
+    })
+    .catch((error) => {
+      delete axios.defaults.headers.common.Authorization;
+      localStorage.removeItem('token');
+      console.log(error);
+    });
 const jwtAxios = axios.create({
   baseURL: BaseAPI,
   headers: {
     'Content-Type': 'application/json',
-    'x-requestid': uuidv4(),
   },
 });
+createAuthRefreshInterceptor(jwtAxios, refreshAuthLogic);
 // jwtAxios.interceptors.response.use(
 //   (res) => res,
 //   (err) => {
@@ -39,13 +57,12 @@ jwtAxios.interceptors.response.use(
     return Promise.reject(errorMessage);
   },
 );
-
 export const setAuthToken = (token: string | null) => {
   if (token) {
-    jwtAxios.defaults.headers.common['x-auth-token'] = token;
+    jwtAxios.defaults.headers.common.Authorization = `Bearer ${token}`;
     localStorage.setItem('token', token);
   } else {
-    delete jwtAxios.defaults.headers.common['x-auth-token'];
+    delete jwtAxios.defaults.headers.common.Authorization;
     localStorage.removeItem('token');
   }
 };

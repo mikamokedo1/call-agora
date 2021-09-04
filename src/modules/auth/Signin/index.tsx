@@ -8,6 +8,7 @@ import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { AppState } from 'src/redux/store';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { onJwtSignIn } from '../../../redux/actions';
 import { Fonts } from '../../../shared/constants/AppEnums';
 import { CremaTheme } from '../../../types/AppContextPropsType';
@@ -42,6 +43,7 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     fontWeight: Fonts.REGULAR,
     fontSize: 16,
     textTransform: 'capitalize',
+    height: '40px',
   },
   textGrey: {
     color: theme.palette.grey[500],
@@ -59,6 +61,8 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
   error: {
     fontSize: '14px',
     color: '#F7685B',
+    marginBottom: '10px',
+    textAlign: 'center',
   },
 }));
 
@@ -73,7 +77,8 @@ const validationSchema = yup.object({
 });
 
 const Signin: React.FC<{}> = () => {
-  const common = useSelector((state: AppState) => state.common.message);
+  const common = useSelector((state: AppState) => state.common.error);
+  const isLoading = useSelector((state: AppState) => state.common.loading);
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
@@ -120,10 +125,10 @@ const Signin: React.FC<{}> = () => {
                     variant='contained'
                     color='primary'
                     type='submit'
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || isLoading}
                     className={classes.btnRoot}
                     fullWidth>
-                    Đăng nhập
+                    {isLoading ? <CircularProgress size={30} color='inherit' /> : 'Đăng nhập'}
                   </Button>
                 </Box>
               </Form>

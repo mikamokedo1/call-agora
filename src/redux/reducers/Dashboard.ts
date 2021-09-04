@@ -38,7 +38,7 @@ const DashboardReducer = (state: INIT_DASHBOARD = INIT_STATE, action: AnyAction)
         loadings: { ...state.loadings, statistic: true },
       };
     case FETCH_STATISTIC.success:
-      return { ...state, statistic: action.payload };
+      return { ...state, statistic: action.payload, loadings: { ...state.loadings, statistic: false } };
     case FETCH_STATISTIC.error:
       return {
         ...state,
@@ -52,7 +52,7 @@ const DashboardReducer = (state: INIT_DASHBOARD = INIT_STATE, action: AnyAction)
         loadings: { ...state.loadings, orders: true },
       };
     case FETCH_ORDERS.success:
-      return { ...state, orders: action.payload };
+      return { ...state, orders: action.payload, loadings: { ...state.loadings, orders: false } };
     case FETCH_ORDERS.error:
       return {
         ...state,

@@ -21,9 +21,8 @@ const AuthRoutes: React.FC<AuthRoutesProps> = ({ children }) => {
   const { pathname, search } = useLocation();
   const dispatch = useDispatch();
   const history = useHistory();
-  const { routes, changeNavStyle, updateThemeStyle, updateThemeMode, setRTL } = useContext<AppContextPropsType>(
-    AppContext,
-  );
+  const { routes, changeNavStyle, updateThemeStyle, updateThemeMode, setRTL } =
+    useContext<AppContextPropsType>(AppContext);
 
   const [loading, user] = useAuthToken();
   const { initialPath } = useSelector<AppState, AppState['settings']>(({ settings }) => settings);
@@ -94,7 +93,7 @@ const AuthRoutes: React.FC<AuthRoutesProps> = ({ children }) => {
             // initialPath !== '/signin' ||
             // initialPath !== '/signup')
           ) {
-            history.push(initialPath);
+            // history.push(initialPath);
             console.log({ isPermitted, initialPath, initialUrl });
           }
         }

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Box from '@material-ui/core/Box';
 import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
@@ -27,6 +27,8 @@ interface UserSettingFormProps {
 }
 
 const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingFormProps) => {
+  const refInput = useRef<HTMLInputElement>(null);
+  const [avatar, setAvatar] = useState<File>();
   const formik = useFormik({
     initialValues: {
       fullName: '',
@@ -38,6 +40,13 @@ const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingForm
       console.log(values);
     },
   });
+  const handleChangeAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const image = e.target.files[0];
+      setAvatar(image);
+    }
+  };
+
   return (
     <Box
       bgcolor='#fff'
@@ -48,6 +57,13 @@ const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingForm
       width='100%'
       boxShadow='0px 2x rgba(163, 171, 185, 0.24)'>
       <Box display='flex' justifyContent='center' alignItems='center' flexDirection='column'>
+        <input
+          type='file'
+          ref={refInput}
+          style={{ display: 'none' }}
+          onChange={handleChangeAvatar}
+          accept='.jpg, .jpeg, .png, .svg'
+        />
         <Box
           width='105px'
           height='105px'
@@ -55,7 +71,11 @@ const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingForm
           justifyContent='center'
           alignItems='center'
           position='relative'>
-          <img src='https://via.placeholder.com/150x150' alt='avatar' style={{ borderRadius: '50%' }} />
+          <img
+            src={avatar ? URL.createObjectURL(avatar) : 'https://via.placeholder.com/150x150'}
+            alt='avatar'
+            style={{ borderRadius: '50%' }}
+          />
           <Box
             display='flex'
             justifyContent='center'
@@ -65,7 +85,8 @@ const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingForm
             style={{ position: 'absolute', bottom: '5px', right: '5px', cursor: 'pointer' }}
             bgcolor='#fff'
             borderRadius='50%'
-            p='3px'>
+            p='3px'
+            onClick={() => refInput.current?.click()}>
             <CameraAltIcon style={{ fontSize: '20px' }} />
           </Box>
         </Box>
