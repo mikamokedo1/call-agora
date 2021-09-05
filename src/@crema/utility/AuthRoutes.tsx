@@ -82,7 +82,7 @@ const AuthRoutes: React.FC<AuthRoutesProps> = ({ children }) => {
       } else if (user && !isPermitted) {
         history.push('/error-pages/error-404'); // Not found
       } else if (user && isPermitted) {
-        if (pathname === '/' || pathname === '/signin' || pathname === '/signup') {
+        if ((pathname === '/' || pathname === '/signin' || pathname === '/signup') && localStorage.getItem('token')) {
           history.push(initialUrl);
         } else {
           // @ts-ignore

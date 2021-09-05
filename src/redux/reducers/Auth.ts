@@ -1,4 +1,5 @@
 import { AnyAction } from 'redux';
+import jwt_decode from 'jwt-decode';
 import { AuthType } from '../../shared/constants/AppEnums';
 import {
   SET_AUTH_TOKEN,
@@ -10,7 +11,15 @@ import { AuthUser } from '../../types/models/AuthUser';
 import { AppState } from '../store';
 
 type ActionType = 'login' | 'changePassword';
-
+interface JWTdecode {
+  email: string;
+  exp: number;
+  iat: number;
+  nbf: number;
+  phone: string;
+  reseller: string;
+  username: string;
+}
 interface INIT_AUTH {
   user: AuthUser | null;
   token: string | null;
@@ -50,6 +59,10 @@ const Auth = (state: INIT_AUTH = INIT_STATE, action: AnyAction): INIT_AUTH => {
       };
     }
     case SET_AUTH_TOKEN: {
+      if (!action.payload.token) {
+        return INIT_STATE;
+      }
+      const decoded: JWTdecode = jwt_decode(action.payload.token);
       return {
         ...state,
         token: action.payload.token,
@@ -57,9 +70,11 @@ const Auth = (state: INIT_AUTH = INIT_STATE, action: AnyAction): INIT_AUTH => {
           uid: '1',
           role: ['user', 'admin'],
           authType: AuthType.JWT_AUTH,
-          displayName: 'admin',
-          email: 'crema.demo@gmail.com',
+          displayName: decoded?.username,
+          email: decoded?.email,
           token: '5f4baae13ccef700178e1da4',
+          reseller: decoded?.reseller,
+          phone: decoded?.phone,
         },
       };
     }

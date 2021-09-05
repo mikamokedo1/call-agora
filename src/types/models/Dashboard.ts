@@ -13,3 +13,10 @@ export interface Order {
   orderDate: string;
   status: string;
 }
+
+export interface Sumary {
+  totalOrder: number;
+  totalAmount: number;
+  commission: number;
+  paidCommission: number;
+}

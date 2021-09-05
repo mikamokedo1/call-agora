@@ -1,13 +1,14 @@
 import { AnyAction } from 'redux';
-import { FETCH_STATISTIC, FETCH_ORDERS } from '../../types/actions/Dashboard';
+import { FETCH_STATISTIC, FETCH_ORDERS, FETCH_SUMMARY } from '../../types/actions/Dashboard';
 import { AppState } from '../store/index';
-import { Statistic, Order } from '../../types/models/Dashboard';
+import { Statistic, Order, Sumary } from '../../types/models/Dashboard';
 
-type ActionType = 'statistic' | 'orders';
+type ActionType = 'statistic' | 'orders' | 'summary';
 
 interface INIT_DASHBOARD {
   statistic: Statistic[];
   orders: Order[];
+  summary?: Sumary;
   errors: {
     [k in ActionType]: null | string;
   };
@@ -19,13 +20,16 @@ interface INIT_DASHBOARD {
 const INIT_STATE: INIT_DASHBOARD = {
   statistic: [],
   orders: [],
+  summary: undefined,
   errors: {
     statistic: null,
     orders: null,
+    summary: null,
   },
   loadings: {
     statistic: false,
     orders: false,
+    summary: false,
   },
 };
 
@@ -59,6 +63,20 @@ const DashboardReducer = (state: INIT_DASHBOARD = INIT_STATE, action: AnyAction)
         errors: { ...state.errors, orders: action.message },
         loadings: { ...state.loadings, orders: false },
       };
+    case FETCH_SUMMARY.pending:
+      return {
+        ...state,
+        errors: { ...state.errors, summary: null },
+        loadings: { ...state.loadings, summary: true },
+      };
+    case FETCH_SUMMARY.success:
+      return { ...state, summary: action.payload, loadings: { ...state.loadings, summary: false } };
+    case FETCH_SUMMARY.error:
+      return {
+        ...state,
+        errors: { ...state.errors, summary: action.message },
+        loadings: { ...state.loadings, summary: false },
+      };
     default:
       return state;
   }
@@ -68,3 +86,4 @@ export default DashboardReducer;
 
 export const statisticSelector = (state: AppState) => state.dashboard.statistic;
 export const ordersSelector = (state: AppState) => state.dashboard.orders;
+export const summarySelector = (state: AppState) => state.dashboard.summary;

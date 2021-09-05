@@ -1,21 +1,28 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useMemo } from 'react';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { Bar } from 'react-chartjs-2';
+import * as R from 'ramda';
+import { format } from 'date-fns';
 import AppAnimate from '../../../@crema/core/AppAnimate';
 import { CremaTheme } from '../../../types/AppContextPropsType';
-import TableDayOrder from '../container/TableDayOrder';
-import { fetchStatistic, fetchOrders } from '../../../redux/actions/dashboard';
+import { fetchStatistic, fetchOrders, fetchSummary } from '../../../redux/actions/dashboard';
+import { ordersSelector, statisticSelector, summarySelector } from '../../../redux/reducers/Dashboard';
+import { Statistic, Order } from '../../../types/models/Dashboard';
+import TableList from '../container/TableList';
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
   wrap: {
-    height: '100%',
+    height: 'calc(100vh - 70px)',
   },
   top: {
     display: 'flex',
     justifyContent: 'space-between',
     marginBottom: '20px',
+    height: 'calc((100% - 20px) / 2)',
   },
   topLeft: {
     width: 'calc(30% - 30px)',
@@ -91,23 +98,35 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
   bottom: {
     display: 'flex',
     justifyContent: 'space-between',
+    height: 'calc((100% - 20px) / 2)',
   },
   bottomLeft: {
     width: 'calc(30% - 30px)',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+    backgroundColor: '#fff',
+    borderRadius: '5px',
+    padding: '15px',
   },
   bottomRight: {
     width: '70%',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
+    backgroundColor: '#fff',
+    borderRadius: '5px',
+    padding: '15px',
   },
 }));
+
 const PageOne = () => {
   const dispatch = useDispatch();
   const boxRef = React.useRef<HTMLInputElement>(null);
+  const orders = useSelector(ordersSelector);
+  const summary = useSelector(summarySelector);
+  const statistics = useSelector(statisticSelector);
+
   const classes = useStyles();
   const handleCopy = () => {
     navigator.clipboard.writeText(boxRef.current?.textContent ?? '');
@@ -119,23 +138,13 @@ const PageOne = () => {
   useEffect(() => {
     dispatch(fetchOrders());
   }, [dispatch]);
-  const data = {
-    labels: ['1', '2', '3', '4', '5', '6'],
-    datasets: [
-      {
-        label: 'Tổng đơn',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: '#F7685B',
-      },
-      {
-        label: 'Tổng tiền',
-        data: [2, 3, 20, 5, 1, 4],
-        backgroundColor: '#109CF1',
-      },
-    ],
-  };
+
+  useEffect(() => {
+    dispatch(fetchSummary());
+  }, [dispatch]);
 
   const options = {
+    maintainAspectRatio: false,
     scales: {
       yAxes: [
         {
@@ -147,44 +156,86 @@ const PageOne = () => {
     },
     responsive: true,
   };
-  const data2 = {
-    labels: ['1', '2', '3', '4', '5', '6'],
-    datasets: [
-      {
-        label: '3 Tháng',
-        data: [12, 19, 3, 5, 2, 3],
-        backgroundColor: '#FFB946',
-      },
-      {
-        label: '6 Tháng',
-        data: [2, 3, 20, 5, 1, 4],
-        backgroundColor: '#885AF8',
-      },
-      {
-        label: '12 Tháng',
-        data: [3, 10, 13, 15, 22, 30],
-        backgroundColor: '#34AC6D',
-      },
-    ],
-  };
+
   const options2 = {
+    maintainAspectRatio: false,
     scales: {
       x: {
         stacked: true,
+        grid: {
+          display: false,
+        },
       },
+
       y: {
         stacked: true,
+        grid: {
+          display: false,
+        },
       },
     },
     responsive: true,
   };
+  const DATACHART = useMemo(() => {
+    return {
+      labels: statistics.map((item) => {
+        return format(new Date(item.orderDate), 'dd-MM-yyyy');
+      }),
+      datasets: [
+        {
+          label: 'Tổng đơn',
+          data: statistics.map((item) => {
+            return item.totalOrder;
+          }),
+          backgroundColor: '#F7685B',
+        },
+        {
+          label: 'Tổng tiền',
+          data: statistics.map((item) => {
+            return item.totalAmount / 1000000;
+          }),
+          backgroundColor: '#109CF1',
+        },
+      ],
+    };
+  }, [statistics]);
+
+  const DATACHARTSTACK = useMemo(() => {
+    return {
+      labels: ['Gói 1', 'Gói 2', 'Gói 3'],
+      datasets: !orders
+        ? []
+        : R.pipe<
+            Order[] | undefined,
+            Order[],
+            { [k: string]: Order[] },
+            any,
+            { label: string; data: Order[]; backgroundColor: string }[]
+          >(
+            R.defaultTo<Order[]>([]),
+            R.groupBy((g) => g.period),
+            R.values,
+            R.addIndex(R.map)((item, index) => {
+              return {
+                label: index === 0 ? '3 Tháng' : index === 1 ? '6 Tháng' : '12 Tháng',
+                data: R.pipe<Order[], any, any, number[]>(
+                  R.groupBy((g) => g.package),
+                  R.values,
+                  R.map((m: Order[]) => m.length),
+                )(item),
+                backgroundColor: index === 0 ? '#FFB946' : index === 1 ? '#885AF8' : '#34AC6D',
+              };
+            }),
+          )(orders),
+    };
+  }, [orders]);
 
   return (
     <AppAnimate animation='transition.slideUpIn' delay={200}>
       <Box className={classes.wrap}>
         <Box className={classes.top}>
           <Box className={classes.topRight}>
-            <TableDayOrder />
+            <TableList />
           </Box>
           <Box className={classes.topLeft}>
             <Box className={classes.link}>
@@ -207,7 +258,7 @@ const PageOne = () => {
                     Tổng số đơn
                   </Box>
                   <Box fontSize='18px' fontWeight='bold' color='334D6E'>
-                    165 Đơn
+                    {summary ? `${summary.totalOrder} đơn` : '0 đơn'}
                   </Box>
                 </Box>
               </Box>
@@ -220,7 +271,9 @@ const PageOne = () => {
                     Số tiền đã bán được
                   </Box>
                   <Box fontSize='18px' fontWeight='bold' color='334D6E'>
-                    2.000.000 VND
+                    {summary
+                      ? `${summary.totalAmount.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}`
+                      : '0 VND'}
                   </Box>
                 </Box>
               </Box>
@@ -235,7 +288,9 @@ const PageOne = () => {
                     </Box>
                     <Box className='right'>
                       <Box fontSize='14px' fontWeight='bold' color='334D6E'>
-                        20.000.000 VND
+                        {summary
+                          ? `${summary.commission.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}`
+                          : '0 VND'}
                       </Box>
                     </Box>
                   </Box>
@@ -250,7 +305,9 @@ const PageOne = () => {
                     </Box>
                     <Box className='right'>
                       <Box fontSize='14px' fontWeight='bold' color='334D6E'>
-                        20.000.000 VND
+                        {summary
+                          ? `${summary.paidCommission.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}`
+                          : '0 VND'}
                       </Box>
                     </Box>
                   </Box>
@@ -264,13 +321,17 @@ const PageOne = () => {
             <Box fontWeight='bold' color='#334D6E' mb='15px'>
               Biểu đồ bán theo ngày
             </Box>
-            <Bar data={data} options={options} />
+            <Box height='calc(100% - 28px)'>
+              <Bar data={DATACHART} options={options} />
+            </Box>
           </Box>
           <Box className={classes.bottomLeft}>
             <Box fontWeight='bold' color='#334D6E' mb='15px'>
               Loại đơn
             </Box>
-            <Bar data={data2} options={options2} />
+            <Box height='calc(100% - 28px)'>
+              <Bar data={DATACHARTSTACK} options={options2} />
+            </Box>
           </Box>
         </Box>
       </Box>

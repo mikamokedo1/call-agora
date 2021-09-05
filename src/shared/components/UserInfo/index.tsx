@@ -8,6 +8,7 @@ import Menu from '@material-ui/core/Menu';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import Box from '@material-ui/core/Box';
 import { orange } from '@material-ui/core/colors';
+import { useHistory } from 'react-router-dom';
 import AppContext from '../../../@crema/utility/AppContext';
 import { useAuthUser } from '../../../@crema/utility/AppHooks';
 import { onJWTAuthSignout } from '../../../redux/actions';
@@ -62,7 +63,7 @@ const UserInfo: React.FC<{}> = () => {
   const { themeMode } = useContext<AppContextPropsType>(AppContext);
   const dispatch = useDispatch();
   const user: AuthUser | null = useAuthUser();
-
+  const history = useHistory();
   const [anchorEl, setAnchorEl] = React.useState(null);
 
   const handleClick = (event: any) => {
@@ -100,12 +101,12 @@ const UserInfo: React.FC<{}> = () => {
             <Box ml={3} className={classes.pointer} color={themeMode === 'light' ? '#313541' : 'white'}>
               <ExpandMoreIcon onClick={handleClick} />
               <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
-                <MenuItem>My account</MenuItem>
+                <MenuItem onClick={() => history.push('/setting')}>My account</MenuItem>
                 <MenuItem onClick={() => dispatch(onJWTAuthSignout())}>Logout</MenuItem>
               </Menu>
             </Box>
           </Box>
-          <Box className={classes.designation}>System Manager</Box>
+          <Box className={classes.designation}>{user?.email}</Box>
         </Box>
       </Box>
     </Box>

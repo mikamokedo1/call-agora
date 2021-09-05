@@ -1,6 +1,7 @@
 import axios from 'axios';
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
 import { v4 as uuidv4 } from 'uuid';
+import configureStore, { history } from '../../../../redux/store/index';
 
 const BaseAPI = process.env.REACT_APP_API_URL;
 const axiosConfig = {
@@ -11,8 +12,21 @@ const refreshAuthLogic = (failedRequest: any) =>
   axios
     .post(`${BaseAPI}/users/refresh-token`, {}, axiosConfig)
     .then((tokenRefreshResponse) => {
-      localStorage.setItem('token', tokenRefreshResponse.data.accessToken);
-      failedRequest.response.config.headers.Authorization = `Bearer ${tokenRefreshResponse.data.accessToken}`;
+      if (tokenRefreshResponse.data.result.code === 'error') {
+        delete axios.defaults.headers.common.Authorization;
+        localStorage.removeItem('token');
+        history.push('/signin');
+        configureStore.dispatch({
+          type: 'SET_AUTH_TOKEN',
+          payload: {
+            token: '',
+          },
+        });
+        console.log(tokenRefreshResponse.data.result.code);
+      } else {
+        localStorage.setItem('token', tokenRefreshResponse.data.accessToken);
+        failedRequest.response.config.headers.Authorization = `Bearer ${tokenRefreshResponse.data.accessToken}`;
+      }
       return Promise.resolve();
     })
     .catch((error) => {
