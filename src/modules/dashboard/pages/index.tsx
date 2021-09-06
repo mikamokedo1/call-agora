@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import AppAnimate from '../../../@crema/core/AppAnimate';
 import { CremaTheme } from '../../../types/AppContextPropsType';
-import { fetchStatistic, fetchOrders, fetchSummary } from '../../../redux/actions/dashboard';
+import { fetchStatistic, fetchOrders, fetchSummary, fetchStatisticChart } from '../../../redux/actions/dashboard';
 import { statisticSelector, summarySelector, ordersSelector } from '../../../redux/reducers/Dashboard';
 import TableList from '../container/TableList';
 import ChartStistic from '../container/ChartStistic';
@@ -160,6 +160,10 @@ const PageOne = () => {
       dispatch(fetchStatistic());
     }
   }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchStatisticChart());
+  }, [dispatch]);
+
   useEffect(() => {
     if (orders.length === 0) {
       dispatch(fetchOrders());

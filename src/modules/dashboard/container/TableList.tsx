@@ -2,7 +2,7 @@ import React, { useMemo } from 'react';
 import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
-import { useSelector } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import TableContainer from '@material-ui/core/TableContainer';
 import SelectDate from './SelectDate';
 import TableItem from './TableItem';
@@ -10,11 +10,16 @@ import TableHeading from './TableHeading';
 import AppCard from '../../../@crema/core/AppCard';
 import AppSelect from '../../../@crema/core/AppSelect';
 import { statisticSelector } from '../../../redux/reducers/Dashboard';
+import { fetchStatistic } from '../../../redux/actions/dashboard';
 
 const TableList = () => {
   const statistics = useSelector(statisticSelector);
+  const dispatch = useDispatch();
   const handleSelectionType = (data: unknown) => {
-    console.log('data: ', data);
+    if (data === 'Ngày') {
+      dispatch(fetchStatistic());
+      console.log(data);
+    }
   };
 
   const DATA_TABLE = useMemo(() => {

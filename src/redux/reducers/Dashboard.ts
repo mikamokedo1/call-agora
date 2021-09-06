@@ -1,12 +1,13 @@
 import { AnyAction } from 'redux';
-import { FETCH_STATISTIC, FETCH_ORDERS, FETCH_SUMMARY } from '../../types/actions/Dashboard';
+import { FETCH_STATISTIC, FETCH_ORDERS, FETCH_SUMMARY, FETCH_STATISTIC_CHART } from '../../types/actions/Dashboard';
 import { AppState } from '../store/index';
 import { Statistic, Order, Sumary } from '../../types/models/Dashboard';
 
-type ActionType = 'statistic' | 'orders' | 'summary';
+type ActionType = 'statistic' | 'orders' | 'summary' | 'statisticChart';
 
 interface INIT_DASHBOARD {
   statistic: Statistic[];
+  statisticChart: Statistic[];
   orders: Order[];
   summary?: Sumary;
   errors: {
@@ -20,16 +21,19 @@ interface INIT_DASHBOARD {
 const INIT_STATE: INIT_DASHBOARD = {
   statistic: [],
   orders: [],
+  statisticChart: [],
   summary: undefined,
   errors: {
     statistic: null,
     orders: null,
     summary: null,
+    statisticChart: null,
   },
   loadings: {
     statistic: false,
     orders: false,
     summary: false,
+    statisticChart: false,
   },
 };
 
@@ -77,6 +81,22 @@ const DashboardReducer = (state: INIT_DASHBOARD = INIT_STATE, action: AnyAction)
         errors: { ...state.errors, summary: action.message },
         loadings: { ...state.loadings, summary: false },
       };
+
+    case FETCH_STATISTIC_CHART.pending:
+      return {
+        ...state,
+        errors: { ...state.errors, statisticChart: null },
+        loadings: { ...state.loadings, statisticChart: true },
+      };
+    case FETCH_STATISTIC_CHART.success:
+      return { ...state, statisticChart: action.payload, loadings: { ...state.loadings, statisticChart: false } };
+    case FETCH_STATISTIC_CHART.error:
+      return {
+        ...state,
+        errors: { ...state.errors, statisticChart: action.message },
+        loadings: { ...state.loadings, statisticChart: false },
+      };
+
     default:
       return state;
   }
@@ -87,3 +107,4 @@ export default DashboardReducer;
 export const statisticSelector = (state: AppState) => state.dashboard.statistic;
 export const ordersSelector = (state: AppState) => state.dashboard.orders;
 export const summarySelector = (state: AppState) => state.dashboard.summary;
+export const statisticChartSelector = (state: AppState) => state.dashboard.statisticChart;

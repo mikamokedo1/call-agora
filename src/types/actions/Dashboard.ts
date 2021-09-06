@@ -52,6 +52,21 @@ export interface FetSummaryFailedAction {
   message: string;
 }
 
+export const FETCH_STATISTIC_CHART = reduxRequestActionGenerator(scope, 'FETCH_STATISTIC_CHART');
+
+export interface FetchStatisticChartAction {
+  type: typeof FETCH_STATISTIC_CHART.pending;
+}
+
+export interface FetchStatisticChartSuccessAction {
+  type: typeof FETCH_STATISTIC_CHART.success;
+  payload: Statistic[];
+}
+export interface FetchStatisticChartFailedAction {
+  type: typeof FETCH_STATISTIC_CHART.error;
+  message: string;
+}
+
 export type DashboardActionTypes =
   | FetchStatisticAction
   | FetchStatisticSuccessAction
@@ -61,4 +76,7 @@ export type DashboardActionTypes =
   | FetchOrdersFailedAction
   | FetSummaryAction
   | FetSummarySuccessAction
-  | FetSummaryFailedAction;
+  | FetSummaryFailedAction
+  | FetchStatisticChartAction
+  | FetchStatisticChartSuccessAction
+  | FetchStatisticChartFailedAction;
