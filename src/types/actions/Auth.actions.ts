@@ -44,10 +44,35 @@ export interface ChangePasswordFailedAction {
   message: string;
 }
 
+export const CHANGE_BANK_INFO = reduxRequestActionGenerator(scope, 'CHANGE_BANK_INFO');
+
+export interface ChangeBankParams {
+  bankAccount: string;
+  bankAccountNumber: string;
+  bankName: string;
+  username: string;
+}
+export interface ChangeBankInfoAction {
+  type: typeof CHANGE_BANK_INFO.pending;
+  payload: ChangeBankParams;
+}
+
+export interface ChangeBankInfoSuccessAction {
+  type: typeof CHANGE_BANK_INFO.success;
+  payload: ChangeBankParams;
+}
+export interface ChangeBankInfoFailedAction {
+  type: typeof CHANGE_BANK_INFO.error;
+  message: string;
+}
+
 export type AuthActions =
   | UpdateAuthUserActions
   | SetAuthTokenActions
   | SignoutAuthUserActions
   | ChangePasswordAction
   | ChangePasswordSuccessAction
-  | ChangePasswordFailedAction;
+  | ChangePasswordFailedAction
+  | ChangeBankInfoAction
+  | ChangeBankInfoSuccessAction
+  | ChangeBankInfoFailedAction;

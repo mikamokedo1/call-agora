@@ -10,4 +10,7 @@ export interface AuthUser {
   role: string[];
   reseller: string;
   phone: string;
+  bankAccount: string;
+  bankAccountNumber: string;
+  bankName: string;
 }

@@ -4,31 +4,31 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { Bar } from 'react-chartjs-2';
 import * as R from 'ramda';
-import { format } from 'date-fns';
 import AppAnimate from '../../../@crema/core/AppAnimate';
 import { CremaTheme } from '../../../types/AppContextPropsType';
 import { fetchStatistic, fetchOrders, fetchSummary } from '../../../redux/actions/dashboard';
 import { ordersSelector, statisticSelector, summarySelector } from '../../../redux/reducers/Dashboard';
-import { Statistic, Order } from '../../../types/models/Dashboard';
+import { Order } from '../../../types/models/Dashboard';
 import TableList from '../container/TableList';
-
+import ChartStistic from '../container/ChartStistic';
 import 'react-datepicker/dist/react-datepicker.css';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
   wrap: {
-    height: 'calc(100vh - 70px)',
+    height: '100%',
   },
   top: {
     display: 'flex',
     justifyContent: 'space-between',
     marginBottom: '20px',
-    height: 'calc((100% - 20px) / 2)',
   },
   topLeft: {
     width: 'calc(30% - 30px)',
   },
   topRight: {
     width: '70%',
+    backgroundColor: '#fff',
+    borderRadius: '4px',
   },
   link: {
     display: 'flex',
@@ -65,6 +65,9 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     borderRadius: '5px',
     padding: '15px',
     marginBottom: '15px',
+    '&:last-child': {
+      marginBottom: '0px',
+    },
     '& .left': {
       width: '53px',
       height: '53px',
@@ -98,7 +101,6 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
   bottom: {
     display: 'flex',
     justifyContent: 'space-between',
-    height: 'calc((100% - 20px) / 2)',
   },
   bottomLeft: {
     width: 'calc(30% - 30px)',
@@ -133,7 +135,9 @@ const PageOne = () => {
   };
 
   useEffect(() => {
-    dispatch(fetchStatistic());
+    if (statistics.length === 0) {
+      dispatch(fetchStatistic());
+    }
   }, [dispatch]);
   useEffect(() => {
     dispatch(fetchOrders());
@@ -142,20 +146,6 @@ const PageOne = () => {
   useEffect(() => {
     dispatch(fetchSummary());
   }, [dispatch]);
-
-  const options = {
-    maintainAspectRatio: false,
-    scales: {
-      yAxes: [
-        {
-          ticks: {
-            beginAtZero: true,
-          },
-        },
-      ],
-    },
-    responsive: true,
-  };
 
   const options2 = {
     maintainAspectRatio: false,
@@ -175,30 +165,8 @@ const PageOne = () => {
       },
     },
     responsive: true,
+    animation: false,
   };
-  const DATACHART = useMemo(() => {
-    return {
-      labels: statistics.map((item) => {
-        return format(new Date(item.orderDate), 'dd-MM-yyyy');
-      }),
-      datasets: [
-        {
-          label: 'Tổng đơn',
-          data: statistics.map((item) => {
-            return item.totalOrder;
-          }),
-          backgroundColor: '#F7685B',
-        },
-        {
-          label: 'Tổng tiền',
-          data: statistics.map((item) => {
-            return item.totalAmount / 1000000;
-          }),
-          backgroundColor: '#109CF1',
-        },
-      ],
-    };
-  }, [statistics]);
 
   const DATACHARTSTACK = useMemo(() => {
     return {
@@ -277,39 +245,33 @@ const PageOne = () => {
                   </Box>
                 </Box>
               </Box>
-              <Box display='flex' justifyContent='space-between'>
-                <Box className={classes.sumItemHaft}>
-                  <Box color='#90A0B7' fontSize='15px' mb='5px'>
+              <Box className={classes.sumItem}>
+                <Box className='left' bgcolor='rgb(136,90,248,0.2)'>
+                  <img src='/assets/images/dasboard/wallet.png' alt='icon-shit' />
+                </Box>
+                <Box className='right'>
+                  <Box color='#90A0B7' fontSize='16px'>
                     Tiền hoa hồng
                   </Box>
-                  <Box display='flex' alignItems='center'>
-                    <Box className='left' bgcolor='rgb(136,90,248,0.2)'>
-                      <img src='/assets/images/dasboard/wallet.png' alt='icon-shit' style={{ width: '15px' }} />
-                    </Box>
-                    <Box className='right'>
-                      <Box fontSize='14px' fontWeight='bold' color='334D6E'>
-                        {summary
-                          ? `${summary.commission.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}`
-                          : '0 VND'}
-                      </Box>
-                    </Box>
+                  <Box fontSize='18px' fontWeight='bold' color='334D6E'>
+                    {summary
+                      ? `${summary.commission.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}`
+                      : '0 VND'}
                   </Box>
                 </Box>
-                <Box className={classes.sumItemHaft}>
-                  <Box color='#90A0B7' fontSize='15px' mb='5px'>
+              </Box>
+              <Box className={classes.sumItem}>
+                <Box className='left' bgcolor='rgb(255,187,70,0.2)'>
+                  <img src='/assets/images/dasboard/danhan.png' alt='icon-shit' />
+                </Box>
+                <Box className='right'>
+                  <Box color='#90A0B7' fontSize='16px'>
                     Tiền đã nhận
                   </Box>
-                  <Box display='flex' alignItems='center'>
-                    <Box className='left' bgcolor='rgb(255,187,70,0.2)'>
-                      <img src='/assets/images/dasboard/danhan.png' alt='icon-shit' style={{ width: '15px' }} />
-                    </Box>
-                    <Box className='right'>
-                      <Box fontSize='14px' fontWeight='bold' color='334D6E'>
-                        {summary
-                          ? `${summary.paidCommission.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}`
-                          : '0 VND'}
-                      </Box>
-                    </Box>
+                  <Box fontSize='18px' fontWeight='bold' color='334D6E'>
+                    {summary
+                      ? `${summary.paidCommission.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}`
+                      : '0 VND'}
                   </Box>
                 </Box>
               </Box>
@@ -319,10 +281,10 @@ const PageOne = () => {
         <Box className={classes.bottom}>
           <Box className={classes.bottomRight}>
             <Box fontWeight='bold' color='#334D6E' mb='15px'>
-              Biểu đồ bán theo ngày
+              Biểu đồ bán theo ngày đơn/triệu
             </Box>
             <Box height='calc(100% - 28px)'>
-              <Bar data={DATACHART} options={options} />
+              <ChartStistic />
             </Box>
           </Box>
           <Box className={classes.bottomLeft}>

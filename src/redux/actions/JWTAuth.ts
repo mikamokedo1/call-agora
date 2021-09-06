@@ -15,6 +15,8 @@ import {
   UPDATE_AUTH_USER,
   CHANGE_PASSWORD,
   ChangePasswordParams,
+  ChangeBankParams,
+  CHANGE_BANK_INFO,
 } from '../../types/actions/Auth.actions';
 
 const keyHmac = process.env.REACT_APP_KEY_HASHMAC;
@@ -120,6 +122,24 @@ export const changePassword = (payload: ChangePasswordParams) => {
       }
     } catch (error) {
       dispatch({ type: CHANGE_PASSWORD.error, message: error });
+    }
+  };
+};
+
+export const changeBankInfo = (payload: ChangeBankParams) => {
+  return async (dispatch: Dispatch<AppActions>) => {
+    try {
+      dispatch({ type: CHANGE_BANK_INFO.pending });
+      const uid = uuidv4();
+      jwtAxios.defaults.headers.common['x-requestid'] = uid;
+      const res = await jwtAxios.put('/users/update-bankinfor', payload);
+      if (res.result.code === 'success') {
+        dispatch({ type: CHANGE_BANK_INFO.success, payload });
+      } else {
+        dispatch({ type: CHANGE_BANK_INFO.error, message: get(res, 'result.message') });
+      }
+    } catch (error) {
+      dispatch({ type: CHANGE_BANK_INFO.error, message: error });
     }
   };
 };

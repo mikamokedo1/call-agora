@@ -36,7 +36,6 @@ const SelectDate = () => {
       dispatch(fetchStatistic(date, date));
     }
   };
-  console.log('re render');
   return (
     <StyledDate>
       <DatePicker

@@ -6,11 +6,12 @@ import {
   SIGNOUT_AUTH_SUCCESS,
   UPDATE_AUTH_USER,
   CHANGE_PASSWORD,
+  CHANGE_BANK_INFO,
 } from '../../types/actions/Auth.actions';
 import { AuthUser } from '../../types/models/AuthUser';
 import { AppState } from '../store';
 
-type ActionType = 'login' | 'changePassword';
+type ActionType = 'login' | 'changePassword' | 'changeBankInfo';
 interface JWTdecode {
   email: string;
   exp: number;
@@ -19,6 +20,9 @@ interface JWTdecode {
   phone: string;
   reseller: string;
   username: string;
+  bankAccount: string;
+  bankAccountNumber: string;
+  bankName: string;
 }
 interface INIT_AUTH {
   user: AuthUser | null;
@@ -37,10 +41,12 @@ const INIT_STATE: INIT_AUTH = {
   errors: {
     login: null,
     changePassword: null,
+    changeBankInfo: null,
   },
   loadings: {
     login: false,
     changePassword: false,
+    changeBankInfo: false,
   },
 };
 
@@ -75,6 +81,9 @@ const Auth = (state: INIT_AUTH = INIT_STATE, action: AnyAction): INIT_AUTH => {
           token: '5f4baae13ccef700178e1da4',
           reseller: decoded?.reseller,
           phone: decoded?.phone,
+          bankAccount: decoded?.bankAccount ?? '',
+          bankAccountNumber: decoded?.bankAccountNumber ?? '',
+          bankName: decoded?.bankName ?? '',
         },
       };
     }
@@ -92,6 +101,30 @@ const Auth = (state: INIT_AUTH = INIT_STATE, action: AnyAction): INIT_AUTH => {
         errors: { ...state.errors, changePassword: action.message },
         loadings: { ...state.loadings, changePassword: false },
       };
+    case CHANGE_BANK_INFO.pending:
+      return {
+        ...state,
+        errors: { ...state.errors, changeBankInfo: null },
+        loadings: { ...state.loadings, changeBankInfo: true },
+      };
+    case CHANGE_BANK_INFO.success:
+      return {
+        ...state,
+        loadings: { ...state.loadings, changeBankInfo: false },
+        user: {
+          ...state.user,
+          bankAccount: action.payload.bankAccount ?? '',
+          bankAccountNumber: action.payload.bankAccountNumber ?? '',
+          bankName: action.payload.bankName ?? '',
+        },
+      };
+    case CHANGE_BANK_INFO.error:
+      return {
+        ...state,
+        errors: { ...state.errors, changeBankInfo: action.message },
+        loadings: { ...state.loadings, changeBankInfo: false },
+      };
+
     default:
       return state;
   }

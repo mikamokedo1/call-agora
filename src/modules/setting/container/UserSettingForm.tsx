@@ -102,7 +102,7 @@ const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingForm
           </Box>
         </Box>
         <Box fontWeight='bold' mb='5px' mt='10px' fontSize='16px'>
-          Nguyễn Văn A
+          {user?.reseller}
         </Box>
         <Box color='#90A0B7' fontSize='14px'>
           Cộng tác viên
@@ -125,7 +125,16 @@ const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingForm
           <img src='/assets/images/dasboard/cardnew.svg' alt='card' />
           <Box ml='20px'>
             <Box color='#90A0B7'>Tài khoản</Box>
-            <Box fontWeight='bold'>*****2222</Box>
+            <Box fontWeight='bold'>
+              {`*****${
+                user?.bankAccountNumber
+                  ? user?.bankAccountNumber.substring(
+                      user?.bankAccountNumber.length - 4,
+                      user?.bankAccountNumber.length,
+                    )
+                  : '****'
+              }`}
+            </Box>
           </Box>
         </Box>
 
@@ -172,8 +181,8 @@ const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingForm
         onChange={formik.handleChange}
         error={formik.touched.email && Boolean(formik.errors.email)}
       /> */}
-      <Box color='#90A0B7'>Họ và tên</Box>
-      <StyledInfo>{user?.reseller}</StyledInfo>
+      {/* <Box color='#90A0B7'>Họ và tên</Box>
+      <StyledInfo>{user?.reseller}</StyledInfo> */}
       <Box color='#90A0B7'>Số điện thoại</Box>
       <StyledInfo>{user?.phone}</StyledInfo>
       <Box color='#90A0B7'>Email</Box>
