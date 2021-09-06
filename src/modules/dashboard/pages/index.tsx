@@ -1,16 +1,15 @@
-import React, { useEffect, useMemo } from 'react';
+import React, { useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
-import { Bar } from 'react-chartjs-2';
-import * as R from 'ramda';
 import AppAnimate from '../../../@crema/core/AppAnimate';
 import { CremaTheme } from '../../../types/AppContextPropsType';
 import { fetchStatistic, fetchOrders, fetchSummary } from '../../../redux/actions/dashboard';
-import { ordersSelector, statisticSelector, summarySelector } from '../../../redux/reducers/Dashboard';
-import { Order } from '../../../types/models/Dashboard';
+import { statisticSelector, summarySelector, ordersSelector } from '../../../redux/reducers/Dashboard';
 import TableList from '../container/TableList';
 import ChartStistic from '../container/ChartStistic';
+import ChartStacked from '../container/ChartStacked';
+
 import 'react-datepicker/dist/react-datepicker.css';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
@@ -21,14 +20,26 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     display: 'flex',
     justifyContent: 'space-between',
     marginBottom: '20px',
+    '@media screen and (max-width: 750px)': {
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
   },
   topLeft: {
     width: 'calc(30% - 30px)',
+    '@media screen and (max-width: 750px)': {
+      width: '100%',
+      order: 1,
+    },
   },
   topRight: {
     width: '70%',
     backgroundColor: '#fff',
     borderRadius: '4px',
+    '@media screen and (max-width: 750px)': {
+      width: '100%',
+      order: 2,
+    },
   },
   link: {
     display: 'flex',
@@ -101,6 +112,10 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
   bottom: {
     display: 'flex',
     justifyContent: 'space-between',
+    '@media screen and (max-width: 750px)': {
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
   },
   bottomLeft: {
     width: 'calc(30% - 30px)',
@@ -110,6 +125,9 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     backgroundColor: '#fff',
     borderRadius: '5px',
     padding: '15px',
+    '@media screen and (max-width: 750px)': {
+      width: '100%',
+    },
   },
   bottomRight: {
     width: '70%',
@@ -119,15 +137,18 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     backgroundColor: '#fff',
     borderRadius: '5px',
     padding: '15px',
+    '@media screen and (max-width: 750px)': {
+      width: '100%',
+    },
   },
 }));
 
 const PageOne = () => {
   const dispatch = useDispatch();
   const boxRef = React.useRef<HTMLInputElement>(null);
-  const orders = useSelector(ordersSelector);
   const summary = useSelector(summarySelector);
   const statistics = useSelector(statisticSelector);
+  const orders = useSelector(ordersSelector);
 
   const classes = useStyles();
   const handleCopy = () => {
@@ -140,63 +161,14 @@ const PageOne = () => {
     }
   }, [dispatch]);
   useEffect(() => {
-    dispatch(fetchOrders());
+    if (orders.length === 0) {
+      dispatch(fetchOrders());
+    }
   }, [dispatch]);
 
   useEffect(() => {
     dispatch(fetchSummary());
   }, [dispatch]);
-
-  const options2 = {
-    maintainAspectRatio: false,
-    scales: {
-      x: {
-        stacked: true,
-        grid: {
-          display: false,
-        },
-      },
-
-      y: {
-        stacked: true,
-        grid: {
-          display: false,
-        },
-      },
-    },
-    responsive: true,
-    animation: false,
-  };
-
-  const DATACHARTSTACK = useMemo(() => {
-    return {
-      labels: ['Gói 1', 'Gói 2', 'Gói 3'],
-      datasets: !orders
-        ? []
-        : R.pipe<
-            Order[] | undefined,
-            Order[],
-            { [k: string]: Order[] },
-            any,
-            { label: string; data: Order[]; backgroundColor: string }[]
-          >(
-            R.defaultTo<Order[]>([]),
-            R.groupBy((g) => g.period),
-            R.values,
-            R.addIndex(R.map)((item, index) => {
-              return {
-                label: index === 0 ? '3 Tháng' : index === 1 ? '6 Tháng' : '12 Tháng',
-                data: R.pipe<Order[], any, any, number[]>(
-                  R.groupBy((g) => g.package),
-                  R.values,
-                  R.map((m: Order[]) => m.length),
-                )(item),
-                backgroundColor: index === 0 ? '#FFB946' : index === 1 ? '#885AF8' : '#34AC6D',
-              };
-            }),
-          )(orders),
-    };
-  }, [orders]);
 
   return (
     <AppAnimate animation='transition.slideUpIn' delay={200}>
@@ -292,7 +264,7 @@ const PageOne = () => {
               Loại đơn
             </Box>
             <Box height='calc(100% - 28px)'>
-              <Bar data={DATACHARTSTACK} options={options2} />
+              <ChartStacked />
             </Box>
           </Box>
         </Box>

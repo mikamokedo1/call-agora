@@ -16,10 +16,22 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     width: '1440px',
     height: '810px',
     display: 'flex',
+    '@media screen and (max-width: 750px)': {
+      flexDirection: 'column',
+      alignItems: 'center',
+      width: '100%',
+      height: '100vh',
+      background: '#fff',
+      justifyContent: 'center',
+      padding: '0 20px',
+    },
   },
   left: {
     width: '50%',
     backgroundImage: 'url(/assets/images/login-left.png)',
+    '@media screen and (max-width: 750px)': {
+      width: '100%',
+    },
   },
   right: {
     background: '#fff',
@@ -28,6 +40,14 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    '@media screen and (max-width: 750px)': {
+      width: '100%',
+    },
+  },
+  rightInner: {
+    '@media screen and (max-width: 750px)': {
+      width: '100%',
+    },
   },
   pointer: {
     cursor: 'pointer',
@@ -49,6 +69,9 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     fontWeight: 'bold',
     fontSize: '36px',
     marginBottom: '10px',
+    '@media screen and (max-width: 750px)': {
+      fontSize: '18px',
+    },
   },
   texforgot: {
     fontSize: '14px',
@@ -113,7 +136,7 @@ const Signin: React.FC<{}> = () => {
             </Button>
           </Box>
         ) : (
-          <Box>
+          <Box className={classes.rightInner}>
             <Box className={classes.title}>Tìm lại mật khẩu</Box>
             <Box fontSize='16px' color='#90A0B7' mb='30px'>
               Nhập mail bạn đã đăng ký cho tài khoản

@@ -11,6 +11,7 @@ import { userSelector } from 'src/redux/reducers/Auth';
 import { AppState } from 'src/redux/store';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { changePassword } from '../../../redux/actions/JWTAuth';
+import { useStyles } from './BankSettingForm';
 
 const StyledTextField = styled(TextField)`
   margin-bottom: 10px;
@@ -20,6 +21,9 @@ const StyledButton = styled(Button)`
   width: 160px;
   margin-top: 20px;
   height: '40px';
+  @media screen and (max-width: 750px) {
+    margin: 20px auto;
+  }
 `;
 const validationSchema = yup.object({
   oldPassword: yup.string().required('Bạn quên nhập mật khẩu cũ!'),
@@ -37,6 +41,7 @@ interface PasswordSettingFormProps {
 }
 
 const PasswordSettingForm = ({ handleClose }: PasswordSettingFormProps) => {
+  const classes = useStyles();
   const error = useSelector((state: AppState) => state.auth.errors.changePassword);
   const isLoading = useSelector((state: AppState) => state.auth.loadings.changePassword);
   const user = useSelector(userSelector);
@@ -55,18 +60,7 @@ const PasswordSettingForm = ({ handleClose }: PasswordSettingFormProps) => {
   return (
     <>
       <Box width='100%' height='100%' bgcolor='rgba(0,0,0,0.7)' position='absolute' left='0px' top='0px' zIndex={10} />
-      <Box
-        zIndex={12}
-        bgcolor='#fff'
-        borderRadius='8px'
-        p='20px'
-        flexDirection='column'
-        display='flex'
-        width='540px'
-        position='absolute'
-        top='50%'
-        left='50%'
-        style={{ transform: 'translate(-50%, -50%)' }}>
+      <Box className={classes.wrap}>
         <Box display='flex' justifyContent='space-between'>
           <Box fontWeight='bold' mb='10px'>
             Đổi mật khẩu

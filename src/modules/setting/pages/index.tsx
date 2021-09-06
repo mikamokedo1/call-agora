@@ -8,7 +8,7 @@ import PasswordSettingForm from '../container/PasswordSettingForm';
 
 const StyledBox = styled.div`
   display: flex;
-  width: 450px;
+  max-width: 450px;
 `;
 
 const PageOne = () => {

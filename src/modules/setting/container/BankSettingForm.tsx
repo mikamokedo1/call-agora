@@ -10,6 +10,7 @@ import { userSelector } from 'src/redux/reducers/Auth';
 import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from 'src/redux/store';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { makeStyles } from '@material-ui/core/styles';
 import { changeBankInfo } from '../../../redux/actions/JWTAuth';
 
 const StyledTextField = styled(TextField)`
@@ -19,7 +20,32 @@ const StyledTextField = styled(TextField)`
 const StyledButton = styled(Button)`
   width: 160px;
   margin-top: 20px;
+  @media screen and (max-width: 750px) {
+    margin: 20px auto;
+  }
 `;
+
+export const useStyles = makeStyles(() => ({
+  wrap: {
+    transform: 'translate(-50%, -50%)',
+    zIndex: 12,
+    backgroundColor: '#fff',
+    borderRadius: '8px',
+    padding: '20px',
+    flexDirection: 'column',
+    display: 'flex',
+    width: '540px',
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    '@media screen and (max-width: 750px)': {
+      width: '100%',
+      left: '0',
+      transform: 'translate(0, -50%)',
+    },
+  },
+}));
+
 const validationSchema = yup.object({
   bankAccount: yup.string().required('Bạn quên nhập tên!'),
   bankName: yup.string().required('Bạn quên nhập số điện thoại!'),
@@ -30,6 +56,7 @@ interface BankSettingFormProps {
 }
 
 const BankSettingForm = ({ handleClose }: BankSettingFormProps) => {
+  const classes = useStyles();
   const dispatch = useDispatch();
   const user = useSelector(userSelector);
   const error = useSelector((state: AppState) => state.auth.errors.changeBankInfo);
@@ -68,18 +95,7 @@ const BankSettingForm = ({ handleClose }: BankSettingFormProps) => {
   return (
     <>
       <Box width='100%' height='100%' bgcolor='rgba(0,0,0,0.7)' position='absolute' left='0px' top='0px' zIndex={10} />
-      <Box
-        zIndex={12}
-        bgcolor='#fff'
-        borderRadius='8px'
-        p='20px'
-        flexDirection='column'
-        display='flex'
-        width='540px'
-        position='absolute'
-        top='50%'
-        left='50%'
-        style={{ transform: 'translate(-50%, -50%)' }}>
+      <Box className={classes.wrap}>
         <Box display='flex' justifyContent='space-between'>
           <Box fontWeight='bold' mb='10px'>
             Tài khoản nhận tiền

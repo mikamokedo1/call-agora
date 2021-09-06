@@ -18,10 +18,22 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     width: '1440px',
     height: '810px',
     display: 'flex',
+    '@media screen and (max-width: 750px)': {
+      flexDirection: 'column',
+      alignItems: 'center',
+      width: '100%',
+      height: '100vh',
+      background: '#fff',
+      justifyContent: 'center',
+      padding: '0 20px',
+    },
   },
   left: {
     width: '50%',
     backgroundImage: 'url(/assets/images/login-left.png)',
+    '@media screen and (max-width: 750px)': {
+      width: '100%',
+    },
   },
   right: {
     background: '#fff',
@@ -30,6 +42,14 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     flexDirection: 'column',
     justifyContent: 'center',
     alignItems: 'center',
+    '@media screen and (max-width: 750px)': {
+      width: '100%',
+    },
+  },
+  rightInner: {
+    '@media screen and (max-width: 750px)': {
+      width: '100%',
+    },
   },
   pointer: {
     cursor: 'pointer',
@@ -52,6 +72,9 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     fontWeight: 'bold',
     fontSize: '36px',
     marginBottom: '30px',
+    '@media screen and (max-width: 750px)': {
+      fontSize: '18px',
+    },
   },
   texforgot: {
     fontSize: '14px',
@@ -91,7 +114,7 @@ const Signin: React.FC<{}> = () => {
     <Box className={classes.wrap}>
       <Box className={classes.left} />
       <Box className={classes.right}>
-        <Box>
+        <Box className={classes.rightInner}>
           <Box className={classes.title}>Đăng nhập CRM Site</Box>
           <Formik
             validateOnChange
