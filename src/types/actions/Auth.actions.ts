@@ -65,6 +65,20 @@ export interface ChangeBankInfoFailedAction {
   type: typeof CHANGE_BANK_INFO.error;
   message: string;
 }
+export const CHANGE_AVATAR = reduxRequestActionGenerator(scope, 'CHANGE_AVATAR');
+export interface ChangeAvatarAction {
+  type: typeof CHANGE_AVATAR.pending;
+  payload: { username: string; url: string };
+}
+
+export interface ChangeAvatarSuccessAction {
+  type: typeof CHANGE_AVATAR.success;
+  payload: string;
+}
+export interface ChangeAvatarFailedAction {
+  type: typeof CHANGE_AVATAR.error;
+  message: string;
+}
 
 export type AuthActions =
   | UpdateAuthUserActions
@@ -75,4 +89,7 @@ export type AuthActions =
   | ChangePasswordFailedAction
   | ChangeBankInfoAction
   | ChangeBankInfoSuccessAction
-  | ChangeBankInfoFailedAction;
+  | ChangeBankInfoFailedAction
+  | ChangeAvatarAction
+  | ChangeAvatarSuccessAction
+  | ChangeAvatarFailedAction;

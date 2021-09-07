@@ -17,6 +17,7 @@ import {
   ChangePasswordParams,
   ChangeBankParams,
   CHANGE_BANK_INFO,
+  CHANGE_AVATAR,
 } from '../../types/actions/Auth.actions';
 
 const keyHmac = process.env.REACT_APP_KEY_HASHMAC;
@@ -140,6 +141,23 @@ export const changeBankInfo = (payload: ChangeBankParams) => {
       }
     } catch (error) {
       dispatch({ type: CHANGE_BANK_INFO.error, message: error });
+    }
+  };
+};
+export const changeAvatar = (payload: { username: string; url: string }) => {
+  return async (dispatch: Dispatch<AppActions>) => {
+    try {
+      dispatch({ type: CHANGE_AVATAR.pending });
+      const uid = uuidv4();
+      jwtAxios.defaults.headers.common['x-requestid'] = uid;
+      const res = await jwtAxios.put('/users/avatar-url', payload);
+      if (res.result.code === 'success') {
+        dispatch({ type: CHANGE_AVATAR.success, payload: payload.url });
+      } else {
+        dispatch({ type: CHANGE_AVATAR.error, message: get(res, 'result.message') });
+      }
+    } catch (error) {
+      dispatch({ type: CHANGE_AVATAR.error, message: error });
     }
   };
 };

@@ -23,14 +23,14 @@ const TableItem: React.FC<TableItemProps> = ({ data }) => {
       <TableCell align='left' className={classes.tableCell}>
         {format(new Date(data.orderDate), 'dd-MM-yyyy')}
       </TableCell>
-      <TableCell align='center' className={classes.tableCell}>
+      <TableCell align='right' className={classes.tableCell}>
         {data.totalOrder}
       </TableCell>
       <TableCell align='right' className={classes.tableCell}>
-        {data.totalAmount}
+        {data.totalAmount.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}
       </TableCell>
       <TableCell align='right' className={`${classes.tableCell} ${data.diff < 0 ? classes.red : classes.green}`}>
-        {data.diff}
+        {data.diff.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}
       </TableCell>
       {/* <TableCell align='left' className={classes.tableCell}>
         <Box

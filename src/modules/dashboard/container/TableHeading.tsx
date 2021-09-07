@@ -24,7 +24,7 @@ const TableHeading = () => {
   return (
     <TableRow className={classes.tableRowRoot}>
       <TableCell align='left'>Ngày</TableCell>
-      <TableCell align='center'>Tổng đơn</TableCell>
+      <TableCell align='right'>Tổng đơn</TableCell>
       <TableCell align='right'>Tổng Tiền</TableCell>
       <TableCell align='right'>Chênh Lệch</TableCell>
     </TableRow>

@@ -1,27 +1,18 @@
 import React, { useState, useRef } from 'react';
 import Box from '@material-ui/core/Box';
-import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
-// import * as yup from 'yup';
-// import { useFormik } from 'formik';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
 import { userSelector } from 'src/redux/reducers/Auth';
-import { useSelector } from 'react-redux';
-
-const StyledTextField = styled(TextField)`
-  margin-bottom: 10px;
-`;
+import { useDispatch, useSelector } from 'react-redux';
+import axios from 'axios';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import { changeAvatar } from '../../../redux/actions/JWTAuth';
 
 const StyledButton = styled(Button)`
   margin-top: 20px;
 `;
-// const validationSchema = yup.object({
-//   fullName: yup.string().required('Bạn quên nhập tên!'),
-//   phone: yup.string().required('Bạn quên nhập số điện thoại!'),
-//   email: yup.string().email().required('Bạn quên nhập email!'),
-// });
 
 const StyledInfo = styled(Box)`
   font-size: 17px;
@@ -35,27 +26,37 @@ interface UserSettingFormProps {
 }
 
 const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingFormProps) => {
+  const dispatch = useDispatch();
   const user = useSelector(userSelector);
   const refInput = useRef<HTMLInputElement>(null);
   const [avatar, setAvatar] = useState<File>();
-  // const formik = useFormik({
-  //   initialValues: {
-  //     fullName: '',
-  //     phone: '',
-  //     email: '',
-  //   },
-  //   validationSchema,
-  //   onSubmit: (values) => {
-  //     console.log(values);
-  //   },
-  // });
+  const [loading, setLoading] = useState(false);
   const handleChangeAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const image = e.target.files[0];
       setAvatar(image);
     }
   };
-
+  const submitAvatar = () => {
+    setLoading(true);
+    const formData = new FormData();
+    formData.append('file', avatar as any);
+    formData.append('upload_preset', 'krystal');
+    axios
+      .post('https://api.cloudinary.com/v1_1/dofjvpahx/image/upload', formData, {
+        headers: { 'X-Requested-With': 'XMLHttpRequest' },
+      })
+      .then((response) => {
+        const { data } = response;
+        const url = data.secure_url; // You should store this URL for future references in your app
+        dispatch(changeAvatar({ username: user?.displayName, url }));
+        setLoading(false);
+      })
+      .catch((error) => {
+        console.log(error);
+        setLoading(false);
+      });
+  };
   return (
     <Box
       bgcolor='#fff'
@@ -83,7 +84,7 @@ const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingForm
           borderRadius='50%'
           border='1px solid gray'>
           <img
-            src={avatar ? URL.createObjectURL(avatar) : 'https://via.placeholder.com/150x150'}
+            src={avatar ? URL.createObjectURL(avatar) : user?.photoURL}
             alt='avatar'
             style={{ borderRadius: '50%' }}
           />
@@ -163,26 +164,6 @@ const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingForm
         <ArrowRightAltIcon />
       </Box>
 
-      {/* <StyledTextField
-        label='Họ và tên'
-        name='fullName'
-        onChange={formik.handleChange}
-        error={formik.touched.fullName && Boolean(formik.errors.fullName)}
-      />
-      <StyledTextField
-        label='Số điện thoại'
-        name='phone'
-        onChange={formik.handleChange}
-        error={formik.touched.phone && Boolean(formik.errors.phone)}
-      />
-      <StyledTextField
-        label='Email'
-        name='email'
-        onChange={formik.handleChange}
-        error={formik.touched.email && Boolean(formik.errors.email)}
-      /> */}
-      {/* <Box color='#90A0B7'>Họ và tên</Box>
-      <StyledInfo>{user?.reseller}</StyledInfo> */}
       <Box color='#90A0B7'>Số điện thoại</Box>
       <StyledInfo>{user?.phone}</StyledInfo>
       <Box color='#90A0B7'>Email</Box>
@@ -190,8 +171,8 @@ const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingForm
       <Button variant='outlined' color='primary' style={{ marginTop: '30px' }}>
         Chính sách cộng tác viên
       </Button>
-      <StyledButton variant='contained' color='primary' onClick={() => console.log('submit')} fullWidth>
-        Cập nhật
+      <StyledButton variant='contained' color='primary' onClick={submitAvatar} fullWidth>
+        {loading ? <CircularProgress size={30} color='inherit' /> : ' Cập nhật'}
       </StyledButton>
     </Box>
   );

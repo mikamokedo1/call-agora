@@ -7,11 +7,12 @@ import {
   UPDATE_AUTH_USER,
   CHANGE_PASSWORD,
   CHANGE_BANK_INFO,
+  CHANGE_AVATAR,
 } from '../../types/actions/Auth.actions';
 import { AuthUser } from '../../types/models/AuthUser';
 import { AppState } from '../store';
 
-type ActionType = 'login' | 'changePassword' | 'changeBankInfo';
+type ActionType = 'login' | 'changePassword' | 'changeBankInfo' | 'changeAvatar';
 interface JWTdecode {
   email: string;
   exp: number;
@@ -23,6 +24,7 @@ interface JWTdecode {
   bankAccount: string;
   bankAccountNumber: string;
   bankName: string;
+  avatar: string;
 }
 interface INIT_AUTH {
   user: AuthUser | null;
@@ -42,11 +44,13 @@ const INIT_STATE: INIT_AUTH = {
     login: null,
     changePassword: null,
     changeBankInfo: null,
+    changeAvatar: null,
   },
   loadings: {
     login: false,
     changePassword: false,
     changeBankInfo: false,
+    changeAvatar: false,
   },
 };
 
@@ -84,6 +88,7 @@ const Auth = (state: INIT_AUTH = INIT_STATE, action: AnyAction): INIT_AUTH => {
           bankAccount: decoded?.bankAccount ?? '',
           bankAccountNumber: decoded?.bankAccountNumber ?? '',
           bankName: decoded?.bankName ?? '',
+          photoURL: decoded?.avatar ?? '',
         },
       };
     }
@@ -121,8 +126,30 @@ const Auth = (state: INIT_AUTH = INIT_STATE, action: AnyAction): INIT_AUTH => {
     case CHANGE_BANK_INFO.error:
       return {
         ...state,
-        errors: { ...state.errors, changeBankInfo: action.message },
-        loadings: { ...state.loadings, changeBankInfo: false },
+        errors: { ...state.errors, changeAvatar: action.message },
+        loadings: { ...state.loadings, changeAvatar: false },
+      };
+
+    case CHANGE_AVATAR.pending:
+      return {
+        ...state,
+        errors: { ...state.errors, changeAvatar: null },
+        loadings: { ...state.loadings, changeAvatar: true },
+      };
+    case CHANGE_AVATAR.success:
+      return {
+        ...state,
+        loadings: { ...state.loadings, changeAvatar: false },
+        user: {
+          ...state.user,
+          photoURL: action.payload,
+        },
+      };
+    case CHANGE_AVATAR.error:
+      return {
+        ...state,
+        errors: { ...state.errors, changeAvatar: action.message },
+        loadings: { ...state.loadings, changeAvatar: false },
       };
 
     default:

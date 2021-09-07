@@ -238,7 +238,7 @@ const PageOne = () => {
               </Box>
               <Box className={classes.sumItem}>
                 <Box className='left' bgcolor='rgb(255,187,70,0.2)'>
-                  <img src='/assets/images/dasboard/danhan.png' alt='icon-shit' />
+                  <img src='/assets/images/dasboard/danhan.png' alt='icon-shit' style={{ width: '31px' }} />
                 </Box>
                 <Box className='right'>
                   <Box color='#90A0B7' fontSize='16px'>
@@ -257,7 +257,7 @@ const PageOne = () => {
         <Box className={classes.bottom}>
           <Box className={classes.bottomRight}>
             <Box fontWeight='bold' color='#334D6E' mb='15px'>
-              Biểu đồ bán theo ngày đơn/triệu
+              Biểu đồ bán theo ngày đơn/triệu đồng
             </Box>
             <Box height='calc(100% - 28px)'>
               <ChartStistic />
