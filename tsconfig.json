@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "target": "es5",
+    "baseUrl": ".",
     "lib": [
       "dom",
       "dom.iterable",
@@ -24,5 +25,5 @@
     "src",
     "react-app-env.d.ts"
   ],
-  "extends": "./tsconfig.paths.json"
+  // "extends": "./tsconfig.paths.json"
 }

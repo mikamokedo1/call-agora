@@ -1,12 +1,14 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import Box from '@material-ui/core/Box';
 import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
-import * as yup from 'yup';
-import { useFormik } from 'formik';
+// import * as yup from 'yup';
+// import { useFormik } from 'formik';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
+import { userSelector } from 'src/redux/reducers/Auth';
+import { useSelector } from 'react-redux';
 
 const StyledTextField = styled(TextField)`
   margin-bottom: 10px;
@@ -15,29 +17,45 @@ const StyledTextField = styled(TextField)`
 const StyledButton = styled(Button)`
   margin-top: 20px;
 `;
-const validationSchema = yup.object({
-  fullName: yup.string().required('Bạn quên nhập tên!'),
-  phone: yup.string().required('Bạn quên nhập số điện thoại!'),
-  email: yup.string().email().required('Bạn quên nhập email!'),
-});
+// const validationSchema = yup.object({
+//   fullName: yup.string().required('Bạn quên nhập tên!'),
+//   phone: yup.string().required('Bạn quên nhập số điện thoại!'),
+//   email: yup.string().email().required('Bạn quên nhập email!'),
+// });
 
+const StyledInfo = styled(Box)`
+  font-size: 17px;
+  margin-bottom: 20px;
+  font-weight: 600;
+  margin-top: 5px;
+`;
 interface UserSettingFormProps {
   handleEditBank: () => void;
   handleEditPassword: () => void;
 }
 
 const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingFormProps) => {
-  const formik = useFormik({
-    initialValues: {
-      fullName: '',
-      phone: '',
-      email: '',
-    },
-    validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
-    },
-  });
+  const user = useSelector(userSelector);
+  const refInput = useRef<HTMLInputElement>(null);
+  const [avatar, setAvatar] = useState<File>();
+  // const formik = useFormik({
+  //   initialValues: {
+  //     fullName: '',
+  //     phone: '',
+  //     email: '',
+  //   },
+  //   validationSchema,
+  //   onSubmit: (values) => {
+  //     console.log(values);
+  //   },
+  // });
+  const handleChangeAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
+    if (e.target.files) {
+      const image = e.target.files[0];
+      setAvatar(image);
+    }
+  };
+
   return (
     <Box
       bgcolor='#fff'
@@ -48,14 +66,27 @@ const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingForm
       width='100%'
       boxShadow='0px 2x rgba(163, 171, 185, 0.24)'>
       <Box display='flex' justifyContent='center' alignItems='center' flexDirection='column'>
+        <input
+          type='file'
+          ref={refInput}
+          style={{ display: 'none' }}
+          onChange={handleChangeAvatar}
+          accept='.jpg, .jpeg, .png, .svg'
+        />
         <Box
           width='105px'
           height='105px'
           display='flex'
           justifyContent='center'
           alignItems='center'
-          position='relative'>
-          <img src='https://via.placeholder.com/150x150' alt='avatar' style={{ borderRadius: '50%' }} />
+          position='relative'
+          borderRadius='50%'
+          border='1px solid gray'>
+          <img
+            src={avatar ? URL.createObjectURL(avatar) : 'https://via.placeholder.com/150x150'}
+            alt='avatar'
+            style={{ borderRadius: '50%' }}
+          />
           <Box
             display='flex'
             justifyContent='center'
@@ -65,12 +96,13 @@ const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingForm
             style={{ position: 'absolute', bottom: '5px', right: '5px', cursor: 'pointer' }}
             bgcolor='#fff'
             borderRadius='50%'
-            p='3px'>
+            p='3px'
+            onClick={() => refInput.current?.click()}>
             <CameraAltIcon style={{ fontSize: '20px' }} />
           </Box>
         </Box>
         <Box fontWeight='bold' mb='5px' mt='10px' fontSize='16px'>
-          Nguyễn Văn A
+          {user?.reseller}
         </Box>
         <Box color='#90A0B7' fontSize='14px'>
           Cộng tác viên
@@ -93,7 +125,16 @@ const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingForm
           <img src='/assets/images/dasboard/cardnew.svg' alt='card' />
           <Box ml='20px'>
             <Box color='#90A0B7'>Tài khoản</Box>
-            <Box fontWeight='bold'>*****2222</Box>
+            <Box fontWeight='bold'>
+              {`*****${
+                user?.bankAccountNumber
+                  ? user?.bankAccountNumber.substring(
+                      user?.bankAccountNumber.length - 4,
+                      user?.bankAccountNumber.length,
+                    )
+                  : '****'
+              }`}
+            </Box>
           </Box>
         </Box>
 
@@ -122,7 +163,7 @@ const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingForm
         <ArrowRightAltIcon />
       </Box>
 
-      <StyledTextField
+      {/* <StyledTextField
         label='Họ và tên'
         name='fullName'
         onChange={formik.handleChange}
@@ -139,11 +180,17 @@ const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingForm
         name='email'
         onChange={formik.handleChange}
         error={formik.touched.email && Boolean(formik.errors.email)}
-      />
+      /> */}
+      {/* <Box color='#90A0B7'>Họ và tên</Box>
+      <StyledInfo>{user?.reseller}</StyledInfo> */}
+      <Box color='#90A0B7'>Số điện thoại</Box>
+      <StyledInfo>{user?.phone}</StyledInfo>
+      <Box color='#90A0B7'>Email</Box>
+      <StyledInfo>{user?.email}</StyledInfo>
       <Button variant='outlined' color='primary' style={{ marginTop: '30px' }}>
         Chính sách cộng tác viên
       </Button>
-      <StyledButton variant='contained' color='primary' onClick={() => formik.handleSubmit()} fullWidth>
+      <StyledButton variant='contained' color='primary' onClick={() => console.log('submit')} fullWidth>
         Cập nhật
       </StyledButton>
     </Box>

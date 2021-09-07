@@ -8,4 +8,9 @@ export interface AuthUser {
   token?: string;
   authType?: AuthType;
   role: string[];
+  reseller: string;
+  phone: string;
+  bankAccount: string;
+  bankAccountNumber: string;
+  bankName: string;
 }

@@ -21,9 +21,8 @@ const AuthRoutes: React.FC<AuthRoutesProps> = ({ children }) => {
   const { pathname, search } = useLocation();
   const dispatch = useDispatch();
   const history = useHistory();
-  const { routes, changeNavStyle, updateThemeStyle, updateThemeMode, setRTL } = useContext<AppContextPropsType>(
-    AppContext,
-  );
+  const { routes, changeNavStyle, updateThemeStyle, updateThemeMode, setRTL } =
+    useContext<AppContextPropsType>(AppContext);
 
   const [loading, user] = useAuthToken();
   const { initialPath } = useSelector<AppState, AppState['settings']>(({ settings }) => settings);
@@ -83,7 +82,7 @@ const AuthRoutes: React.FC<AuthRoutesProps> = ({ children }) => {
       } else if (user && !isPermitted) {
         history.push('/error-pages/error-404'); // Not found
       } else if (user && isPermitted) {
-        if (pathname === '/' || pathname === '/signin' || pathname === '/signup') {
+        if ((pathname === '/' || pathname === '/signin' || pathname === '/signup') && localStorage.getItem('token')) {
           history.push(initialUrl);
         } else {
           // @ts-ignore
@@ -94,7 +93,7 @@ const AuthRoutes: React.FC<AuthRoutesProps> = ({ children }) => {
             // initialPath !== '/signin' ||
             // initialPath !== '/signup')
           ) {
-            history.push(initialPath);
+            // history.push(initialPath);
             console.log({ isPermitted, initialPath, initialUrl });
           }
         }

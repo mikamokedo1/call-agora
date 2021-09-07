@@ -1,21 +1,45 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
+import { useDispatch, useSelector } from 'react-redux';
 import AppAnimate from '../../../@crema/core/AppAnimate';
 import { CremaTheme } from '../../../types/AppContextPropsType';
-import TableDayOrder from '../container/TableDayOrder';
+import { fetchStatistic, fetchOrders, fetchSummary, fetchStatisticChart } from '../../../redux/actions/dashboard';
+import { statisticSelector, summarySelector, ordersSelector } from '../../../redux/reducers/Dashboard';
+import TableList from '../container/TableList';
+import ChartStistic from '../container/ChartStistic';
+import ChartStacked from '../container/ChartStacked';
+
+import 'react-datepicker/dist/react-datepicker.css';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
-  wrap: {},
+  wrap: {
+    height: '100%',
+  },
   top: {
     display: 'flex',
     justifyContent: 'space-between',
+    marginBottom: '20px',
+    '@media screen and (max-width: 750px)': {
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
   },
   topLeft: {
     width: 'calc(30% - 30px)',
+    '@media screen and (max-width: 750px)': {
+      width: '100%',
+      order: 1,
+    },
   },
   topRight: {
     width: '70%',
+    backgroundColor: '#fff',
+    borderRadius: '4px',
+    '@media screen and (max-width: 750px)': {
+      width: '100%',
+      order: 2,
+    },
   },
   link: {
     display: 'flex',
@@ -52,6 +76,9 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     borderRadius: '5px',
     padding: '15px',
     marginBottom: '15px',
+    '&:last-child': {
+      marginBottom: '0px',
+    },
     '& .left': {
       width: '53px',
       height: '53px',
@@ -82,22 +109,77 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
       flexShrink: 0,
     },
   },
-  bottom: {},
-  bottomLeft: {},
-  bottomRight: {},
+  bottom: {
+    display: 'flex',
+    justifyContent: 'space-between',
+    '@media screen and (max-width: 750px)': {
+      flexDirection: 'column',
+      alignItems: 'center',
+    },
+  },
+  bottomLeft: {
+    width: 'calc(30% - 30px)',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    backgroundColor: '#fff',
+    borderRadius: '5px',
+    padding: '15px',
+    '@media screen and (max-width: 750px)': {
+      width: '100%',
+    },
+  },
+  bottomRight: {
+    width: '70%',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-between',
+    backgroundColor: '#fff',
+    borderRadius: '5px',
+    padding: '15px',
+    '@media screen and (max-width: 750px)': {
+      width: '100%',
+    },
+  },
 }));
+
 const PageOne = () => {
+  const dispatch = useDispatch();
   const boxRef = React.useRef<HTMLInputElement>(null);
+  const summary = useSelector(summarySelector);
+  const statistics = useSelector(statisticSelector);
+  const orders = useSelector(ordersSelector);
+
   const classes = useStyles();
   const handleCopy = () => {
     navigator.clipboard.writeText(boxRef.current?.textContent ?? '');
   };
+
+  useEffect(() => {
+    if (statistics.length === 0) {
+      dispatch(fetchStatistic());
+    }
+  }, [dispatch]);
+  useEffect(() => {
+    dispatch(fetchStatisticChart());
+  }, [dispatch]);
+
+  useEffect(() => {
+    if (orders.length === 0) {
+      dispatch(fetchOrders());
+    }
+  }, [dispatch]);
+
+  useEffect(() => {
+    dispatch(fetchSummary());
+  }, [dispatch]);
+
   return (
     <AppAnimate animation='transition.slideUpIn' delay={200}>
       <Box className={classes.wrap}>
         <Box className={classes.top}>
           <Box className={classes.topRight}>
-            <TableDayOrder />
+            <TableList />
           </Box>
           <Box className={classes.topLeft}>
             <Box className={classes.link}>
@@ -120,7 +202,7 @@ const PageOne = () => {
                     Tổng số đơn
                   </Box>
                   <Box fontSize='18px' fontWeight='bold' color='334D6E'>
-                    165 Đơn
+                    {summary ? `${summary.totalOrder} đơn` : '0 đơn'}
                   </Box>
                 </Box>
               </Box>
@@ -133,39 +215,39 @@ const PageOne = () => {
                     Số tiền đã bán được
                   </Box>
                   <Box fontSize='18px' fontWeight='bold' color='334D6E'>
-                    2.000.000 VND
+                    {summary
+                      ? `${summary.totalAmount.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}`
+                      : '0 VND'}
                   </Box>
                 </Box>
               </Box>
-              <Box display='flex' justifyContent='space-between'>
-                <Box className={classes.sumItemHaft}>
-                  <Box color='#90A0B7' fontSize='15px' mb='5px'>
+              <Box className={classes.sumItem}>
+                <Box className='left' bgcolor='rgb(136,90,248,0.2)'>
+                  <img src='/assets/images/dasboard/wallet.png' alt='icon-shit' />
+                </Box>
+                <Box className='right'>
+                  <Box color='#90A0B7' fontSize='16px'>
                     Tiền hoa hồng
                   </Box>
-                  <Box display='flex' alignItems='center'>
-                    <Box className='left' bgcolor='rgb(136,90,248,0.2)'>
-                      <img src='/assets/images/dasboard/wallet.png' alt='icon-shit' style={{ width: '15px' }} />
-                    </Box>
-                    <Box className='right'>
-                      <Box fontSize='14px' fontWeight='bold' color='334D6E'>
-                        20.000.000 VND
-                      </Box>
-                    </Box>
+                  <Box fontSize='18px' fontWeight='bold' color='334D6E'>
+                    {summary
+                      ? `${summary.commission.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}`
+                      : '0 VND'}
                   </Box>
                 </Box>
-                <Box className={classes.sumItemHaft}>
-                  <Box color='#90A0B7' fontSize='15px' mb='5px'>
+              </Box>
+              <Box className={classes.sumItem}>
+                <Box className='left' bgcolor='rgb(255,187,70,0.2)'>
+                  <img src='/assets/images/dasboard/danhan.png' alt='icon-shit' />
+                </Box>
+                <Box className='right'>
+                  <Box color='#90A0B7' fontSize='16px'>
                     Tiền đã nhận
                   </Box>
-                  <Box display='flex' alignItems='center'>
-                    <Box className='left' bgcolor='rgb(255,187,70,0.2)'>
-                      <img src='/assets/images/dasboard/danhan.png' alt='icon-shit' style={{ width: '15px' }} />
-                    </Box>
-                    <Box className='right'>
-                      <Box fontSize='14px' fontWeight='bold' color='334D6E'>
-                        20.000.000 VND
-                      </Box>
-                    </Box>
+                  <Box fontSize='18px' fontWeight='bold' color='334D6E'>
+                    {summary
+                      ? `${summary.paidCommission.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}`
+                      : '0 VND'}
                   </Box>
                 </Box>
               </Box>
@@ -173,8 +255,22 @@ const PageOne = () => {
           </Box>
         </Box>
         <Box className={classes.bottom}>
-          <Box className={classes.bottomLeft} />
-          <Box className={classes.bottomRight} />
+          <Box className={classes.bottomRight}>
+            <Box fontWeight='bold' color='#334D6E' mb='15px'>
+              Biểu đồ bán theo ngày đơn/triệu
+            </Box>
+            <Box height='calc(100% - 28px)'>
+              <ChartStistic />
+            </Box>
+          </Box>
+          <Box className={classes.bottomLeft}>
+            <Box fontWeight='bold' color='#334D6E' mb='15px'>
+              Loại đơn
+            </Box>
+            <Box height='calc(100% - 28px)'>
+              <ChartStacked />
+            </Box>
+          </Box>
         </Box>
       </Box>
     </AppAnimate>
