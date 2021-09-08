@@ -1,4 +1,4 @@
-import {Setting} from '../../types/models/Setting';
+import { Setting } from '../../types/models/Setting';
 import {
   ROUTE_CHANGE,
   SET_INITIAL_PATH,

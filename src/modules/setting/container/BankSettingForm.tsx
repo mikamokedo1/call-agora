@@ -1,17 +1,17 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
-import {TextField} from '@material-ui/core';
+import { TextField } from '@material-ui/core';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 import * as yup from 'yup';
-import {useFormik} from 'formik';
+import { useFormik } from 'formik';
 import CloseIcon from '@material-ui/icons/Close';
-import {userSelector} from 'src/redux/reducers/Auth';
-import {useSelector, useDispatch} from 'react-redux';
-import {AppState} from 'src/redux/store';
+import { userSelector } from 'src/redux/reducers/Auth';
+import { useSelector, useDispatch } from 'react-redux';
+import { AppState } from 'src/redux/store';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import {makeStyles} from '@material-ui/core/styles';
-import {changeBankInfo} from '../../../redux/actions/JWTAuth';
+import { makeStyles } from '@material-ui/core/styles';
+import { changeBankInfo } from '../../../redux/actions/JWTAuth';
 
 const StyledTextField = styled(TextField)`
   margin-bottom: 10px;
@@ -55,16 +55,12 @@ interface BankSettingFormProps {
   handleClose: () => void;
 }
 
-const BankSettingForm = ({handleClose}: BankSettingFormProps) => {
+const BankSettingForm = ({ handleClose }: BankSettingFormProps) => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const user = useSelector(userSelector);
-  const error = useSelector(
-    (state: AppState) => state.auth.errors.changeBankInfo,
-  );
-  const isLoading = useSelector(
-    (state: AppState) => state.auth.loadings.changeBankInfo,
-  );
+  const error = useSelector((state: AppState) => state.auth.errors.changeBankInfo);
+  const isLoading = useSelector((state: AppState) => state.auth.loadings.changeBankInfo);
   const [onEdit, setOnEdit] = useState(false);
   const formik = useFormik({
     initialValues: {
@@ -74,7 +70,7 @@ const BankSettingForm = ({handleClose}: BankSettingFormProps) => {
     },
     validationSchema,
     onSubmit: (values) => {
-      dispatch(changeBankInfo({...values, username: user?.displayName ?? ''}));
+      dispatch(changeBankInfo({ ...values, username: user?.displayName ?? '' }));
     },
   });
 
@@ -98,72 +94,46 @@ const BankSettingForm = ({handleClose}: BankSettingFormProps) => {
 
   return (
     <>
-      <Box
-        width='100%'
-        height='100%'
-        bgcolor='rgba(0,0,0,0.7)'
-        position='absolute'
-        left='0px'
-        top='0px'
-        zIndex={10}
-      />
+      <Box width="100%" height="100%" bgcolor="rgba(0,0,0,0.7)" position="absolute" left="0px" top="0px" zIndex={10} />
       <Box className={classes.wrap}>
-        <Box display='flex' justifyContent='space-between'>
-          <Box fontWeight='bold' mb='10px'>
+        <Box display="flex" justifyContent="space-between">
+          <Box fontWeight="bold" mb="10px">
             Tài khoản nhận tiền
           </Box>
-          <CloseIcon onClick={handleClose} style={{cursor: 'pointer'}} />
+          <CloseIcon onClick={handleClose} style={{ cursor: 'pointer' }} />
         </Box>
 
         <StyledTextField
-          label='Chủ tài khoản'
+          label="Chủ tài khoản"
           value={formik.values.bankAccount}
-          name='bankAccount'
+          name="bankAccount"
           onChange={formik.handleChange}
-          error={
-            formik.touched.bankAccount && Boolean(formik.errors.bankAccount)
-          }
+          error={formik.touched.bankAccount && Boolean(formik.errors.bankAccount)}
           disabled={!onEdit}
         />
         <StyledTextField
-          label='Ngân hàng'
-          name='bankName'
+          label="Ngân hàng"
+          name="bankName"
           value={formik.values.bankName}
           onChange={formik.handleChange}
           error={formik.touched.bankName && Boolean(formik.errors.bankName)}
           disabled={!onEdit}
         />
         <StyledTextField
-          label='Số tài khoản'
-          name='bankAccountNumber'
+          label="Số tài khoản"
+          name="bankAccountNumber"
           value={formik.values.bankAccountNumber}
           onChange={formik.handleChange}
-          error={
-            formik.touched.bankAccountNumber &&
-            Boolean(formik.errors.bankAccountNumber)
-          }
+          error={formik.touched.bankAccountNumber && Boolean(formik.errors.bankAccountNumber)}
           disabled={!onEdit}
         />
         {error && (
-          <Box
-            fontSize='14px'
-            color='#F7685B'
-            marginBottom='10px'
-            textAlign='center'>
+          <Box fontSize="14px" color="#F7685B" marginBottom="10px" textAlign="center">
             {error}
           </Box>
         )}
-        <StyledButton
-          variant='contained'
-          color='primary'
-          onClick={onClickSubmit}>
-          {isLoading ? (
-            <CircularProgress size={30} color='inherit' />
-          ) : onEdit ? (
-            'Cập nhật'
-          ) : (
-            'Thay đổi'
-          )}
+        <StyledButton variant="contained" color="primary" onClick={onClickSubmit}>
+          {isLoading ? <CircularProgress size={30} color="inherit" /> : onEdit ? 'Cập nhật' : 'Thay đổi'}
         </StyledButton>
       </Box>
     </>

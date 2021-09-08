@@ -6,9 +6,9 @@ import SmsIcon from '@material-ui/icons/Sms';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
 import LanguageSwitcher from '../../LanguageSwitcher';
 import Box from '@material-ui/core/Box';
-import {makeStyles} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
-import {CremaTheme} from '../../../../types/AppContextPropsType';
+import { CremaTheme } from '../../../../types/AppContextPropsType';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
   bucketMinibar: {
@@ -47,39 +47,24 @@ export default function PrimarySearchAppBar() {
   const classes = useStyles();
 
   return (
-    <Box
-      borderRight={1}
-      borderColor='grey.100'
-      className={clsx(classes.bucketMinibar, '')}>
+    <Box borderRight={1} borderColor="grey.100" className={clsx(classes.bucketMinibar, '')}>
       <Box>
-        <IconButton
-          className={classes.iconBtn}
-          aria-label='show 17 new notifications'>
-          <img
-            className={classes.logoRoot}
-            src={'/assets/images/logo-icon-large.png'}
-            alt='crema-logo'
-          />
+        <IconButton className={classes.iconBtn} aria-label="show 17 new notifications">
+          <img className={classes.logoRoot} src={'/assets/images/logo-icon-large.png'} alt="crema-logo" />
         </IconButton>
 
-        <IconButton
-          className={clsx(classes.bucketMiniBtn, '')}
-          aria-label='show 17 new notifications'>
+        <IconButton className={clsx(classes.bucketMiniBtn, '')} aria-label="show 17 new notifications">
           <SearchIcon className={classes.icon} />
         </IconButton>
         <LanguageSwitcher iconOnly={true} />
-        <IconButton
-          className={classes.bucketMiniBtn}
-          aria-label='show 4 new mails'>
+        <IconButton className={classes.bucketMiniBtn} aria-label="show 4 new mails">
           <SmsIcon className={classes.icon} />
         </IconButton>
-        <IconButton
-          className={classes.bucketMiniBtn}
-          aria-label='show 17 new notifications'>
+        <IconButton className={classes.bucketMiniBtn} aria-label="show 17 new notifications">
           <NotificationsActiveIcon className={classes.icon} />
         </IconButton>
       </Box>
-      <Box mt='auto'>
+      <Box mt="auto">
         <IconButton className={classes.bucketMiniBtn}>
           <SettingsIcon className={classes.icon} />
         </IconButton>

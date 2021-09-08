@@ -1,9 +1,9 @@
-import React, {useCallback, useReducer} from 'react';
+import React, { useCallback, useReducer } from 'react';
 import defaultConfig from './defaultConfig';
 import AppContext from '../AppContext';
 import routes from '../../../modules';
-import {contextReducer, ThemeSetting} from './ContextReducer';
-import {CremaTheme} from '../../../types/AppContextPropsType';
+import { contextReducer, ThemeSetting } from './ContextReducer';
+import { CremaTheme } from '../../../types/AppContextPropsType';
 import {
   FooterType,
   HeaderType,
@@ -29,65 +29,61 @@ export const ContextState = {
   sidebarColor: defaultConfig.theme.palette.sidebar.bgColor,
   secondary: defaultConfig.theme.palette.secondary.main,
 };
-const ContextProvider: React.FC<React.ReactNode> = ({children}) => {
-  const [state, dispatch] = useReducer(
-    contextReducer,
-    ContextState,
-    () => ContextState,
-  );
+const ContextProvider: React.FC<React.ReactNode> = ({ children }) => {
+  const [state, dispatch] = useReducer(contextReducer, ContextState, () => ContextState);
 
   const setFooter = (footer: boolean) => {
-    dispatch({type: ThemeSetting.SET_FOOTER, payload: footer});
+    dispatch({ type: ThemeSetting.SET_FOOTER, payload: footer });
   };
 
   const setFooterType = (footerType: FooterType) => {
-    dispatch({type: ThemeSetting.SET_FOOTER_TYPE, payload: footerType});
+    dispatch({ type: ThemeSetting.SET_FOOTER_TYPE, payload: footerType });
   };
 
   const updateHeaderMode = (headerMode: HeaderType) => {
-    dispatch({type: ThemeSetting.UPDATE_HEADER_MODE, payload: headerMode});
+    dispatch({ type: ThemeSetting.UPDATE_HEADER_MODE, payload: headerMode });
   };
 
   const updateThemeStyle = useCallback((themeStyle: ThemeStyle) => {
-    dispatch({type: ThemeSetting.UPDATE_THEME_STYLE, payload: themeStyle});
+    dispatch({ type: ThemeSetting.UPDATE_THEME_STYLE, payload: themeStyle });
   }, []);
 
   const updateLayoutStyle = (layoutType: LayoutType) => {
-    dispatch({type: ThemeSetting.UPDATE_LAYOUT_STYLE, payload: layoutType});
+    dispatch({ type: ThemeSetting.UPDATE_LAYOUT_STYLE, payload: layoutType });
   };
 
   const changeLocale = (locale: any) => {
-    dispatch({type: ThemeSetting.CHANGE_LOCALE, payload: locale});
+    dispatch({ type: ThemeSetting.CHANGE_LOCALE, payload: locale });
   };
 
   const changeNavStyle = useCallback((navStyle) => {
-    dispatch({type: ThemeSetting.CHANGE_NAV_STYLE, payload: navStyle});
+    dispatch({ type: ThemeSetting.CHANGE_NAV_STYLE, payload: navStyle });
   }, []);
 
   const changeRTAnim = (rtAnim: RouteTransition) => {
-    dispatch({type: ThemeSetting.CHANGE_RT_ANIM, payload: rtAnim});
+    dispatch({ type: ThemeSetting.CHANGE_RT_ANIM, payload: rtAnim });
   };
   const updatePrimaryColor = (primary: string) => {
-    dispatch({type: ThemeSetting.UPDATE_PRIMARY_COLOR, payload: primary});
+    dispatch({ type: ThemeSetting.UPDATE_PRIMARY_COLOR, payload: primary });
   };
 
   const updateSidebarColor = (sidebarColor: string) => {
-    dispatch({type: ThemeSetting.UPDATE_SIDEBAR_COLOR, payload: sidebarColor});
+    dispatch({ type: ThemeSetting.UPDATE_SIDEBAR_COLOR, payload: sidebarColor });
   };
 
   const updateSecondaryColor = (secondary: string) => {
-    dispatch({type: ThemeSetting.UPDATE_SECONDARY_COLOR, payload: secondary});
+    dispatch({ type: ThemeSetting.UPDATE_SECONDARY_COLOR, payload: secondary });
   };
 
   const updateThemeMode = useCallback((themeMode: ThemeMode) => {
-    dispatch({type: ThemeSetting.UPDATE_THEME_MODE, payload: themeMode});
+    dispatch({ type: ThemeSetting.UPDATE_THEME_MODE, payload: themeMode });
   }, []);
   const updateTheme = (theme: CremaTheme) => {
-    dispatch({type: ThemeSetting.UPDATE_THEME, payload: theme});
+    dispatch({ type: ThemeSetting.UPDATE_THEME, payload: theme });
   };
 
   const setRTL = useCallback((rtl) => {
-    dispatch({type: ThemeSetting.SET_RTL, payload: rtl});
+    dispatch({ type: ThemeSetting.SET_RTL, payload: rtl });
   }, []);
 
   return (
@@ -110,7 +106,8 @@ const ContextProvider: React.FC<React.ReactNode> = ({children}) => {
         changeLocale,
         changeNavStyle,
         changeRTAnim,
-      }}>
+      }}
+    >
       {children}
     </AppContext.Provider>
   );

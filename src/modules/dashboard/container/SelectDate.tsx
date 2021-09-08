@@ -1,11 +1,11 @@
 import SearchIcon from '@material-ui/icons/Search';
 import DatePicker from 'react-datepicker';
-import React, {useState, useRef} from 'react';
+import React, { useState, useRef } from 'react';
 import styled from 'styled-components';
 import Box from '@material-ui/core/Box';
-import {format} from 'date-fns';
-import {useDispatch} from 'react-redux';
-import {fetchStatistic} from '../../../redux/actions/dashboard';
+import { format } from 'date-fns';
+import { useDispatch } from 'react-redux';
+import { fetchStatistic } from '../../../redux/actions/dashboard';
 
 const StyledDate = styled(Box)`
   margin-left: 20px;
@@ -39,13 +39,13 @@ const SelectDate = () => {
   return (
     <StyledDate>
       <DatePicker
-        wrapperClassName='datePicker'
+        wrapperClassName="datePicker"
         selected={startDate}
         onChange={(date) => setStartDate(date)}
-        placeholderText='Nhập ngày'
+        placeholderText="Nhập ngày"
         ref={DatePickerRef}
       />
-      <Box style={{cursor: 'pointer'}} onClick={onClickSearchDate}>
+      <Box style={{ cursor: 'pointer' }} onClick={onClickSearchDate}>
         <SearchIcon />
       </Box>
     </StyledDate>

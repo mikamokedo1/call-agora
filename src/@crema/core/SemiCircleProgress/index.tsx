@@ -1,7 +1,7 @@
 import React from 'react';
-import {Box} from '@material-ui/core';
-import {Fonts} from '../../../shared/constants/AppEnums';
-import {getBreakPointsValue, useWidth} from '../../utility/Utils';
+import { Box } from '@material-ui/core';
+import { Fonts } from '../../../shared/constants/AppEnums';
+import { getBreakPointsValue, useWidth } from '../../utility/Utils';
 
 interface SemiCircleProgressProps {
   activeColor?: string;
@@ -61,16 +61,13 @@ const SemiCircleProgress: React.FC<SemiCircleProgressProps> = ({
   }
 
   return (
-    <Box width={actualDiameter} style={{position: 'relative'}}>
-      <svg
-        width={actualDiameter}
-        height={actualDiameter / 2}
-        style={{transform: rotation, overflow: 'hidden'}}>
+    <Box width={actualDiameter} style={{ position: 'relative' }}>
+      <svg width={actualDiameter} height={actualDiameter / 2} style={{ transform: rotation, overflow: 'hidden' }}>
         <circle
           cx={coordinateForCircle}
           cy={coordinateForCircle}
           r={radius}
-          fill='none'
+          fill="none"
           stroke={pathColor}
           strokeWidth={strokeWidth}
           strokeDasharray={circumference}
@@ -82,14 +79,13 @@ const SemiCircleProgress: React.FC<SemiCircleProgressProps> = ({
           cx={coordinateForCircle}
           cy={coordinateForCircle}
           r={radius}
-          fill='none'
+          fill="none"
           stroke={activeColor}
           strokeWidth={strokeWidth}
           strokeDasharray={circumference}
           style={{
             strokeDashoffset: semiCirclePercentage,
-            transition:
-              'activeColor-dashoffset .3s ease 0s, activeColor-dasharray .3s ease 0s, activeColor .3s',
+            transition: 'activeColor-dashoffset .3s ease 0s, activeColor-dasharray .3s ease 0s, activeColor .3s',
           }}
         />
       </svg>
@@ -107,18 +103,17 @@ const SemiCircleProgress: React.FC<SemiCircleProgressProps> = ({
             bottom: orientation === 'down' ? 'auto' : '0',
             position: 'absolute',
             ...labelStyle,
-          }}>
-          <Box
-            component='span'
-            fontSize={{xs: 18, sm: 20, xl: 22}}
-            fontWeight={Fonts.LIGHT}>
+          }}
+        >
+          <Box component="span" fontSize={{ xs: 18, sm: 20, xl: 22 }} fontWeight={Fonts.LIGHT}>
             {percentage}%
           </Box>
           <Box
-            component='span'
-            fontSize={{xs: 16, sm: 18, xl: 20}}
-            style={{textTransform: 'uppercase'}}
-            color='text.secondary'>
+            component="span"
+            fontSize={{ xs: 16, sm: 18, xl: 20 }}
+            style={{ textTransform: 'uppercase' }}
+            color="text.secondary"
+          >
             Progress
           </Box>
         </Box>

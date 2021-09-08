@@ -1,6 +1,6 @@
-import {makeStyles} from '@material-ui/core';
-import {ThemeMode} from '../../../../shared/constants/AppEnums';
-import {CremaTheme} from '../../../../types/AppContextPropsType';
+import { makeStyles } from '@material-ui/core';
+import { ThemeMode } from '../../../../shared/constants/AppEnums';
+import { CremaTheme } from '../../../../types/AppContextPropsType';
 
 const useStyles = makeStyles((theme: CremaTheme) => {
   return {
@@ -102,10 +102,9 @@ const useStyles = makeStyles((theme: CremaTheme) => {
           '& .collapse-children .collapse-children .nav-item': {
             paddingLeft: 117,
           },
-          '& .collapse-children .collapse-children .collapse-children .nav-item':
-            {
-              paddingLeft: 167,
-            },
+          '& .collapse-children .collapse-children .collapse-children .nav-item': {
+            paddingLeft: 167,
+          },
         },
 
         [theme.breakpoints.up('xl')]: {
@@ -119,15 +118,14 @@ const useStyles = makeStyles((theme: CremaTheme) => {
           '& .collapse-children .collapse-children .nav-item': {
             paddingLeft: 124,
           },
-          '& .collapse-children .collapse-children .collapse-children .nav-item':
-            {
-              paddingLeft: 174,
-            },
+          '& .collapse-children .collapse-children .collapse-children .nav-item': {
+            paddingLeft: 174,
+          },
         },
       },
     },
     sidebarBg: {
-      backgroundColor: (props: {themeMode: ThemeMode}) =>
+      backgroundColor: (props: { themeMode: ThemeMode }) =>
         props.themeMode === ThemeMode.SEMI_DARK
           ? theme.palette.sidebar.bgColor
           : props.themeMode === ThemeMode.LIGHT

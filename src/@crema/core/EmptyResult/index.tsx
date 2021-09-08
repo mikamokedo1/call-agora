@@ -2,8 +2,8 @@ import React from 'react';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
 import IntlMessages from '../../utility/IntlMessages';
-import {makeStyles} from '@material-ui/core/styles';
-import {Fonts} from '../../../shared/constants/AppEnums';
+import { makeStyles } from '@material-ui/core/styles';
+import { Fonts } from '../../../shared/constants/AppEnums';
 
 const useStyle = makeStyles({
   btn: {
@@ -19,7 +19,7 @@ interface EmptyResultProps {
 }
 
 const EmptyResult: React.FC<EmptyResultProps> = ({
-  title = <IntlMessages id='common.noRecordFound' />,
+  title = <IntlMessages id="common.noRecordFound" />,
   description = '',
   actionTitle,
   onAction,
@@ -27,32 +27,25 @@ const EmptyResult: React.FC<EmptyResultProps> = ({
   const classes = useStyle();
   return (
     <Box
-      display='flex'
-      flexDirection='column'
+      display="flex"
+      flexDirection="column"
       flex={1}
-      justifyContent='center'
+      justifyContent="center"
       width={1}
       height={1}
-      alignItems='center'
-      p={5}>
-      <Box
-        component='h4'
-        mb={4}
-        fontWeight={Fonts.REGULAR}
-        color='text.secondary'>
+      alignItems="center"
+      p={5}
+    >
+      <Box component="h4" mb={4} fontWeight={Fonts.REGULAR} color="text.secondary">
         {title}
       </Box>
       {description ? (
-        <Box component='p' mb={5} color='text.secondary'>
+        <Box component="p" mb={5} color="text.secondary">
           {description}
         </Box>
       ) : null}
       {actionTitle ? (
-        <Button
-          className={classes.btn}
-          variant='contained'
-          color='primary'
-          onClick={onAction}>
+        <Button className={classes.btn} variant="contained" color="primary" onClick={onAction}>
           {actionTitle}
         </Button>
       ) : null}

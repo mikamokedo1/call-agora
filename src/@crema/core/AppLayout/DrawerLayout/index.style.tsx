@@ -1,4 +1,4 @@
-import {makeStyles} from '@material-ui/core';
+import { makeStyles } from '@material-ui/core';
 
 const useStyles = makeStyles((theme) => {
   return {
@@ -28,7 +28,7 @@ const useStyles = makeStyles((theme) => {
     },
     mainContainerFull: {
       width: '100vw',
-      paddingBottom: (props: {footer: boolean}) => (props.footer ? 0 : 10),
+      paddingBottom: (props: { footer: boolean }) => (props.footer ? 0 : 10),
       '& > .scrollbar-container': {
         padding: '20px 20px 0',
         display: 'flex',

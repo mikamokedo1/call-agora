@@ -1,6 +1,6 @@
-import React, {ReactNode} from 'react';
+import React, { ReactNode } from 'react';
 import Grid from '@material-ui/core/Grid';
-import {isBreakPointDown} from '../../utility/Utils';
+import { isBreakPointDown } from '../../utility/Utils';
 
 interface GridContainerProps {
   children: ReactNode;
@@ -8,7 +8,7 @@ interface GridContainerProps {
   [x: string]: any;
 }
 
-const GridContainer: React.FC<GridContainerProps> = ({children, ...others}) => {
+const GridContainer: React.FC<GridContainerProps> = ({ children, ...others }) => {
   return (
     <Grid container spacing={isBreakPointDown('md') ? 4 : 8} {...others}>
       {children}

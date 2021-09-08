@@ -1,17 +1,17 @@
-import React, {CSSProperties, ReactNode, useContext} from 'react';
-import {useDispatch, useSelector} from 'react-redux';
-import {Box} from '@material-ui/core';
+import React, { CSSProperties, ReactNode, useContext } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { Box } from '@material-ui/core';
 import Hidden from '@material-ui/core/Hidden';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import Card from '@material-ui/core/Card';
 import InfoView from '@crema/core/InfoView';
-import {Fonts} from '../../../shared/constants/AppEnums';
-import {onToggleAppDrawer} from '../../../redux/actions';
+import { Fonts } from '../../../shared/constants/AppEnums';
+import { onToggleAppDrawer } from '../../../redux/actions';
 import useStyles from './index.style';
-import {AppContext} from '../../index';
+import { AppContext } from '../../index';
 import AppSidebar from './AppSidebar';
-import {AppState} from '../../../redux/store';
+import { AppState } from '../../../redux/store';
 
 interface AppsContainerProps {
   title?: string | ReactNode;
@@ -29,36 +29,32 @@ const AppsContainer: React.FC<AppsContainerProps> = ({
   children,
 }) => {
   const dispatch = useDispatch();
-  const {isAppDrawerOpen} = useSelector<AppState, AppState['common']>(
-    ({common}) => common,
-  );
-  const {footer, navStyle} = useContext(AppContext);
-  const classes = useStyles({footer, navStyle, fullView});
+  const { isAppDrawerOpen } = useSelector<AppState, AppState['common']>(({ common }) => common);
+  const { footer, navStyle } = useContext(AppContext);
+  const classes = useStyles({ footer, navStyle, fullView });
 
   return (
-    <Box pt={{xl: 4}} flex={1} display='flex' flexDirection='column'>
+    <Box pt={{ xl: 4 }} flex={1} display="flex" flexDirection="column">
       <Box
-        mb={{xs: fullView ? 4 : 2, lg: fullView ? 5 : 4}}
-        mt={{xs: fullView ? 0 : -3, lg: 0}}
-        display='flex'
-        alignItems='center'>
+        mb={{ xs: fullView ? 4 : 2, lg: fullView ? 5 : 4 }}
+        mt={{ xs: fullView ? 0 : -3, lg: 0 }}
+        display="flex"
+        alignItems="center"
+      >
         {fullView ? null : (
           <Hidden lgUp>
             <IconButton
-              edge='start'
+              edge="start"
               className={classes.menuButton}
-              color='inherit'
-              aria-label='open drawer'
-              onClick={() => dispatch(onToggleAppDrawer())}>
+              color="inherit"
+              aria-label="open drawer"
+              onClick={() => dispatch(onToggleAppDrawer())}
+            >
               <MenuIcon className={classes.menuIcon} />
             </IconButton>
           </Hidden>
         )}
-        <Box
-          component='h2'
-          color='text.primary'
-          fontWeight={Fonts.BOLD}
-          fontSize={16}>
+        <Box component="h2" color="text.primary" fontWeight={Fonts.BOLD} fontSize={16}>
           {title}
         </Box>
       </Box>
@@ -81,7 +77,8 @@ const AppsContainer: React.FC<AppsContainerProps> = ({
               display: 'flex',
               flexDirection: 'column',
               ...cardStyle,
-            }}>
+            }}
+          >
             {children}
           </Card>
           <InfoView />

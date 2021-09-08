@@ -1,13 +1,11 @@
-import {makeStyles} from '@material-ui/core';
-import {useContext} from 'react';
+import { makeStyles } from '@material-ui/core';
+import { useContext } from 'react';
 import AppContext from '../../../utility/AppContext';
-import AppContextPropsType, {
-  CremaTheme,
-} from '../../../../types/AppContextPropsType';
-import {ThemeStyle} from '../../../../shared/constants/AppEnums';
+import AppContextPropsType, { CremaTheme } from '../../../../types/AppContextPropsType';
+import { ThemeStyle } from '../../../../shared/constants/AppEnums';
 
 const useStyles = makeStyles((theme: CremaTheme) => {
-  const {themeStyle, footer} = useContext<AppContextPropsType>(AppContext);
+  const { themeStyle, footer } = useContext<AppContextPropsType>(AppContext);
   return {
     appMain: {
       height: '100vh',
@@ -26,14 +24,10 @@ const useStyles = makeStyles((theme: CremaTheme) => {
         },
         '& .scrollAppSidebar': {
           height:
-            themeStyle === ThemeStyle.MODERN
-              ? 'calc(100vh - 260px) !important'
-              : 'calc(100vh - 198px) !important',
+            themeStyle === ThemeStyle.MODERN ? 'calc(100vh - 260px) !important' : 'calc(100vh - 198px) !important',
           [theme.breakpoints.up('xl')]: {
             height:
-              themeStyle === ThemeStyle.MODERN
-                ? 'calc(100vh - 300px) !important'
-                : 'calc(100vh - 236px) !important',
+              themeStyle === ThemeStyle.MODERN ? 'calc(100vh - 300px) !important' : 'calc(100vh - 236px) !important',
           },
         },
         '& $mainContainer': {

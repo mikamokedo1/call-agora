@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, CircularProgress, makeStyles} from '@material-ui/core';
+import { Box, CircularProgress, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 
 const useStyles = makeStyles((theme) => ({
@@ -25,22 +25,19 @@ interface ListFooterProps {
   footerText?: string;
 }
 
-const ListFooter: React.FC<ListFooterProps> = ({
-  loading = false,
-  footerText,
-}) => {
+const ListFooter: React.FC<ListFooterProps> = ({ loading = false, footerText }) => {
   const classes = useStyles();
 
   return loading ? (
     <Box className={classes.listFooterLoaderRoot}>
       <CircularProgress size={16} />
-      <Box component='span' ml={2}>
+      <Box component="span" ml={2}>
         Loading...
       </Box>
     </Box>
   ) : (
     <Box className={clsx(classes.listFooterRoot, 'list-footer')}>
-      <Box component='p'>{footerText}</Box>
+      <Box component="p">{footerText}</Box>
     </Box>
   );
 };

@@ -1,19 +1,14 @@
 import React from 'react';
-import {Redirect} from 'react-router-dom';
+import { Redirect } from 'react-router-dom';
 
-import {createRoutes} from '../@crema/utility/Utils';
-import {dashboardPagesConfig} from './dashboard/dashboardPagesConfig';
-import {settingRouterConfig} from './setting/settingRouterConfig';
-import {errorPagesConfigs} from './errorPages';
-import {authRouteConfig} from './auth';
-import {initialUrl} from '../shared/constants/AppConst';
+import { createRoutes } from '../@crema/utility/Utils';
+import { dashboardPagesConfig } from './dashboard/dashboardPagesConfig';
+import { settingRouterConfig } from './setting/settingRouterConfig';
+import { errorPagesConfigs } from './errorPages';
+import { authRouteConfig } from './auth';
+import { initialUrl } from '../shared/constants/AppConst';
 
-const routeConfigs = [
-  ...dashboardPagesConfig,
-  ...settingRouterConfig,
-  ...errorPagesConfigs,
-  ...authRouteConfig,
-];
+const routeConfigs = [...dashboardPagesConfig, ...settingRouterConfig, ...errorPagesConfigs, ...authRouteConfig];
 
 const routes = [
   ...createRoutes(routeConfigs),
@@ -23,7 +18,7 @@ const routes = [
     component: () => <Redirect to={initialUrl} />,
   },
   {
-    component: () => <Redirect to='/error-pages/error-404' />,
+    component: () => <Redirect to="/error-pages/error-404" />,
   },
 ];
 

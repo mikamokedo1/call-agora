@@ -1,6 +1,6 @@
-import {makeStyles} from '@material-ui/core/styles';
-import {ThemeMode} from '../../../../shared/constants/AppEnums';
-import {CremaTheme} from '../../../../types/AppContextPropsType';
+import { makeStyles } from '@material-ui/core/styles';
+import { ThemeMode } from '../../../../shared/constants/AppEnums';
+import { CremaTheme } from '../../../../types/AppContextPropsType';
 
 const useStyles = makeStyles((theme: CremaTheme) => {
   return {
@@ -9,19 +9,11 @@ const useStyles = makeStyles((theme: CremaTheme) => {
       marginTop: 2,
       marginBottom: 2,
       paddingLeft:
-        theme.direction === 'ltr'
-          ? (props: {level: number; themeMode: ThemeMode}) =>
-              24 + 40 * props.level
-          : 12,
+        theme.direction === 'ltr' ? (props: { level: number; themeMode: ThemeMode }) => 24 + 40 * props.level : 12,
       paddingRight:
-        theme.direction === 'rtl'
-          ? (props: {level: number; themeMode: ThemeMode}) =>
-              24 + 40 * props.level
-          : 12,
-      color: (props: {level: number; themeMode: ThemeMode}) =>
-        props.themeMode === ThemeMode.LIGHT
-          ? theme.palette.text.secondary
-          : 'rgba(255,255,255,0.38)',
+        theme.direction === 'rtl' ? (props: { level: number; themeMode: ThemeMode }) => 24 + 40 * props.level : 12,
+      color: (props: { level: number; themeMode: ThemeMode }) =>
+        props.themeMode === ThemeMode.LIGHT ? theme.palette.text.secondary : 'rgba(255,255,255,0.38)',
       fontWeight: 700,
       fontSize: 14,
       cursor: 'pointer',

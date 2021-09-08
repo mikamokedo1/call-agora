@@ -1,5 +1,5 @@
 import React from 'react';
-import {Box, Button, CircularProgress} from '@material-ui/core';
+import { Box, Button, CircularProgress } from '@material-ui/core';
 import clsx from 'clsx';
 import makeStyles from '@material-ui/core/styles/makeStyles';
 import IntlMessages from '../../utility/IntlMessages';
@@ -38,7 +38,7 @@ const ListEmptyResult: React.FC<ListEmptyResultProps> = ({
   loader,
   placeholder,
   loading,
-  title = <IntlMessages id='common.noRecordFound' />,
+  title = <IntlMessages id="common.noRecordFound" />,
   actionTitle,
   content,
   onClick,
@@ -52,7 +52,7 @@ const ListEmptyResult: React.FC<ListEmptyResultProps> = ({
         ) : (
           <Box className={clsx(classes.emptyListContainer, classes.flexRow)}>
             <CircularProgress size={16} />
-            <Box component='span' ml={2}>
+            <Box component="span" ml={2}>
               Loading...
             </Box>
           </Box>
@@ -63,20 +63,21 @@ const ListEmptyResult: React.FC<ListEmptyResultProps> = ({
     return (
       <Box className={classes.emptyListContainer}>
         {title ? (
-          <Box component='h4' fontSize={18} color='text.secondary' mb={3}>
+          <Box component="h4" fontSize={18} color="text.secondary" mb={3}>
             {title}
           </Box>
         ) : null}
-        <Box fontSize={16} component='p' color='text.hint'>
+        <Box fontSize={16} component="p" color="text.hint">
           {content}
         </Box>
 
         {actionTitle ? (
           <Button
-            color='primary'
-            variant='contained'
-            style={{marginTop: 30, height: 45, minWidth: 150}}
-            onClick={onClick}>
+            color="primary"
+            variant="contained"
+            style={{ marginTop: 30, height: 45, minWidth: 150 }}
+            onClick={onClick}
+          >
             {actionTitle}
           </Button>
         ) : null}

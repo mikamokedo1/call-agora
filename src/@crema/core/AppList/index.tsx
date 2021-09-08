@@ -14,14 +14,7 @@ interface AppListProps {
   [x: string]: any;
 }
 
-const AppList: React.FC<AppListProps> = ({
-  footerProps,
-  renderRow,
-  onEndReached,
-  data,
-  border = false,
-  ...props
-}) => {
+const AppList: React.FC<AppListProps> = ({ footerProps, renderRow, onEndReached, data, border = false, ...props }) => {
   return (
     <ListView
       renderRow={renderRow}
@@ -29,12 +22,7 @@ const AppList: React.FC<AppListProps> = ({
       data={data}
       {...props}
       ListFooterComponent={
-        footerProps ? (
-          <ListFooter
-            loading={footerProps.loading}
-            footerText={footerProps.footerText}
-          />
-        ) : null
+        footerProps ? <ListFooter loading={footerProps.loading} footerText={footerProps.footerText} /> : null
       }
     />
   );

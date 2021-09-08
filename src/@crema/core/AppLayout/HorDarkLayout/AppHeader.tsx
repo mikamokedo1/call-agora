@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -8,8 +8,8 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import clsx from 'clsx';
 import LanguageSwitcher from '../../LanguageSwitcher';
-import {toggleNavCollapsed} from '../../../../redux/actions';
-import {useDispatch} from 'react-redux';
+import { toggleNavCollapsed } from '../../../../redux/actions';
+import { useDispatch } from 'react-redux';
 import Hidden from '@material-ui/core/Hidden';
 import HorizontalNav from '../../Navigation/HorizontalNav';
 import Box from '@material-ui/core/Box';
@@ -26,8 +26,7 @@ interface AppHeaderProps {}
 const AppHeader: React.FC<AppHeaderProps> = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-    useState<null | HTMLElement>(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
 
   function handleMobileMenuClose() {
     setMobileMoreAnchorEl(null);
@@ -41,12 +40,13 @@ const AppHeader: React.FC<AppHeaderProps> = () => {
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       id={mobileMenuId}
       keepMounted
-      transformOrigin={{vertical: 'top', horizontal: 'right'}}
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={Boolean(mobileMoreAnchorEl)}
-      onClose={handleMobileMenuClose}>
+      onClose={handleMobileMenuClose}
+    >
       <MenuItem className={classes.menuItemRoot}>
         <HeaderMessages />
       </MenuItem>
@@ -59,18 +59,19 @@ const AppHeader: React.FC<AppHeaderProps> = () => {
 
   return (
     <>
-      <AppBar position='relative'>
+      <AppBar position="relative">
         <NotificationBar />
         <Toolbar className={classes.headerMain}>
           <Box className={classes.headerContainer}>
             <Box className={classes.headerMainFlex}>
               <Hidden lgUp>
                 <IconButton
-                  edge='start'
+                  edge="start"
                   className={classes.menuButton}
-                  color='inherit'
-                  aria-label='open drawer'
-                  onClick={() => dispatch(toggleNavCollapsed())}>
+                  color="inherit"
+                  aria-label="open drawer"
+                  onClick={() => dispatch(toggleNavCollapsed())}
+                >
                   <MenuIcon className={classes.menuIconRoot} />
                 </IconButton>
               </Hidden>
@@ -85,11 +86,12 @@ const AppHeader: React.FC<AppHeaderProps> = () => {
               <HorUserInfo />
               <Box ml={1} className={classes.sectionMobile}>
                 <IconButton
-                  aria-label='show more'
+                  aria-label="show more"
                   aria-controls={mobileMenuId}
-                  aria-haspopup='true'
+                  aria-haspopup="true"
                   onClick={handleMobileMenuOpen}
-                  color='inherit'>
+                  color="inherit"
+                >
                   <MoreIcon />
                 </IconButton>
               </Box>

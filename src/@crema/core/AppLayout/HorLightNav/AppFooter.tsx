@@ -1,7 +1,7 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import AppContext from '../../../utility/AppContext';
 import Box from '@material-ui/core/Box';
-import {Button, makeStyles} from '@material-ui/core';
+import { Button, makeStyles } from '@material-ui/core';
 import clsx from 'clsx';
 import AppContextPropsType from '../../../../types/AppContextPropsType';
 
@@ -34,21 +34,17 @@ const useStyles = makeStyles((theme) => ({
 interface AppFooterProps {}
 
 const AppFooter: React.FC<AppFooterProps> = () => {
-  const {footer, footerType} = useContext<AppContextPropsType>(AppContext);
+  const { footer, footerType } = useContext<AppContextPropsType>(AppContext);
   const classes = useStyles();
 
   return (
     <>
       {footer && footerType === 'fluid' ? (
         <Box className={clsx(classes.footer, 'footer fixed-footer')}>
-          <Box
-            className='footerContainer'
-            alignItems='center'
-            flexDirection='row'
-            display='flex'>
+          <Box className="footerContainer" alignItems="center" flexDirection="row" display="flex">
             <Box>Copy right @crema 2020</Box>
-            <Box ml='auto'>
-              <Button className={classes.btnRoot} color='primary'>
+            <Box ml="auto">
+              <Button className={classes.btnRoot} color="primary">
                 Buy Now
               </Button>
             </Box>

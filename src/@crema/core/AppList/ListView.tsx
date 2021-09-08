@@ -1,26 +1,17 @@
-import React, {CSSProperties} from 'react';
-import {useBottomScrollListener} from 'react-bottom-scroll-listener';
-import {Box, useTheme} from '@material-ui/core';
+import React, { CSSProperties } from 'react';
+import { useBottomScrollListener } from 'react-bottom-scroll-listener';
+import { Box, useTheme } from '@material-ui/core';
 import grey from '@material-ui/core/colors/grey';
 import AppAnimateGroup from '../AppAnimateGroup';
 
 const getEmptyContainer = (ListEmptyComponent: any) => {
-  if (ListEmptyComponent)
-    return React.isValidElement(ListEmptyComponent) ? (
-      ListEmptyComponent
-    ) : (
-      <ListEmptyComponent />
-    );
+  if (ListEmptyComponent) return React.isValidElement(ListEmptyComponent) ? ListEmptyComponent : <ListEmptyComponent />;
   return null;
 };
 
 const getFooterContainer = (ListFooterComponent: any) => {
   if (ListFooterComponent)
-    return React.isValidElement(ListFooterComponent) ? (
-      ListFooterComponent
-    ) : (
-      <ListFooterComponent />
-    );
+    return React.isValidElement(ListFooterComponent) ? ListFooterComponent : <ListFooterComponent />;
   return null;
 };
 
@@ -68,11 +59,11 @@ const ListView: React.FC<ListViewProps> = ({
 
   let style = containerStyle;
   if (border) {
-    style = {...style, ...borderStyle};
+    style = { ...style, ...borderStyle };
   }
   useBottomScrollListener(onEndReached, 200);
   return (
-    <Box style={{...style}} {...rest} flex={1}>
+    <Box style={{ ...style }} {...rest} flex={1}>
       <AppAnimateGroup>
         {data.map((item: any, index: number) => (
           <Box key={'list-item-' + index}>{renderRow(item, index)}</Box>

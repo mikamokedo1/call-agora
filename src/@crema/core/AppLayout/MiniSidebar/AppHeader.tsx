@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import IconButton from '@material-ui/core/IconButton';
@@ -7,8 +7,8 @@ import MoreIcon from '@material-ui/icons/MoreVert';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import LanguageSwitcher from '../../LanguageSwitcher';
-import {toggleNavCollapsed} from '../../../../redux/actions';
-import {useDispatch} from 'react-redux';
+import { toggleNavCollapsed } from '../../../../redux/actions';
+import { useDispatch } from 'react-redux';
 import Hidden from '@material-ui/core/Hidden';
 import Box from '@material-ui/core/Box';
 import SearchBar from '../../SearchBar';
@@ -23,8 +23,7 @@ interface AppHeaderProps {}
 const AppHeader: React.FC<AppHeaderProps> = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
-    useState<null | HTMLElement>(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] = useState<null | HTMLElement>(null);
 
   function handleMobileMenuClose() {
     setMobileMoreAnchorEl(null);
@@ -38,12 +37,13 @@ const AppHeader: React.FC<AppHeaderProps> = () => {
   const renderMobileMenu = (
     <Menu
       anchorEl={mobileMoreAnchorEl}
-      anchorOrigin={{vertical: 'top', horizontal: 'right'}}
+      anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
       id={mobileMenuId}
       keepMounted
-      transformOrigin={{vertical: 'top', horizontal: 'right'}}
+      transformOrigin={{ vertical: 'top', horizontal: 'right' }}
       open={Boolean(mobileMoreAnchorEl)}
-      onClose={handleMobileMenuClose}>
+      onClose={handleMobileMenuClose}
+    >
       <MenuItem className={classes.menuItemRoot}>
         <HeaderMessages />
       </MenuItem>
@@ -56,22 +56,23 @@ const AppHeader: React.FC<AppHeaderProps> = () => {
 
   return (
     <>
-      <AppBar color='inherit' className={clsx(classes.appBar, 'app-bar')}>
+      <AppBar color="inherit" className={clsx(classes.appBar, 'app-bar')}>
         <Toolbar className={classes.appToolbar}>
           <Hidden lgUp>
             <IconButton
-              edge='start'
+              edge="start"
               className={classes.menuButton}
-              color='inherit'
-              aria-label='open drawer'
-              onClick={() => dispatch(toggleNavCollapsed())}>
+              color="inherit"
+              aria-label="open drawer"
+              onClick={() => dispatch(toggleNavCollapsed())}
+            >
               <MenuIcon className={classes.menuIcon} />
             </IconButton>
           </Hidden>
 
           <AppLogo />
           <Box className={classes.grow} />
-          <SearchBar borderLight placeholder='Search…' />
+          <SearchBar borderLight placeholder="Search…" />
           <Box className={classes.sectionDesktop}>
             <LanguageSwitcher />
             <HeaderMessages />
@@ -79,11 +80,12 @@ const AppHeader: React.FC<AppHeaderProps> = () => {
           </Box>
           <Box className={classes.sectionMobile}>
             <IconButton
-              aria-label='show more'
+              aria-label="show more"
               aria-controls={mobileMenuId}
-              aria-haspopup='true'
+              aria-haspopup="true"
               onClick={handleMobileMenuOpen}
-              color='inherit'>
+              color="inherit"
+            >
               <MoreIcon />
             </IconButton>
           </Box>

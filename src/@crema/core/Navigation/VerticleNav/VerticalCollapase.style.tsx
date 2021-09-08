@@ -1,6 +1,6 @@
-import {makeStyles} from '@material-ui/core/styles';
-import {Fonts, ThemeMode} from '../../../../shared/constants/AppEnums';
-import {CremaTheme} from '../../../../types/AppContextPropsType';
+import { makeStyles } from '@material-ui/core/styles';
+import { Fonts, ThemeMode } from '../../../../shared/constants/AppEnums';
+import { CremaTheme } from '../../../../types/AppContextPropsType';
 
 const useStyles = makeStyles((theme: CremaTheme) => {
   return {
@@ -11,15 +11,9 @@ const useStyles = makeStyles((theme: CremaTheme) => {
       width: 'calc(100% - 16px)',
       borderRadius: '0 30px 30px 0',
       paddingLeft:
-        theme.direction === 'ltr'
-          ? (props: {level: number; themeMode: ThemeMode}) =>
-              24 + 40 * props.level
-          : 24,
+        theme.direction === 'ltr' ? (props: { level: number; themeMode: ThemeMode }) => 24 + 40 * props.level : 24,
       paddingRight:
-        theme.direction === 'rtl'
-          ? (props: {level: number; themeMode: ThemeMode}) =>
-              24 + 40 * props.level
-          : 24,
+        theme.direction === 'rtl' ? (props: { level: number; themeMode: ThemeMode }) => 24 + 40 * props.level : 24,
 
       '& .nav-item-text': {
         fontWeight: Fonts.REGULAR,
@@ -48,17 +42,17 @@ const useStyles = makeStyles((theme: CremaTheme) => {
       '&.open, &:hover, &:focus': {
         '& .nav-item-text': {
           fontWeight: Fonts.MEDIUM,
-          color: (props: {level: number; themeMode: ThemeMode}) =>
+          color: (props: { level: number; themeMode: ThemeMode }) =>
             props.themeMode === ThemeMode.LIGHT ? '#313541' : '#fff',
         },
 
         '& .nav-item-icon': {
-          color: (props: {level: number; themeMode: ThemeMode}) =>
+          color: (props: { level: number; themeMode: ThemeMode }) =>
             props.themeMode === ThemeMode.LIGHT ? '#313541' : '#fff',
         },
 
         '& .nav-item-icon-arrow': {
-          color: (props: {level: number; themeMode: ThemeMode}) =>
+          color: (props: { level: number; themeMode: ThemeMode }) =>
             props.themeMode === ThemeMode.LIGHT ? '#313541' : '#fff',
         },
       },

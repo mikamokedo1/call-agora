@@ -1,5 +1,5 @@
-import React, {memo} from 'react';
-import {VelocityComponent, VelocityComponentProps} from 'velocity-react';
+import React, { memo } from 'react';
+import { VelocityComponent, VelocityComponentProps } from 'velocity-react';
 import 'velocity-animate/velocity.ui';
 
 interface AppAnimateProps extends VelocityComponentProps {
@@ -43,7 +43,8 @@ const AppAnimate: React.FC<AppAnimateProps> = ({
       delay={delay}
       easing={easing}
       display={display}
-      {...rest}>
+      {...rest}
+    >
       {child}
     </VelocityComponent>
   );

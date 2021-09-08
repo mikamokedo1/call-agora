@@ -2,8 +2,8 @@ import React from 'react';
 import clsx from 'clsx';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
-import {toggleNavCollapsed} from '../../../../redux/actions';
-import {useDispatch} from 'react-redux';
+import { toggleNavCollapsed } from '../../../../redux/actions';
+import { useDispatch } from 'react-redux';
 import Hidden from '@material-ui/core/Hidden';
 import Box from '@material-ui/core/Box';
 import SearchBar from '../../SearchBar';
@@ -20,20 +20,22 @@ const AppHeader: React.FC<AppHeaderProps> = () => {
     <Hidden lgUp>
       <Box
         width={1}
-        display='flex'
-        alignItems='center'
-        className={clsx(classes.bitBucketResHeader, 'bitBucketResHeader')}>
+        display="flex"
+        alignItems="center"
+        className={clsx(classes.bitBucketResHeader, 'bitBucketResHeader')}
+      >
         <IconButton
-          edge='start'
+          edge="start"
           className={classes.menuButton}
-          color='inherit'
-          aria-label='open drawer'
-          onClick={() => dispatch(toggleNavCollapsed())}>
+          color="inherit"
+          aria-label="open drawer"
+          onClick={() => dispatch(toggleNavCollapsed())}
+        >
           <MenuIcon className={classes.menuIcon} />
         </IconButton>
         <AppLogo />
-        <Box ml='auto'>
-          <SearchBar borderLight placeholder='Search…' />
+        <Box ml="auto">
+          <SearchBar borderLight placeholder="Search…" />
         </Box>
       </Box>
     </Hidden>

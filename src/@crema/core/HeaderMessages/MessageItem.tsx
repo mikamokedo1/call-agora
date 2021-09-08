@@ -3,11 +3,11 @@ import Box from '@material-ui/core/Box';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import ListItem from '@material-ui/core/ListItem';
-import {makeStyles} from '@material-ui/core/styles';
-import {Fonts} from '../../../shared/constants/AppEnums';
+import { makeStyles } from '@material-ui/core/styles';
+import { Fonts } from '../../../shared/constants/AppEnums';
 import clsx from 'clsx';
-import {CremaTheme} from '../../../types/AppContextPropsType';
-import {MessageData} from '../../services/db/messages/messages';
+import { CremaTheme } from '../../../types/AppContextPropsType';
+import { MessageData } from '../../services/db/messages/messages';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
   textBase: {
@@ -29,7 +29,7 @@ interface MessageItemProps {
   item: MessageData;
 }
 
-const MessageItem: React.FC<MessageItemProps> = ({item}) => {
+const MessageItem: React.FC<MessageItemProps> = ({ item }) => {
   const classes = useStyles();
 
   return (
@@ -40,10 +40,10 @@ const MessageItem: React.FC<MessageItemProps> = ({item}) => {
         </ListItemAvatar>
       </Box>
       <Box className={classes.textBase}>
-        <Box mb={0.5} component='p' fontWeight={Fonts.MEDIUM} fontSize={14}>
+        <Box mb={0.5} component="p" fontWeight={Fonts.MEDIUM} fontSize={14}>
           {item.name}
         </Box>
-        <Box component='p' color='text.secondary'>
+        <Box component="p" color="text.secondary">
           {item.message}
         </Box>
       </Box>

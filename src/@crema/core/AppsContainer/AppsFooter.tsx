@@ -1,8 +1,8 @@
-import React, {ReactNode} from 'react';
+import React, { ReactNode } from 'react';
 import Box from '@material-ui/core/Box';
-import {makeStyles} from '@material-ui/core/styles';
-import {grey} from '@material-ui/core/colors';
-import {CremaTheme} from '../../../types/AppContextPropsType';
+import { makeStyles } from '@material-ui/core/styles';
+import { grey } from '@material-ui/core/colors';
+import { CremaTheme } from '../../../types/AppContextPropsType';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
   paginationRoot: {
@@ -25,7 +25,7 @@ interface AppsFooterProps {
   [x: string]: any;
 }
 
-const AppsFooter: React.FC<AppsFooterProps> = ({children, ...rest}) => {
+const AppsFooter: React.FC<AppsFooterProps> = ({ children, ...rest }) => {
   const classes = useStyles();
   return (
     <Box className={classes.paginationRoot} {...rest}>

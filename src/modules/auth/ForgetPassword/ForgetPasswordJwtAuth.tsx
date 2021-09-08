@@ -1,14 +1,14 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Box from '@material-ui/core/Box';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import {Form, Formik, useField} from 'formik';
+import { Form, Formik, useField } from 'formik';
 import * as yup from 'yup';
-import {useHistory} from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-import {useDispatch} from 'react-redux';
-import {Fonts} from '../../../shared/constants/AppEnums';
-import {CremaTheme} from '../../../types/AppContextPropsType';
+import { useDispatch } from 'react-redux';
+import { Fonts } from '../../../shared/constants/AppEnums';
+import { CremaTheme } from '../../../types/AppContextPropsType';
 import OTPInput from './InputOtp';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
@@ -87,14 +87,7 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
 const MyTextField = (props: any) => {
   const [field, meta] = useField(props);
   const errorText = meta.error && meta.touched ? meta.error : '';
-  return (
-    <TextField
-      {...props}
-      {...field}
-      helperText={errorText}
-      error={!!errorText}
-    />
-  );
+  return <TextField {...props} {...field} helperText={errorText} error={!!errorText} />;
 };
 const validationSchema = yup.object({
   email: yup.string().email().required('Bạn quên nhập email!'),
@@ -120,7 +113,7 @@ const Signin: React.FC<{}> = () => {
         {requested ? (
           <Box>
             <Box className={classes.title}>Xác minh email</Box>
-            <Box fontSize='16px' color='#90A0B7' mb='30px'>
+            <Box fontSize="16px" color="#90A0B7" mb="30px">
               Nhập 4 mã code được gửi tới&nbsp;<b>{submitEmail}</b>
             </Box>
             <OTPInput
@@ -133,19 +126,20 @@ const Signin: React.FC<{}> = () => {
             />
             <Button
               onClick={handleSubmitOtp}
-              variant='contained'
-              color='primary'
+              variant="contained"
+              color="primary"
               disabled={false}
               className={classes.btnRoot}
               fullWidth
-              style={{marginTop: '30px'}}>
+              style={{ marginTop: '30px' }}
+            >
               Tìm lại mật khẩu
             </Button>
           </Box>
         ) : (
           <Box className={classes.rightInner}>
             <Box className={classes.title}>Tìm lại mật khẩu</Box>
-            <Box fontSize='16px' color='#90A0B7' mb='30px'>
+            <Box fontSize="16px" color="#90A0B7" mb="30px">
               Nhập mail bạn đã đăng ký cho tài khoản
             </Box>
             <Formik
@@ -154,38 +148,31 @@ const Signin: React.FC<{}> = () => {
                 email: '',
               }}
               validationSchema={validationSchema}
-              onSubmit={(data, {setSubmitting}) => {
+              onSubmit={(data, { setSubmitting }) => {
                 setSubmitting(true);
                 console.log('foget password');
                 setSubmitting(false);
                 setSubmitEmail(data.email);
                 setRequested(true);
-              }}>
-              {({isSubmitting}) => (
-                <Form noValidate autoComplete='off'>
-                  <Box mb={{xs: 5, xl: 8}}>
-                    <MyTextField
-                      placeholder='Nhập email'
-                      name='email'
-                      label='Email'
-                      fullWidth
-                    />
+              }}
+            >
+              {({ isSubmitting }) => (
+                <Form noValidate autoComplete="off">
+                  <Box mb={{ xs: 5, xl: 8 }}>
+                    <MyTextField placeholder="Nhập email" name="email" label="Email" fullWidth />
                   </Box>
-                  <Box
-                    component='span'
-                    className={classes.pointer}
-                    onClick={onGoToSignIn}
-                    fontSize={15}>
+                  <Box component="span" className={classes.pointer} onClick={onGoToSignIn} fontSize={15}>
                     Đăng nhập
                   </Box>
                   <Box>
                     <Button
-                      variant='contained'
-                      color='primary'
-                      type='submit'
+                      variant="contained"
+                      color="primary"
+                      type="submit"
                       disabled={isSubmitting}
                       className={classes.btnRoot}
-                      fullWidth>
+                      fullWidth
+                    >
                       Tìm lại mật khẩu
                     </Button>
                   </Box>

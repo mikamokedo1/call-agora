@@ -1,16 +1,16 @@
-import React, {useState} from 'react';
-import {Card, makeStyles} from '@material-ui/core';
+import React, { useState } from 'react';
+import { Card, makeStyles } from '@material-ui/core';
 import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CodeIcon from '@material-ui/icons/Code';
-import Highlight, {defaultProps} from 'prism-react-renderer';
+import Highlight, { defaultProps } from 'prism-react-renderer';
 import IconButton from '@material-ui/core/IconButton';
 import Collapse from '@material-ui/core/Collapse';
 import Scrollbar from '../Scrollbar';
 import clsx from 'clsx';
-import {highlightTheme} from './highlightTheme';
+import { highlightTheme } from './highlightTheme';
 import Box from '@material-ui/core/Box';
-import {Fonts} from '../../../shared/constants/AppEnums';
+import { Fonts } from '../../../shared/constants/AppEnums';
 import AppAnimate from '../AppAnimate';
 
 const useStyles = makeStyles((theme) => {
@@ -62,7 +62,7 @@ const ComponentCard: React.FC<ComponentCardProps> = ({
   const classes = useStyles();
 
   return (
-    <AppAnimate animation='transition.slideUpIn' delay={200}>
+    <AppAnimate animation="transition.slideUpIn" delay={200}>
       <Card>
         <CardHeader
           className={classes.cardHeader}
@@ -77,7 +77,7 @@ const ComponentCard: React.FC<ComponentCardProps> = ({
             source ? (
               <Box mt={2}>
                 <IconButton
-                  aria-label='view code'
+                  aria-label="view code"
                   onClick={() => {
                     if (animation) {
                       setAnimation(!animation);
@@ -86,7 +86,8 @@ const ComponentCard: React.FC<ComponentCardProps> = ({
                       setAnimation(!animation);
                       setToggleViewSource(!viewSource);
                     }
-                  }}>
+                  }}
+                >
                   <CodeIcon />
                 </IconButton>
               </Box>
@@ -101,26 +102,15 @@ const ComponentCard: React.FC<ComponentCardProps> = ({
                 style={{
                   borderRadius: 8,
                   background: '#333333',
-                }}>
-                <Highlight
-                  {...defaultProps}
-                  code={source}
-                  language='jsx'
-                  theme={highlightTheme}>
-                  {({
-                    className,
-                    style,
-                    tokens,
-                    getLineProps,
-                    getTokenProps,
-                  }) => (
-                    <pre
-                      className={clsx(className, classes.preTag)}
-                      style={{...style, maxHeight: 500}}>
+                }}
+              >
+                <Highlight {...defaultProps} code={source} language="jsx" theme={highlightTheme}>
+                  {({ className, style, tokens, getLineProps, getTokenProps }) => (
+                    <pre className={clsx(className, classes.preTag)} style={{ ...style, maxHeight: 500 }}>
                       {tokens.map((line, i) => (
-                        <Box {...getLineProps({line, key: i})}>
+                        <Box {...getLineProps({ line, key: i })}>
                           {line.map((token, key) => (
-                            <span {...getTokenProps({token, key})} />
+                            <span {...getTokenProps({ token, key })} />
                           ))}
                         </Box>
                       ))}
@@ -130,12 +120,8 @@ const ComponentCard: React.FC<ComponentCardProps> = ({
               </Scrollbar>
             ) : null}
           </Collapse>
-          <Scrollbar className={classes.root} style={{maxHeight: maxHeight}}>
-            <Box
-              width='100%'
-              display='flex'
-              alignItems='center'
-              justifyContent='center'>
+          <Scrollbar className={classes.root} style={{ maxHeight: maxHeight }}>
+            <Box width="100%" display="flex" alignItems="center" justifyContent="center">
               <Component />
             </Box>
           </Scrollbar>

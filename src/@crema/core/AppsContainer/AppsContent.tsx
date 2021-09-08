@@ -1,14 +1,11 @@
-import React, {CSSProperties, ReactNode} from 'react';
+import React, { CSSProperties, ReactNode } from 'react';
 import Scrollbar from '../Scrollbar';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import {fade} from '@material-ui/core';
-import {CremaTheme} from '../../../types/AppContextPropsType';
+import { fade } from '@material-ui/core';
+import { CremaTheme } from '../../../types/AppContextPropsType';
 
 export const useAppsContentStyles = makeStyles((theme: CremaTheme) => ({
-  appsContentContainer: (props: {
-    isDetailView: boolean;
-    fullView: boolean;
-  }) => ({
+  appsContentContainer: (props: { isDetailView: boolean; fullView: boolean }) => ({
     display: 'flex',
     flexDirection: 'column',
     height: `calc(100% - ${props.isDetailView ? 60 : 115}px)`,
@@ -59,12 +56,7 @@ interface AppsContentProps {
   [x: string]: any;
 }
 
-const AppsContent: React.FC<AppsContentProps> = ({
-  isDetailView = false,
-  fullView = false,
-  style = {},
-  children,
-}) => {
+const AppsContent: React.FC<AppsContentProps> = ({ isDetailView = false, fullView = false, style = {}, children }) => {
   const classes = useAppsContentStyles({
     isDetailView,
     fullView,

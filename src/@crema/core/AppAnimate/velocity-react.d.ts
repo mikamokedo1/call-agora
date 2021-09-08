@@ -10,7 +10,7 @@ declare module 'velocity-react' {
   }
 
   export class VelocityComponent extends React.Component<VelocityComponentProps> {
-    public runAnimation(config: {stop?: boolean; finish?: boolean}): void;
+    public runAnimation(config: { stop?: boolean; finish?: boolean }): void;
   }
 
   export interface VelocityAnimationObject extends jquery.velocity.Options {
@@ -30,12 +30,7 @@ declare module 'velocity-react' {
 
   export class VelocityTransitionGroup extends React.Component<VelocityTransitionGroupProps> {}
 
-  export function registerEffect(
-    animation: jquery.velocity.RegisteredEffectOptions,
-  ): string;
+  export function registerEffect(animation: jquery.velocity.RegisteredEffectOptions): string;
 
-  export function registerEffect(
-    suffix: string,
-    animation: jquery.velocity.RegisteredEffectOptions,
-  ): string;
+  export function registerEffect(suffix: string, animation: jquery.velocity.RegisteredEffectOptions): string;
 }

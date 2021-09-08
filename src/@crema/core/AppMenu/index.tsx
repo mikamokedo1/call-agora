@@ -1,6 +1,6 @@
 import React from 'react';
 import MenuItem from '@material-ui/core/MenuItem';
-import {Box} from '@material-ui/core';
+import { Box } from '@material-ui/core';
 import IconButton from '@material-ui/core/IconButton';
 import Menu from '@material-ui/core/Menu';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
@@ -23,23 +23,12 @@ const AppMenu: React.FC<AppMenuProps> = () => {
 
   return (
     <Box>
-      <IconButton
-        style={{height: 30, width: 30}}
-        aria-label='more'
-        onClick={handleClick}>
+      <IconButton style={{ height: 30, width: 30 }} aria-label="more" onClick={handleClick}>
         <MoreVertIcon />
       </IconButton>
-      <Menu
-        id='long-menu'
-        anchorEl={anchorEl}
-        keepMounted
-        open={open}
-        onClose={handleClose}>
+      <Menu id="long-menu" anchorEl={anchorEl} keepMounted open={open} onClose={handleClose}>
         {options.map((option) => (
-          <MenuItem
-            key={option}
-            selected={option === 'Pyxis'}
-            onClick={handleClose}>
+          <MenuItem key={option} selected={option === 'Pyxis'} onClick={handleClose}>
             {option}
           </MenuItem>
         ))}

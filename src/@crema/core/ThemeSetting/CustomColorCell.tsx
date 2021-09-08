@@ -1,10 +1,10 @@
-import React, {useContext} from 'react';
+import React, { useContext } from 'react';
 import Box from '@material-ui/core/Box';
 import CheckIcon from '@material-ui/icons/Check';
 import useStyles from './CustomColorCell.style';
-import {AppContext} from '../../index';
+import { AppContext } from '../../index';
 import IntlMessages from '../../utility/IntlMessages';
-import {ThemeMode} from '../../../shared/constants/AppEnums';
+import { ThemeMode } from '../../../shared/constants/AppEnums';
 import AppContextPropsType from '../../../types/AppContextPropsType';
 
 interface CustomColorCellProps {
@@ -12,23 +12,22 @@ interface CustomColorCellProps {
   updateThemeColors: (color: any) => void;
 }
 
-const CustomColorCell: React.FC<CustomColorCellProps> = ({
-  themeColorSet,
-  updateThemeColors,
-}) => {
+const CustomColorCell: React.FC<CustomColorCellProps> = ({ themeColorSet, updateThemeColors }) => {
   const classes = useStyles();
-  const {themeMode, theme} = useContext<AppContextPropsType>(AppContext);
+  const { themeMode, theme } = useContext<AppContextPropsType>(AppContext);
   return (
     <Box
-      component='li'
+      component="li"
       onClick={() => {
         updateThemeColors(themeColorSet);
-      }}>
+      }}
+    >
       <Box
         height={40}
         width={50}
-        style={{backgroundColor: themeColorSet.PrimaryColor}}
-        className={classes.colorOption}>
+        style={{ backgroundColor: themeColorSet.PrimaryColor }}
+        className={classes.colorOption}
+      >
         <Box
           height={60}
           width={60}
@@ -41,10 +40,7 @@ const CustomColorCell: React.FC<CustomColorCellProps> = ({
           style={{
             borderColor: '#ADADAD',
             borderWidth: 1,
-            backgroundColor:
-              themeMode === ThemeMode.LIGHT
-                ? 'white'
-                : themeColorSet.SidebarColor,
+            backgroundColor: themeMode === ThemeMode.LIGHT ? 'white' : themeColorSet.SidebarColor,
           }}
           className={classes.colorOptionBorder}
         />
@@ -53,7 +49,7 @@ const CustomColorCell: React.FC<CustomColorCellProps> = ({
         theme.palette.secondary.main === themeColorSet.SecondaryColor ? (
           <span className={classes.colorOptionRightIcon}>
             <CheckIcon className={classes.textBase}>
-              <IntlMessages id='customizer.checked' />
+              <IntlMessages id="customizer.checked" />
             </CheckIcon>
           </span>
         ) : null}

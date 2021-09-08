@@ -1,5 +1,5 @@
-import {AuthUser} from '../../types/models/AuthUser';
-import {AuthType} from './AppEnums';
+import { AuthUser } from '../../types/models/AuthUser';
+import { AuthType } from './AppEnums';
 
 export const authRole = {
   admin: ['admin'],

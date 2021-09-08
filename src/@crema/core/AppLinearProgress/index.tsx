@@ -1,43 +1,23 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import LinearProgress from '@material-ui/core/LinearProgress';
 
 const useStyles = makeStyles({
   root: {
-    height: (props: {
-      thickness: number;
-      borderRadius: number;
-      pathColor: string;
-      activeColor: string;
-    }) => props.thickness,
-    borderRadius: (props: {
-      thickness: number;
-      borderRadius: number;
-      pathColor: string;
-      activeColor: string;
-    }) => props.borderRadius,
+    height: (props: { thickness: number; borderRadius: number; pathColor: string; activeColor: string }) =>
+      props.thickness,
+    borderRadius: (props: { thickness: number; borderRadius: number; pathColor: string; activeColor: string }) =>
+      props.borderRadius,
   },
   colorPrimary: {
-    backgroundColor: (props: {
-      thickness: number;
-      borderRadius: number;
-      pathColor: string;
-      activeColor: string;
-    }) => props.pathColor,
+    backgroundColor: (props: { thickness: number; borderRadius: number; pathColor: string; activeColor: string }) =>
+      props.pathColor,
   },
   bar: {
-    borderRadius: (props: {
-      thickness: number;
-      borderRadius: number;
-      pathColor: string;
-      activeColor: string;
-    }) => props.borderRadius,
-    backgroundColor: (props: {
-      thickness: number;
-      borderRadius: number;
-      pathColor: string;
-      activeColor: string;
-    }) => props.activeColor,
+    borderRadius: (props: { thickness: number; borderRadius: number; pathColor: string; activeColor: string }) =>
+      props.borderRadius,
+    backgroundColor: (props: { thickness: number; borderRadius: number; pathColor: string; activeColor: string }) =>
+      props.activeColor,
   },
 });
 
@@ -66,7 +46,7 @@ const CustomLinearProgress: React.FC<CustomLinearProgressProps> = ({
   return (
     <LinearProgress
       className={classes.root}
-      classes={{colorPrimary: classes.colorPrimary, bar: classes.bar}}
+      classes={{ colorPrimary: classes.colorPrimary, bar: classes.bar }}
       {...rest}
     />
   );

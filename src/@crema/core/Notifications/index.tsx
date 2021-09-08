@@ -1,11 +1,9 @@
 import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
-import notification, {
-  NotificationData,
-} from '../../services/db/notifications/notification';
+import notification, { NotificationData } from '../../services/db/notifications/notification';
 import NotificationsActiveIcon from '@material-ui/icons/NotificationsActive';
-import {makeStyles, Popover} from '@material-ui/core';
+import { makeStyles, Popover } from '@material-ui/core';
 import List from '@material-ui/core/List';
 import Box from '@material-ui/core/Box';
 import Button from '@material-ui/core/Button';
@@ -14,8 +12,8 @@ import IntlMessages from '../../utility/IntlMessages';
 import Hidden from '@material-ui/core/Hidden';
 import clsx from 'clsx';
 import NotificationItem from './NotificationItem';
-import {Fonts} from '../../../shared/constants/AppEnums';
-import {CremaTheme} from '../../../types/AppContextPropsType';
+import { Fonts } from '../../../shared/constants/AppEnums';
+import { CremaTheme } from '../../../types/AppContextPropsType';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
   crPopover: {
@@ -94,12 +92,9 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
 interface NotificationsProps {}
 
 const Notifications: React.FC<NotificationsProps> = () => {
-  const [anchorNotification, setAnchorNotification] =
-    React.useState<HTMLButtonElement | null>(null);
+  const [anchorNotification, setAnchorNotification] = React.useState<HTMLButtonElement | null>(null);
 
-  const onClickNotificationButton = (
-    event: React.MouseEvent<HTMLButtonElement>,
-  ) => {
+  const onClickNotificationButton = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorNotification(event.currentTarget);
   };
 
@@ -109,32 +104,23 @@ const Notifications: React.FC<NotificationsProps> = () => {
     <>
       <IconButton
         className={clsx(classes.notiBtn, 'notiBtn')}
-        aria-label='show 17 new notifications'
-        color='inherit'
-        onClick={onClickNotificationButton}>
-        <Badge
-          className={classes.badge}
-          badgeContent={notification.length}
-          color='secondary'>
-          <NotificationsActiveIcon
-            className={clsx(classes.notiIcon, 'notiIcon')}
-          />
+        aria-label="show 17 new notifications"
+        color="inherit"
+        onClick={onClickNotificationButton}
+      >
+        <Badge className={classes.badge} badgeContent={notification.length} color="secondary">
+          <NotificationsActiveIcon className={clsx(classes.notiIcon, 'notiIcon')} />
         </Badge>
         <Hidden mdUp>
-          <Box
-            ml={4}
-            fontSize={16}
-            fontFamily='Poppins'
-            fontWeight={Fonts.REGULAR}
-            component='span'>
-            <IntlMessages id='common.notifications' />
+          <Box ml={4} fontSize={16} fontFamily="Poppins" fontWeight={Fonts.REGULAR} component="span">
+            <IntlMessages id="common.notifications" />
           </Box>
         </Hidden>
       </IconButton>
 
       <Popover
         anchorEl={anchorNotification}
-        id='language-switcher'
+        id="language-switcher"
         className={classes.crPopover}
         keepMounted
         open={Boolean(anchorNotification)}
@@ -146,30 +132,29 @@ const Notifications: React.FC<NotificationsProps> = () => {
           vertical: 'top',
           horizontal: 'center',
         }}
-        onClose={() => setAnchorNotification(null)}>
+        onClose={() => setAnchorNotification(null)}
+      >
         <Box>
           <Box px={5} py={3}>
-            <Box component='h5' fontFamily='Poppins' fontSize={16}>
-              <IntlMessages id='common.notifications' />({notification.length})
+            <Box component="h5" fontFamily="Poppins" fontSize={16}>
+              <IntlMessages id="common.notifications" />({notification.length})
             </Box>
           </Box>
-          <Scrollbar className='scroll-submenu'>
+          <Scrollbar className="scroll-submenu">
             <List
               className={classes.list}
               onClick={() => {
                 setAnchorNotification(null);
-              }}>
+              }}
+            >
               {notification.map((item: NotificationData, index) => (
                 <NotificationItem key={item.id} item={item} />
               ))}
             </List>
           </Scrollbar>
           <Box mt={2}>
-            <Button
-              className={classes.btnPopover}
-              variant='contained'
-              color='primary'>
-              <IntlMessages id='common.viewAll' />
+            <Button className={classes.btnPopover} variant="contained" color="primary">
+              <IntlMessages id="common.viewAll" />
             </Button>
           </Box>
         </Box>

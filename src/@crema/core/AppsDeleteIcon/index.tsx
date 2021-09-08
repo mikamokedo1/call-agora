@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import DeleteSharpIcon from '@material-ui/icons/DeleteSharp';
 import Tooltip from '@material-ui/core/Tooltip';
 import IntlMessages from '../../utility/IntlMessages';
@@ -10,20 +10,13 @@ interface AppsDeleteIconProps {
   className: string;
 }
 
-const AppsDeleteIcon: React.FC<AppsDeleteIconProps> = ({
-  deleteAction,
-  deleteTitle,
-  className,
-}) => {
+const AppsDeleteIcon: React.FC<AppsDeleteIconProps> = ({ deleteAction, deleteTitle, className }) => {
   const [isDeleteDialogOpen, setDeleteDialogOpen] = useState(false);
 
   return (
     <>
-      <Tooltip title={<IntlMessages id='common.trash' />}>
-        <DeleteSharpIcon
-          className={className}
-          onClick={() => setDeleteDialogOpen(true)}
-        />
+      <Tooltip title={<IntlMessages id="common.trash" />}>
+        <DeleteSharpIcon className={className} onClick={() => setDeleteDialogOpen(true)} />
       </Tooltip>
       {isDeleteDialogOpen ? (
         <ConfirmationDialog
@@ -31,7 +24,7 @@ const AppsDeleteIcon: React.FC<AppsDeleteIconProps> = ({
           onDeny={setDeleteDialogOpen}
           onConfirm={deleteAction}
           title={deleteTitle}
-          dialogTitle={<IntlMessages id='common.deleteItem' />}
+          dialogTitle={<IntlMessages id="common.deleteItem" />}
         />
       ) : null}
     </>

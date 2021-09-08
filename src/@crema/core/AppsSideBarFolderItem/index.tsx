@@ -1,11 +1,11 @@
 import React from 'react';
-import {NavLink} from '../../index';
+import { NavLink } from '../../index';
 import Box from '@material-ui/core/Box';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItem from '@material-ui/core/ListItem';
-import {makeStyles} from '@material-ui/core/styles';
-import {Fonts} from '../../../shared/constants/AppEnums';
+import { makeStyles } from '@material-ui/core/styles';
+import { Fonts } from '../../../shared/constants/AppEnums';
 import Icon from '@material-ui/core/Icon';
 
 const useStyle = makeStyles((theme) => ({
@@ -76,20 +76,11 @@ interface AppsSideBarFolderItemProps {
   path: string;
 }
 
-const AppsSideBarFolderItem: React.FC<AppsSideBarFolderItemProps> = ({
-  item,
-  path,
-}) => {
+const AppsSideBarFolderItem: React.FC<AppsSideBarFolderItemProps> = ({ item, path }) => {
   const classes = useStyle();
   return (
-    <ListItem
-      button
-      key={item.id}
-      to={path}
-      component={NavLink}
-      className={classes.listItem}
-      activeClassName='active'>
-      <Box component='span' mr={{xs: 4, xl: 5}}>
+    <ListItem button key={item.id} to={path} component={NavLink} className={classes.listItem} activeClassName="active">
+      <Box component="span" mr={{ xs: 4, xl: 5 }}>
         <ListItemIcon className={classes.listItemIcon}>
           <WrappedIcon>{item.icon}</WrappedIcon>
         </ListItemIcon>

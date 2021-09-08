@@ -1,11 +1,11 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Alert from '@material-ui/lab/Alert';
 import IconButton from '@material-ui/core/IconButton';
 import Collapse from '@material-ui/core/Collapse';
 import CloseIcon from '@material-ui/icons/Close';
 import Box from '@material-ui/core/Box';
-import {CremaTheme} from '../../../../types/AppContextPropsType';
+import { CremaTheme } from '../../../../types/AppContextPropsType';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
   headerTop: {
@@ -57,15 +57,17 @@ const NotificationBar: React.FC<NotificationBarProps> = () => {
             icon={false}
             action={
               <IconButton
-                aria-label='close'
-                color='inherit'
-                size='small'
+                aria-label="close"
+                color="inherit"
+                size="small"
                 onClick={() => {
                   setOpen(false);
-                }}>
-                <CloseIcon fontSize='inherit' />
+                }}
+              >
+                <CloseIcon fontSize="inherit" />
               </IconButton>
-            }>
+            }
+          >
             Get flat 60% off on your first purchase
           </Alert>
         </Box>

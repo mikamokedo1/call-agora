@@ -1,5 +1,5 @@
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import {CremaTheme} from '../../../types/AppContextPropsType';
+import { CremaTheme } from '../../../types/AppContextPropsType';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
   dialogRoot: {
@@ -45,10 +45,9 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     '& .slick-dots': {
       bottom: 10,
     },
-    '& .slick-dots li button:before, & .slick-dots li.slick-active button:before':
-      {
-        backgroundColor: theme.palette.background.paper,
-      },
+    '& .slick-dots li button:before, & .slick-dots li.slick-active button:before': {
+      backgroundColor: theme.palette.background.paper,
+    },
     '& .embed-responsive': {
       position: 'relative',
       display: 'block',

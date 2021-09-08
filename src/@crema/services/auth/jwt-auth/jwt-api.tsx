@@ -1,13 +1,13 @@
 import axios from 'axios';
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
-import {v4 as uuidv4} from 'uuid';
-import configureStore, {history} from '../../../../redux/store/index';
+import { v4 as uuidv4 } from 'uuid';
+import configureStore, { history } from '../../../../redux/store/index';
 
 const BaseAPI = process.env.REACT_APP_API_URL;
 const axiosConfig = {
   headers: {
     'Content-Type': 'application/json',
-    common: {'x-requestid': uuidv4()},
+    common: { 'x-requestid': uuidv4() },
   },
 };
 
@@ -58,9 +58,7 @@ createAuthRefreshInterceptor(jwtAxios, refreshAuthLogic);
 jwtAxios.interceptors.response.use(
   (response) => response.data,
   (error) => {
-    let errorMessage = `[Error] Unknown error, status code: ${
-      error.response?.status ?? 0
-    }`;
+    let errorMessage = `[Error] Unknown error, status code: ${error.response?.status ?? 0}`;
     if (error.response?.status >= 400) {
       try {
         const errJson = error.response.data;

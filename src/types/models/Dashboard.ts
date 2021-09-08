@@ -14,7 +14,7 @@ export interface Order {
   status: string;
 }
 
-export interface Sumary {
+export interface Summary {
   totalOrder: number;
   totalAmount: number;
   commission: number;

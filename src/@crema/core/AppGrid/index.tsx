@@ -1,4 +1,4 @@
-import React, {CSSProperties} from 'react';
+import React, { CSSProperties } from 'react';
 import GridView from './GridView';
 import GridFooter from './GridFooter';
 
@@ -36,12 +36,7 @@ const AppGrid: React.FC<AppGridProps> = ({
       data={data}
       {...rest}
       ListFooterComponent={
-        footerProps ? (
-          <GridFooter
-            loading={footerProps.loading}
-            footerText={footerProps.footerText}
-          />
-        ) : null
+        footerProps ? <GridFooter loading={footerProps.loading} footerText={footerProps.footerText} /> : null
       }
     />
   );

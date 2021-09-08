@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, { useState } from 'react';
 import Box from '@material-ui/core/Box';
 import styled from 'styled-components';
 import AppAnimate from '../../../@crema/core/AppAnimate';
@@ -15,14 +15,10 @@ const PageOne = () => {
   const [editBankFlag, setEditBankFlag] = useState(false);
   const [editPasswordFlag, setEditPasswordFlag] = useState(false);
   return (
-    <AppAnimate animation='transition.slideUpIn' delay={200}>
+    <AppAnimate animation="transition.slideUpIn" delay={200}>
       <>
-        {editBankFlag && (
-          <BankSettingForm handleClose={() => setEditBankFlag(false)} />
-        )}
-        {editPasswordFlag && (
-          <PasswordSettingForm handleClose={() => setEditPasswordFlag(false)} />
-        )}
+        {editBankFlag && <BankSettingForm handleClose={() => setEditBankFlag(false)} />}
+        {editPasswordFlag && <PasswordSettingForm handleClose={() => setEditPasswordFlag(false)} />}
         <StyledBox>
           <UserSettingForm
             handleEditBank={() => setEditBankFlag(true)}

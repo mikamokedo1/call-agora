@@ -4,13 +4,13 @@ import CheckCircleIcon from '@material-ui/icons/CheckCircle';
 import ErrorIcon from '@material-ui/icons/Error';
 import InfoIcon from '@material-ui/icons/Info';
 import CloseIcon from '@material-ui/icons/Close';
-import {amber, green} from '@material-ui/core/colors';
+import { amber, green } from '@material-ui/core/colors';
 import IconButton from '@material-ui/core/IconButton';
 import SnackbarContent from '@material-ui/core/SnackbarContent';
 import WarningIcon from '@material-ui/icons/Warning';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import Snackbar from '@material-ui/core/Snackbar';
-import {CremaTheme} from '../../../types/AppContextPropsType';
+import { CremaTheme } from '../../../types/AppContextPropsType';
 
 type Variant = 'error' | 'info' | 'success' | 'warning';
 
@@ -54,12 +54,7 @@ interface AppSnackbarProps {
   [x: string]: any;
 }
 
-const AppSnackbar: React.FC<AppSnackbarProps> = ({
-  className,
-  message,
-  variant,
-  ...other
-}) => {
+const AppSnackbar: React.FC<AppSnackbarProps> = ({ className, message, variant, ...other }) => {
   const classes = useStyles1();
 
   const [open, setOpen] = React.useState(true);
@@ -77,22 +72,19 @@ const AppSnackbar: React.FC<AppSnackbarProps> = ({
       }}
       open={open}
       autoHideDuration={6000}
-      onClose={onClose}>
+      onClose={onClose}
+    >
       <SnackbarContent
         className={clsx(classes[variant], className)}
-        aria-describedby='client-snackbar'
+        aria-describedby="client-snackbar"
         message={
-          <span id='client-snackbar' className={classes.message}>
+          <span id="client-snackbar" className={classes.message}>
             <Icon className={clsx(classes.icon, classes.iconVariant)} />
             {message}
           </span>
         }
         action={[
-          <IconButton
-            key='close'
-            aria-label='close'
-            color='inherit'
-            onClick={onClose}>
+          <IconButton key="close" aria-label="close" color="inherit" onClick={onClose}>
             <CloseIcon className={classes.icon} />
           </IconButton>,
         ]}

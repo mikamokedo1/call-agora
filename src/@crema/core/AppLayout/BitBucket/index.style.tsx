@@ -1,5 +1,5 @@
-import {makeStyles} from '@material-ui/core';
-import {CremaTheme} from '../../../../types/AppContextPropsType';
+import { makeStyles } from '@material-ui/core';
+import { CremaTheme } from '../../../../types/AppContextPropsType';
 
 const useStyles = makeStyles((theme: CremaTheme) => {
   return {
@@ -35,7 +35,7 @@ const useStyles = makeStyles((theme: CremaTheme) => {
     },
     mainContainer: {
       width: `calc(100vw - 19rem)`,
-      paddingBottom: (props: {footer: boolean}) => (props.footer ? 0 : 10),
+      paddingBottom: (props: { footer: boolean }) => (props.footer ? 0 : 10),
       transition: 'all 0.5s ease',
 
       [theme.breakpoints.up('xl')]: {

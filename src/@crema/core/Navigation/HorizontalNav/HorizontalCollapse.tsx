@@ -1,26 +1,17 @@
-import React, {useContext, useState} from 'react';
-import {
-  Grow,
-  Icon,
-  IconButton,
-  ListItem,
-  ListItemText,
-  Paper,
-} from '@material-ui/core';
-import {makeStyles} from '@material-ui/core/styles';
+import React, { useContext, useState } from 'react';
+import { Grow, Icon, IconButton, ListItem, ListItemText, Paper } from '@material-ui/core';
+import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 
-import {RouteComponentProps, withRouter} from 'react-router-dom';
-import {Manager, Popper, Reference} from 'react-popper';
+import { RouteComponentProps, withRouter } from 'react-router-dom';
+import { Manager, Popper, Reference } from 'react-popper';
 import HorizontalItem from './HorizontalItem';
 import HorizontalGroup from './HorizontalGroup';
 import Box from '@material-ui/core/Box';
 import IntlMessages from '../../../utility/IntlMessages';
 import AppContext from '../../../utility/AppContext';
-import AppContextPropsType, {
-  CremaTheme,
-} from '../../../../types/AppContextPropsType';
-import {NavItemProps} from '../../../../modules/routesConfig';
+import AppContextPropsType, { CremaTheme } from '../../../../types/AppContextPropsType';
+import { NavItemProps } from '../../../../modules/routesConfig';
 import ClientOnlyPortal from './ClientPortal';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
@@ -80,7 +71,7 @@ const HorizontalCollapse: React.FC<HorizontalCollapseProps> = ({
 }) => {
   const classes = useStyles();
   const [opened, setOpened] = useState(false);
-  const {theme} = useContext<AppContextPropsType>(AppContext);
+  const { theme } = useContext<AppContextPropsType>(AppContext);
   const active = isUrlInChildren(item, location.pathname);
 
   const handleToggle = (open: boolean) => {
@@ -99,10 +90,7 @@ const HorizontalCollapse: React.FC<HorizontalCollapseProps> = ({
         }
       }
 
-      if (
-        parent.children[i].url === url ||
-        url.includes(parent.children[i].url)
-      ) {
+      if (parent.children[i].url === url || url.includes(parent.children[i].url)) {
         return true;
       }
     }
@@ -114,36 +102,24 @@ const HorizontalCollapse: React.FC<HorizontalCollapseProps> = ({
     <ul className={clsx(classes.root, 'navbarNavSubmenu')}>
       <Manager>
         <Reference>
-          {({ref}) => (
+          {({ ref }) => (
             <ListItem
               ref={ref}
               button
-              className={clsx(
-                'navItemSubmenu',
-                classes.button,
-                opened && 'open',
-                dense && 'dense',
-                active && 'active',
-              )}
+              className={clsx('navItemSubmenu', classes.button, opened && 'open', dense && 'dense', active && 'active')}
               onMouseEnter={() => handleToggle(true)}
-              onMouseLeave={() => handleToggle(false)}>
+              onMouseLeave={() => handleToggle(false)}
+            >
               {item.icon && (
-                <Icon
-                  style={{color: active ? 'white' : 'action'}}
-                  className={classes.icon}>
+                <Icon style={{ color: active ? 'white' : 'action' }} className={classes.icon}>
                   {item.icon}
                 </Icon>
               )}
-              <ListItemText
-                className='navLinkTextSubmenu'
-                primary={<IntlMessages id={item.messageId} />}
-              />
+              <ListItemText className="navLinkTextSubmenu" primary={<IntlMessages id={item.messageId} />} />
               <Box p={0} clone>
                 <IconButton disableRipple>
-                  <Icon style={{color: active ? 'white' : 'action'}}>
-                    {theme.direction === 'ltr'
-                      ? 'chevron_right'
-                      : 'chevron_left'}
+                  <Icon style={{ color: active ? 'white' : 'action' }}>
+                    {theme.direction === 'ltr' ? 'chevron_right' : 'chevron_left'}
                   </Icon>
                 </IconButton>
               </Box>
@@ -151,9 +127,9 @@ const HorizontalCollapse: React.FC<HorizontalCollapseProps> = ({
           )}
         </Reference>
 
-        <ClientOnlyPortal selector='#root'>
-          <Popper placement='right'>
-            {({ref, style, placement, arrowProps}) =>
+        <ClientOnlyPortal selector="#root">
+          <Popper placement="right">
+            {({ ref, style, placement, arrowProps }) =>
               opened && (
                 <div
                   ref={ref}
@@ -165,21 +141,15 @@ const HorizontalCollapse: React.FC<HorizontalCollapseProps> = ({
                   data-placement={placement}
                   className={clsx(classes.popper, {
                     [classes.popperClose]: !opened,
-                  })}>
-                  <Grow in={opened} style={{transformOrigin: '0 0 0'}}>
-                    <Paper
-                      onMouseEnter={() => handleToggle(true)}
-                      onMouseLeave={() => handleToggle(false)}>
+                  })}
+                >
+                  <Grow in={opened} style={{ transformOrigin: '0 0 0' }}>
+                    <Paper onMouseEnter={() => handleToggle(true)} onMouseLeave={() => handleToggle(false)}>
                       {item.children && Array.isArray(item.children) && (
                         <ul className={clsx(classes.pl0)}>
                           {item.children.map((item: any) => (
                             <React.Fragment key={item.id}>
-                              {item.type === 'group' && (
-                                <HorizontalGroup
-                                  item={item}
-                                  nestedLevel={nestedLevel + 1}
-                                />
-                              )}
+                              {item.type === 'group' && <HorizontalGroup item={item} nestedLevel={nestedLevel + 1} />}
 
                               {item.type === 'collapse' && (
                                 <HorizontalCollapse

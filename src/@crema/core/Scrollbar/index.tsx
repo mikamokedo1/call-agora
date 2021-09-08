@@ -1,6 +1,6 @@
-import React, {ReactNode, useEffect, useRef} from 'react';
+import React, { ReactNode, useEffect, useRef } from 'react';
 import PerfectScrollbar from 'react-perfect-scrollbar';
-import {useLocation} from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 
 interface ScrollbarProps {
   children: ReactNode;
@@ -11,9 +11,9 @@ interface ScrollbarProps {
 }
 
 const Scrollbar: React.FC<ScrollbarProps> = React.forwardRef((props, ref) => {
-  const {children, scrollToTop = true, className = '', ...others} = props;
+  const { children, scrollToTop = true, className = '', ...others } = props;
   let _scrollBarRef = useRef<HTMLElement>(null);
-  const {pathname} = useLocation();
+  const { pathname } = useLocation();
 
   useEffect(() => {
     if (scrollToTop && _scrollBarRef) {
@@ -29,7 +29,8 @@ const Scrollbar: React.FC<ScrollbarProps> = React.forwardRef((props, ref) => {
         _scrollBarRef = ref;
       }}
       {...others}
-      className={className}>
+      className={className}
+    >
       {children}
     </PerfectScrollbar>
   );

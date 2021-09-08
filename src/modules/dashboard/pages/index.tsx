@@ -1,20 +1,11 @@
-import React, {useEffect} from 'react';
+import React, { useEffect } from 'react';
 import Box from '@material-ui/core/Box';
-import {makeStyles} from '@material-ui/core/styles';
-import {useDispatch, useSelector} from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
+import { useDispatch, useSelector } from 'react-redux';
 import AppAnimate from '../../../@crema/core/AppAnimate';
-import {CremaTheme} from '../../../types/AppContextPropsType';
-import {
-  fetchStatistic,
-  fetchOrders,
-  fetchSummary,
-  fetchStatisticChart,
-} from '../../../redux/actions/dashboard';
-import {
-  statisticSelector,
-  summarySelector,
-  ordersSelector,
-} from '../../../redux/reducers/Dashboard';
+import { CremaTheme } from '../../../types/AppContextPropsType';
+import { fetchStatistic, fetchOrders, fetchSummary, fetchStatisticChart } from '../../../redux/actions/dashboard';
+import { statisticSelector, summarySelector, ordersSelector } from '../../../redux/reducers/Dashboard';
 import TableList from '../container/TableList';
 import ChartStistic from '../container/ChartStistic';
 import ChartStacked from '../container/ChartStacked';
@@ -184,7 +175,7 @@ const PageOne = () => {
   }, [dispatch]);
 
   return (
-    <AppAnimate animation='transition.slideUpIn' delay={200}>
+    <AppAnimate animation="transition.slideUpIn" delay={200}>
       <Box className={classes.wrap}>
         <Box className={classes.top}>
           <Box className={classes.topRight}>
@@ -198,38 +189,32 @@ const PageOne = () => {
 
               <Box className={classes.copyButton} onClick={handleCopy}>
                 <Box>Copy link CTV</Box>
-                <img src='/assets/images/dasboard/copy.png' alt='icon-shit' />
+                <img src="/assets/images/dasboard/copy.png" alt="icon-shit" />
               </Box>
             </Box>
             <Box>
               <Box className={classes.sumItem}>
-                <Box className='left' bgcolor='rgb(52,172,109,0.2)'>
-                  <img
-                    src='/assets/images/dasboard/order.svg'
-                    alt='icon-shit'
-                  />
+                <Box className="left" bgcolor="rgb(52,172,109,0.2)">
+                  <img src="/assets/images/dasboard/order.svg" alt="icon-shit" />
                 </Box>
-                <Box className='right'>
-                  <Box color='#90A0B7' fontSize='16px'>
+                <Box className="right">
+                  <Box color="#90A0B7" fontSize="16px">
                     Tổng số đơn
                   </Box>
-                  <Box fontSize='18px' fontWeight='bold' color='334D6E'>
+                  <Box fontSize="18px" fontWeight="bold" color="334D6E">
                     {summary ? `${summary.totalOrder} đơn` : '0 đơn'}
                   </Box>
                 </Box>
               </Box>
               <Box className={classes.sumItem}>
-                <Box className='left' bgcolor='rgb(16,156,241,0.2)'>
-                  <img
-                    src='/assets/images/dasboard/money.png'
-                    alt='icon-shit'
-                  />
+                <Box className="left" bgcolor="rgb(16,156,241,0.2)">
+                  <img src="/assets/images/dasboard/money.png" alt="icon-shit" />
                 </Box>
-                <Box className='right'>
-                  <Box color='#90A0B7' fontSize='16px'>
+                <Box className="right">
+                  <Box color="#90A0B7" fontSize="16px">
                     Số tiền đã bán được
                   </Box>
-                  <Box fontSize='18px' fontWeight='bold' color='334D6E'>
+                  <Box fontSize="18px" fontWeight="bold" color="334D6E">
                     {summary
                       ? `${summary.totalAmount.toLocaleString('it-IT', {
                           style: 'currency',
@@ -240,17 +225,14 @@ const PageOne = () => {
                 </Box>
               </Box>
               <Box className={classes.sumItem}>
-                <Box className='left' bgcolor='rgb(136,90,248,0.2)'>
-                  <img
-                    src='/assets/images/dasboard/wallet.png'
-                    alt='icon-shit'
-                  />
+                <Box className="left" bgcolor="rgb(136,90,248,0.2)">
+                  <img src="/assets/images/dasboard/wallet.png" alt="icon-shit" />
                 </Box>
-                <Box className='right'>
-                  <Box color='#90A0B7' fontSize='16px'>
+                <Box className="right">
+                  <Box color="#90A0B7" fontSize="16px">
                     Tiền hoa hồng
                   </Box>
-                  <Box fontSize='18px' fontWeight='bold' color='334D6E'>
+                  <Box fontSize="18px" fontWeight="bold" color="334D6E">
                     {summary
                       ? `${summary.commission.toLocaleString('it-IT', {
                           style: 'currency',
@@ -261,18 +243,14 @@ const PageOne = () => {
                 </Box>
               </Box>
               <Box className={classes.sumItem}>
-                <Box className='left' bgcolor='rgb(255,187,70,0.2)'>
-                  <img
-                    src='/assets/images/dasboard/danhan.png'
-                    alt='icon-shit'
-                    style={{width: '31px'}}
-                  />
+                <Box className="left" bgcolor="rgb(255,187,70,0.2)">
+                  <img src="/assets/images/dasboard/danhan.png" alt="icon-shit" style={{ width: '31px' }} />
                 </Box>
-                <Box className='right'>
-                  <Box color='#90A0B7' fontSize='16px'>
+                <Box className="right">
+                  <Box color="#90A0B7" fontSize="16px">
                     Tiền đã nhận
                   </Box>
-                  <Box fontSize='18px' fontWeight='bold' color='334D6E'>
+                  <Box fontSize="18px" fontWeight="bold" color="334D6E">
                     {summary
                       ? `${summary.paidCommission.toLocaleString('it-IT', {
                           style: 'currency',
@@ -287,18 +265,18 @@ const PageOne = () => {
         </Box>
         <Box className={classes.bottom}>
           <Box className={classes.bottomRight}>
-            <Box fontWeight='bold' color='#334D6E' mb='15px'>
+            <Box fontWeight="bold" color="#334D6E" mb="15px">
               Biểu đồ bán theo ngày đơn/triệu đồng
             </Box>
-            <Box height='calc(100% - 28px)'>
+            <Box height="calc(100% - 28px)">
               <ChartStistic />
             </Box>
           </Box>
           <Box className={classes.bottomLeft}>
-            <Box fontWeight='bold' color='#334D6E' mb='15px'>
+            <Box fontWeight="bold" color="#334D6E" mb="15px">
               Loại đơn
             </Box>
-            <Box height='calc(100% - 28px)'>
+            <Box height="calc(100% - 28px)">
               <ChartStacked />
             </Box>
           </Box>

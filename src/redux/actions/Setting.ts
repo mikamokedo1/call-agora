@@ -1,14 +1,8 @@
-import {
-  SET_INITIAL_PATH,
-  SettingsActionTypes,
-  TOGGLE_NAV_COLLAPSED,
-} from '../../types/actions/Settings.action';
+import { SET_INITIAL_PATH, SettingsActionTypes, TOGGLE_NAV_COLLAPSED } from '../../types/actions/Settings.action';
 
-export const toggleNavCollapsed = () => ({type: TOGGLE_NAV_COLLAPSED});
+export const toggleNavCollapsed = () => ({ type: TOGGLE_NAV_COLLAPSED });
 
-export const setInitialPath = (
-  initialPath: string | undefined,
-): SettingsActionTypes => ({
+export const setInitialPath = (initialPath: string | undefined): SettingsActionTypes => ({
   type: SET_INITIAL_PATH,
   initialPath,
 });

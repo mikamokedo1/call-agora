@@ -1,6 +1,6 @@
-import {makeStyles} from '@material-ui/core';
-import {ThemeStyle} from '../../../../shared/constants/AppEnums';
-import {CremaTheme} from '../../../../types/AppContextPropsType';
+import { makeStyles } from '@material-ui/core';
+import { ThemeStyle } from '../../../../shared/constants/AppEnums';
+import { CremaTheme } from '../../../../types/AppContextPropsType';
 
 const useStyles = makeStyles((theme: CremaTheme) => {
   return {
@@ -23,12 +23,12 @@ const useStyles = makeStyles((theme: CremaTheme) => {
           paddingBottom: 58,
         },
         '& .scrollAppSidebar': {
-          height: (props: {themeStyle: ThemeStyle; footer: boolean}) =>
+          height: (props: { themeStyle: ThemeStyle; footer: boolean }) =>
             props.themeStyle === ThemeStyle.MODERN
               ? 'calc(100vh - 260px) !important'
               : 'calc(100vh - 198px) !important',
           [theme.breakpoints.up('xl')]: {
-            height: (props: {themeStyle: ThemeStyle; footer: boolean}) =>
+            height: (props: { themeStyle: ThemeStyle; footer: boolean }) =>
               props.themeStyle === ThemeStyle.MODERN
                 ? 'calc(100vh - 300px) !important'
                 : 'calc(100vh - 236px) !important',
@@ -45,17 +45,12 @@ const useStyles = makeStyles((theme: CremaTheme) => {
       display: 'flex',
     },
     mainContainer: {
-      width: (props: {themeStyle: ThemeStyle; footer: boolean}) =>
-        `calc(100vw - ${
-          props.themeStyle === ThemeStyle.MODERN ? '19rem' : '19rem'
-        })`,
-      paddingBottom: (props: {themeStyle: ThemeStyle; footer: boolean}) =>
-        props.footer ? 0 : 10,
+      width: (props: { themeStyle: ThemeStyle; footer: boolean }) =>
+        `calc(100vw - ${props.themeStyle === ThemeStyle.MODERN ? '19rem' : '19rem'})`,
+      paddingBottom: (props: { themeStyle: ThemeStyle; footer: boolean }) => (props.footer ? 0 : 10),
       [theme.breakpoints.up('xl')]: {
-        width: (props: {themeStyle: ThemeStyle; footer: boolean}) =>
-          `calc(100vw - ${
-            props.themeStyle === ThemeStyle.MODERN ? '22.8rem' : '21.6rem'
-          })`,
+        width: (props: { themeStyle: ThemeStyle; footer: boolean }) =>
+          `calc(100vw - ${props.themeStyle === ThemeStyle.MODERN ? '22.8rem' : '21.6rem'})`,
       },
       '& > .scrollbar-container': {
         padding: '20px 20px 0',
@@ -68,8 +63,7 @@ const useStyles = makeStyles((theme: CremaTheme) => {
     },
     mainContainerFull: {
       width: '100vw',
-      paddingBottom: (props: {themeStyle: ThemeStyle; footer: boolean}) =>
-        props.footer ? 0 : 10,
+      paddingBottom: (props: { themeStyle: ThemeStyle; footer: boolean }) => (props.footer ? 0 : 10),
       '& > .scrollbar-container': {
         padding: '20px 20px 0',
         display: 'flex',

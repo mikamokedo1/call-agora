@@ -1,13 +1,9 @@
-import {makeStyles} from '@material-ui/core/styles';
-import {NavStyle} from '../../../shared/constants/AppEnums';
-import {CremaTheme} from '../../../types/AppContextPropsType';
+import { makeStyles } from '@material-ui/core/styles';
+import { NavStyle } from '../../../shared/constants/AppEnums';
+import { CremaTheme } from '../../../types/AppContextPropsType';
 
 const getHeaderHeight = (navStyle: NavStyle, screenSize: number) => {
-  if (
-    navStyle === NavStyle.HOR_DARK_LAYOUT ||
-    navStyle === NavStyle.HOR_LIGHT_NAV ||
-    navStyle === NavStyle.H_DEFAULT
-  )
+  if (navStyle === NavStyle.HOR_DARK_LAYOUT || navStyle === NavStyle.HOR_LIGHT_NAV || navStyle === NavStyle.H_DEFAULT)
     return screenSize >= 1280 ? 124 + 20 : 70 + 10; // 50 Header Height + 20/10 Padding Bottom
   if (navStyle === NavStyle.BIT_BUCKET) return 0; // 0 Header Height
 
@@ -97,10 +93,9 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     },
   },
   scLauncher: {
-    '& .sc-header, & .sc-message--content.sent .sc-message--text, & .sc-header--close-button:hover':
-      {
-        backgroundColor: `${theme.palette.primary.main} !important`,
-      },
+    '& .sc-header, & .sc-message--content.sent .sc-message--text, & .sc-header--close-button:hover': {
+      backgroundColor: `${theme.palette.primary.main} !important`,
+    },
   },
 }));
 export default useStyles;

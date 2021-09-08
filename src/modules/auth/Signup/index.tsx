@@ -3,8 +3,8 @@ import SignupJwtAuth from './SignupJwtAuth';
 import Card from '@material-ui/core/Card';
 import Box from '@material-ui/core/Box';
 import IntlMessages from '../../../@crema/utility/IntlMessages';
-import {makeStyles} from '@material-ui/core/styles';
-import {Fonts} from '../../../shared/constants/AppEnums';
+import { makeStyles } from '@material-ui/core/styles';
+import { Fonts } from '../../../shared/constants/AppEnums';
 
 const useStyles = makeStyles((theme) => ({
   imgRoot: {
@@ -46,29 +46,22 @@ const Signup: React.FC<{}> = () => {
   const classes = useStyles();
 
   return (
-    <Box flex={1} display='flex' flexDirection='column' justifyContent='center'>
-      <Box mb={{xs: 6, md: 8, xl: 18}} textAlign='center'>
-        <img
-          className={classes.imgRoot}
-          src={'/assets/images/logo-white-with-name.png'}
-          alt='crema-logo'
-        />
+    <Box flex={1} display="flex" flexDirection="column" justifyContent="center">
+      <Box mb={{ xs: 6, md: 8, xl: 18 }} textAlign="center">
+        <img className={classes.imgRoot} src={'/assets/images/logo-white-with-name.png'} alt="crema-logo" />
       </Box>
 
-      <Box
-        display='flex'
-        flexDirection='column'
-        justifyContent='center'
-        alignItems='center'>
+      <Box display="flex" flexDirection="column" justifyContent="center" alignItems="center">
         <Card className={classes.cardRoot}>
-          <Box px={{xs: 6, sm: 10, xl: 15}}>
+          <Box px={{ xs: 6, sm: 10, xl: 15 }}>
             <Box
-              component='h2'
-              mb={{xs: 3, xl: 6}}
-              color='text.primary'
+              component="h2"
+              mb={{ xs: 3, xl: 6 }}
+              color="text.primary"
               fontWeight={Fonts.REGULAR}
-              fontSize={{xs: 24, xl: 26}}>
-              <IntlMessages id='common.signup' />
+              fontSize={{ xs: 24, xl: 26 }}
+            >
+              <IntlMessages id="common.signup" />
             </Box>
           </Box>
           <SignupJwtAuth />

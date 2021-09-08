@@ -1,5 +1,5 @@
-import {fade, makeStyles} from '@material-ui/core/styles';
-import {CremaTheme} from '../../../../types/AppContextPropsType';
+import { fade, makeStyles } from '@material-ui/core/styles';
+import { CremaTheme } from '../../../../types/AppContextPropsType';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
   appToolbar: {

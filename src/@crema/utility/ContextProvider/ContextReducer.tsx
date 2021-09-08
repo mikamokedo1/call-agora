@@ -1,9 +1,5 @@
-import {
-  ThemeMode,
-  ThemeStyle,
-  ThemeStyleRadius,
-} from '../../../shared/constants/AppEnums';
-import {isBreakPointDown} from '../Utils';
+import { ThemeMode, ThemeStyle, ThemeStyleRadius } from '../../../shared/constants/AppEnums';
+import { isBreakPointDown } from '../Utils';
 
 export const ThemeSetting = {
   UPDATE_THEME: 'UPDATE_THEME',
@@ -45,7 +41,7 @@ export function contextReducer(state: any, action: any) {
       };
     }
     case ThemeSetting.UPDATE_THEME_MODE: {
-      const {theme} = state;
+      const { theme } = state;
       if (action.payload === ThemeMode.DARK) {
         theme.palette.type = ThemeMode.DARK;
         theme.palette.background = {
@@ -84,7 +80,7 @@ export function contextReducer(state: any, action: any) {
       };
     }
     case ThemeSetting.UPDATE_THEME_STYLE: {
-      const {theme} = state;
+      const { theme } = state;
 
       if (action.payload === ThemeStyle.MODERN) {
         if (isBreakPointDown('md')) {
@@ -92,16 +88,13 @@ export function contextReducer(state: any, action: any) {
           theme.overrides.MuiToggleButton.root.borderRadius = 20;
         } else {
           theme.overrides.MuiCard.root.borderRadius = ThemeStyleRadius.MODERN;
-          theme.overrides.MuiToggleButton.root.borderRadius =
-            ThemeStyleRadius.MODERN;
+          theme.overrides.MuiToggleButton.root.borderRadius = ThemeStyleRadius.MODERN;
         }
         theme.overrides.MuiButton.root.borderRadius = ThemeStyleRadius.MODERN;
-        theme.overrides.MuiCardLg.root.borderRadius =
-          ThemeStyleRadius.MODERN + 20;
+        theme.overrides.MuiCardLg.root.borderRadius = ThemeStyleRadius.MODERN + 20;
       } else {
         theme.overrides.MuiCard.root.borderRadius = ThemeStyleRadius.STANDARD;
-        theme.overrides.MuiToggleButton.root.borderRadius =
-          ThemeStyleRadius.STANDARD;
+        theme.overrides.MuiToggleButton.root.borderRadius = ThemeStyleRadius.STANDARD;
         theme.overrides.MuiButton.root.borderRadius = ThemeStyleRadius.STANDARD;
         theme.overrides.MuiCardLg.root.borderRadius = ThemeStyleRadius.STANDARD;
       }
@@ -119,7 +112,7 @@ export function contextReducer(state: any, action: any) {
       };
     }
     case ThemeSetting.SET_RTL: {
-      const {theme} = state;
+      const { theme } = state;
       if (action.payload) {
         theme.direction = 'rtl';
       } else {

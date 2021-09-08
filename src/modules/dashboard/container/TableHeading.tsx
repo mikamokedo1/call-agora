@@ -1,7 +1,7 @@
 import React from 'react';
 import TableCell from '@material-ui/core/TableCell';
 import TableRow from '@material-ui/core/TableRow';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 
 const useStyles = makeStyles(() => ({
   tableRowRoot: {
@@ -23,10 +23,10 @@ const TableHeading = () => {
   const classes = useStyles();
   return (
     <TableRow className={classes.tableRowRoot}>
-      <TableCell align='left'>Ngày</TableCell>
-      <TableCell align='right'>Tổng đơn</TableCell>
-      <TableCell align='right'>Tổng Tiền</TableCell>
-      <TableCell align='right'>Chênh Lệch</TableCell>
+      <TableCell align="left">Ngày</TableCell>
+      <TableCell align="right">Tổng đơn</TableCell>
+      <TableCell align="right">Tổng Tiền</TableCell>
+      <TableCell align="right">Chênh Lệch</TableCell>
     </TableRow>
   );
 };

@@ -1,6 +1,6 @@
-import {makeStyles} from '@material-ui/core';
-import {CremaTheme} from '../../../../types/AppContextPropsType';
-import {ThemeMode} from '../../../../shared/constants/AppEnums';
+import { makeStyles } from '@material-ui/core';
+import { CremaTheme } from '../../../../types/AppContextPropsType';
+import { ThemeMode } from '../../../../shared/constants/AppEnums';
 
 const useStyles = makeStyles((theme: CremaTheme) => {
   return {
@@ -16,7 +16,7 @@ const useStyles = makeStyles((theme: CremaTheme) => {
     },
     sidebarBg: {
       overflow: 'hidden',
-      backgroundColor: (props: {themeMode: ThemeMode}) =>
+      backgroundColor: (props: { themeMode: ThemeMode }) =>
         props.themeMode === ThemeMode.SEMI_DARK
           ? theme.palette.sidebar.bgColor
           : props.themeMode === ThemeMode.LIGHT

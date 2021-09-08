@@ -4,12 +4,12 @@ import AppAnimate from '../../../@crema/core/AppAnimate';
 
 const PageTwo = () => {
   return (
-    <AppAnimate animation='transition.slideUpIn' delay={200}>
+    <AppAnimate animation="transition.slideUpIn" delay={200}>
       <Box>
-        <Box component='h4' mb={3} fontSize={20}>
+        <Box component="h4" mb={3} fontSize={20}>
           Page Two
         </Box>
-        <Box component='p' fontSize={16}>
+        <Box component="p" fontSize={16}>
           You can start from here..
         </Box>
       </Box>

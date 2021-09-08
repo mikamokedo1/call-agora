@@ -5,7 +5,7 @@ import Standard from './Standard';
 import BitBucket from './BitBucket';
 import HorLightNav from './HorLightNav';
 import HorDarkLayout from './HorDarkLayout';
-import {NavStyle} from '../../../shared/constants/AppEnums';
+import { NavStyle } from '../../../shared/constants/AppEnums';
 import DefaultLayout from './DefaultLayout';
 import HeaderUserLayout from './UserHeader';
 import HeaderUserMiniLayout from './UserHeaderMini';

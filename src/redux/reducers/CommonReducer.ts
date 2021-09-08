@@ -1,4 +1,4 @@
-import {Common} from '../../types/models/Common';
+import { Common } from '../../types/models/Common';
 import {
   CommonActionTypes,
   FETCH_ERROR,
@@ -17,13 +17,10 @@ const INIT_STATE: Common = {
   message: '',
 };
 
-const CommonReducer = (
-  state = INIT_STATE,
-  action: CommonActionTypes,
-): Common => {
+const CommonReducer = (state = INIT_STATE, action: CommonActionTypes): Common => {
   switch (action.type) {
     case FETCH_START: {
-      return {...state, error: '', message: '', loading: true};
+      return { ...state, error: '', message: '', loading: true };
     }
     case FETCH_SUCCESS: {
       return {

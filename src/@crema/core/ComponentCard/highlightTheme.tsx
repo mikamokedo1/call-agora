@@ -1,4 +1,4 @@
-import {PrismTheme} from 'prism-react-renderer';
+import { PrismTheme } from 'prism-react-renderer';
 
 export const highlightTheme: PrismTheme = {
   plain: {

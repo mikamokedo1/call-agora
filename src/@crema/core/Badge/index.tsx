@@ -1,5 +1,5 @@
 import React from 'react';
-import {makeStyles} from '@material-ui/core/styles';
+import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Box from '@material-ui/core/Box';
 
@@ -23,11 +23,7 @@ interface BadgeProps {
   color?: string;
 }
 
-const Badge: React.FC<BadgeProps> = ({
-  className,
-  count,
-  color = 'secondary',
-}) => {
+const Badge: React.FC<BadgeProps> = ({ className, count, color = 'secondary' }) => {
   const classes = useStyles();
 
   if (color === 'primary') {

@@ -2,8 +2,8 @@ import React from 'react';
 import IconButton from '@material-ui/core/IconButton';
 import Badge from '@material-ui/core/Badge';
 import SmsIcon from '@material-ui/icons/Sms';
-import messages, {MessageData} from '../../services/db/messages/messages';
-import {makeStyles} from '@material-ui/core';
+import messages, { MessageData } from '../../services/db/messages/messages';
+import { makeStyles } from '@material-ui/core';
 import MessageItem from './MessageItem';
 import Popover from '@material-ui/core/Popover';
 import List from '@material-ui/core/List';
@@ -13,8 +13,8 @@ import Scrollbar from '../Scrollbar';
 import IntlMessages from '../../utility/IntlMessages';
 import Hidden from '@material-ui/core/Hidden';
 import clsx from 'clsx';
-import {Fonts} from '../../../shared/constants/AppEnums';
-import {CremaTheme} from '../../../types/AppContextPropsType';
+import { Fonts } from '../../../shared/constants/AppEnums';
+import { CremaTheme } from '../../../types/AppContextPropsType';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
   crPopover: {
@@ -98,12 +98,9 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
 interface HeaderMessagesProps {}
 
 const HeaderMessages: React.FC<HeaderMessagesProps> = () => {
-  const [anchorMessages, setAnchorMessages] =
-    React.useState<HTMLButtonElement | null>(null);
+  const [anchorMessages, setAnchorMessages] = React.useState<HTMLButtonElement | null>(null);
 
-  const onClickMessagesButton = (
-    event: React.MouseEvent<HTMLButtonElement>,
-  ) => {
+  const onClickMessagesButton = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorMessages(event.currentTarget);
   };
 
@@ -113,30 +110,23 @@ const HeaderMessages: React.FC<HeaderMessagesProps> = () => {
     <>
       <IconButton
         className={clsx(classes.notiBtn, 'notiBtn')}
-        aria-label='show 4 new mails'
-        color='inherit'
-        onClick={onClickMessagesButton}>
-        <Badge
-          className={classes.badgeStyle}
-          badgeContent={messages.length}
-          color='secondary'>
+        aria-label="show 4 new mails"
+        color="inherit"
+        onClick={onClickMessagesButton}
+      >
+        <Badge className={classes.badgeStyle} badgeContent={messages.length} color="secondary">
           <SmsIcon className={clsx(classes.smsIcon, 'smsIcon')} />
         </Badge>
         <Hidden mdUp>
-          <Box
-            ml={4}
-            fontSize={16}
-            fontFamily='Poppins'
-            fontWeight={Fonts.REGULAR}
-            component='span'>
-            <IntlMessages id='dashboard.messages' />
+          <Box ml={4} fontSize={16} fontFamily="Poppins" fontWeight={Fonts.REGULAR} component="span">
+            <IntlMessages id="dashboard.messages" />
           </Box>
         </Hidden>
       </IconButton>
 
       <Popover
         anchorEl={anchorMessages}
-        id='app-message'
+        id="app-message"
         className={classes.crPopover}
         open={Boolean(anchorMessages)}
         anchorOrigin={{
@@ -147,30 +137,29 @@ const HeaderMessages: React.FC<HeaderMessagesProps> = () => {
           vertical: 'top',
           horizontal: 'center',
         }}
-        onClose={() => setAnchorMessages(null)}>
+        onClose={() => setAnchorMessages(null)}
+      >
         <Box>
           <Box px={5} py={3}>
-            <Box component='h5' fontWeight={Fonts.MEDIUM}>
-              <IntlMessages id='dashboard.messages' />({messages.length})
+            <Box component="h5" fontWeight={Fonts.MEDIUM}>
+              <IntlMessages id="dashboard.messages" />({messages.length})
             </Box>
           </Box>
-          <Scrollbar className='scroll-submenu'>
+          <Scrollbar className="scroll-submenu">
             <List
               className={classes.listRoot}
               onClick={() => {
                 setAnchorMessages(null);
-              }}>
+              }}
+            >
               {messages.map((item: MessageData, index) => (
                 <MessageItem key={item.id} item={item} />
               ))}
             </List>
           </Scrollbar>
           <Box mt={2}>
-            <Button
-              className={classes.btnPopover}
-              variant='contained'
-              color='primary'>
-              <IntlMessages id='common.viewAll' />
+            <Button className={classes.btnPopover} variant="contained" color="primary">
+              <IntlMessages id="common.viewAll" />
             </Button>
           </Box>
         </Box>

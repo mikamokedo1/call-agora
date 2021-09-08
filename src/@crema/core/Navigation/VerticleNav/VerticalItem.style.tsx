@@ -1,6 +1,6 @@
-import {makeStyles} from '@material-ui/core/styles';
-import {Fonts, ThemeMode} from '../../../../shared/constants/AppEnums';
-import {CremaTheme} from '../../../../types/AppContextPropsType';
+import { makeStyles } from '@material-ui/core/styles';
+import { Fonts, ThemeMode } from '../../../../shared/constants/AppEnums';
+import { CremaTheme } from '../../../../types/AppContextPropsType';
 
 const useStyles = makeStyles((theme: CremaTheme) => {
   return {
@@ -13,15 +13,9 @@ const useStyles = makeStyles((theme: CremaTheme) => {
       width: 'calc(100% - 16px)',
       borderRadius: '0 30px 30px 0',
       paddingLeft:
-        theme.direction === 'ltr'
-          ? (props: {level: number; themeMode: ThemeMode}) =>
-              24 + 40 * props.level
-          : 12,
+        theme.direction === 'ltr' ? (props: { level: number; themeMode: ThemeMode }) => 24 + 40 * props.level : 12,
       paddingRight:
-        theme.direction === 'rtl'
-          ? (props: {level: number; themeMode: ThemeMode}) =>
-              24 + 40 * props.level
-          : 12,
+        theme.direction === 'rtl' ? (props: { level: number; themeMode: ThemeMode }) => 24 + 40 * props.level : 12,
       '&.nav-item-header': {
         textTransform: 'uppercase',
       },
@@ -40,24 +34,18 @@ const useStyles = makeStyles((theme: CremaTheme) => {
 
       '&:hover, &:focus': {
         '& .nav-item-text': {
-          color: (props: {level: number; themeMode: ThemeMode}) =>
-            props.themeMode === ThemeMode.LIGHT
-              ? theme.palette.primary.main
-              : '#fff',
+          color: (props: { level: number; themeMode: ThemeMode }) =>
+            props.themeMode === ThemeMode.LIGHT ? theme.palette.primary.main : '#fff',
         },
 
         '& .nav-item-icon': {
-          color: (props: {level: number; themeMode: ThemeMode}) =>
-            props.themeMode === ThemeMode.LIGHT
-              ? theme.palette.primary.main
-              : '#fff',
+          color: (props: { level: number; themeMode: ThemeMode }) =>
+            props.themeMode === ThemeMode.LIGHT ? theme.palette.primary.main : '#fff',
         },
 
         '& .nav-item-icon-arrow': {
-          color: (props: {level: number; themeMode: ThemeMode}) =>
-            props.themeMode === ThemeMode.LIGHT
-              ? theme.palette.primary.main
-              : '#fff',
+          color: (props: { level: number; themeMode: ThemeMode }) =>
+            props.themeMode === ThemeMode.LIGHT ? theme.palette.primary.main : '#fff',
         },
       },
       '& .nav-item-icon': {
