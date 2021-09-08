@@ -1,12 +1,18 @@
-import { TextField, TextFieldProps, Theme } from '@material-ui/core';
-import { repeat, times } from 'ramda';
-import React, { memo, useCallback, useLayoutEffect, useRef, useState } from 'react';
+import {TextField, TextFieldProps, Theme} from '@material-ui/core';
+import {repeat, times} from 'ramda';
+import React, {
+  memo,
+  useCallback,
+  useLayoutEffect,
+  useRef,
+  useState,
+} from 'react';
 import styled from 'styled-components';
 
 import usePrevious from './usePrevious';
 
 const StyledInput = styled(TextField)`
-  ${({ theme }: { theme: Theme }) => `
+  ${({theme}: {theme: Theme}) => `
   margin-right:20px;
   .MuiInputBase-root {
     width: 57px;
@@ -29,8 +35,10 @@ const StyledInput = styled(TextField)`
 export interface SingleOTPInputProps {
   focus?: boolean;
 }
-export function SingleOTPInputComponent(props: SingleOTPInputProps & TextFieldProps) {
-  const { focus, autoFocus, ...rest } = props;
+export function SingleOTPInputComponent(
+  props: SingleOTPInputProps & TextFieldProps,
+) {
+  const {focus, autoFocus, ...rest} = props;
   const inputRef = useRef<HTMLInputElement>(null);
   const prevFocus = usePrevious(!!focus);
   useLayoutEffect(() => {
@@ -60,7 +68,15 @@ export interface OTPInputProps {
 }
 
 export function OTPInputComponent(props: OTPInputProps) {
-  const { length, isNumberInput, autoFocus, disabled, error, onChangeOTP, ...rest } = props;
+  const {
+    length,
+    isNumberInput,
+    autoFocus,
+    disabled,
+    error,
+    onChangeOTP,
+    ...rest
+  } = props;
 
   const [activeInput, setActiveInput] = useState(0);
   const [otpValues, setOTPValues] = useState<string[]>(repeat('', length));

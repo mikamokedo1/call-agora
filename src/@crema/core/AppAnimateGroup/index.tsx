@@ -1,13 +1,16 @@
-import React, { memo, useEffect } from 'react';
-import Grow, { GrowProps } from '@material-ui/core/Grow';
-import Fade, { FadeProps } from '@material-ui/core/Fade';
-import Slide, { SlideProps } from '@material-ui/core/Slide';
-import Zoom, { ZoomProps } from '@material-ui/core/Zoom';
-import Collapse, { CollapseProps } from '@material-ui/core/Collapse';
+import React, {memo, useEffect} from 'react';
+import Grow, {GrowProps} from '@material-ui/core/Grow';
+import Fade, {FadeProps} from '@material-ui/core/Fade';
+import Slide, {SlideProps} from '@material-ui/core/Slide';
+import Zoom, {ZoomProps} from '@material-ui/core/Zoom';
+import Collapse, {CollapseProps} from '@material-ui/core/Collapse';
 
 export type AnimType = 'grow' | 'fade' | 'slide' | 'zoom' | 'collapse';
 type AnimProps = GrowProps | FadeProps | SlideProps | ZoomProps | CollapseProps;
-type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<T, Exclude<keyof T, Keys>> &
+type RequireAtLeastOne<T, Keys extends keyof T = keyof T> = Pick<
+  T,
+  Exclude<keyof T, Keys>
+> &
   {
     [K in Keys]-?: Required<Pick<T, K>> & Partial<Pick<T, Exclude<Keys, K>>>;
   }[Keys];
@@ -25,12 +28,19 @@ interface ItemProps {
   children: any;
   onCompleteOutAnimation?: VoidFunction;
   onExited: VoidFunction;
-  timeout?: { enter?: number; exit?: number };
+  timeout?: {enter?: number; exit?: number};
   animation: AnimType;
   animationProps?: AnimProps;
 }
 
-function AnimatedItem({ shown, children, timeout, onExited, animationProps, animation }: ItemProps) {
+function AnimatedItem({
+  shown,
+  children,
+  timeout,
+  onExited,
+  animationProps,
+  animation,
+}: ItemProps) {
   useEffect(() => {}, [shown]);
   const componentMap: any = {
     grow: Grow,
@@ -41,7 +51,11 @@ function AnimatedItem({ shown, children, timeout, onExited, animationProps, anim
   };
   const SelectedComponent = componentMap[animation];
   return (
-    <SelectedComponent {...animationProps} timeout={timeout} in={shown} onExiting={onExited}>
+    <SelectedComponent
+      {...animationProps}
+      timeout={timeout}
+      in={shown}
+      onExiting={onExited}>
       {children}
     </SelectedComponent>
   );
@@ -61,7 +75,7 @@ const AppAnimateGroup = ({
   initialAnimationDuration = 750,
 }: AppAnimateGroupProps) => {
   const previousChildren: any = usePrevious(children);
-  const [removed, setRemoved] = React.useState<{ [index: number]: any }>([]);
+  const [removed, setRemoved] = React.useState<{[index: number]: any}>([]);
   const [removedShown, setRemovedShown] = React.useState<{
     [index: number]: any;
   }>([]);
@@ -73,11 +87,11 @@ const AppAnimateGroup = ({
       );
       newlyRemoved.forEach((r: any) => {
         const index = previousChildren.findIndex((rr: any) => r.key === rr.key);
-        setRemoved({ ...removed, [index]: r });
-        setRemovedShown({ ...removedShown, [index]: r });
+        setRemoved({...removed, [index]: r});
+        setRemovedShown({...removedShown, [index]: r});
         setTimeout(() => {
           delete removedShown[index];
-          setRemovedShown({ ...removedShown });
+          setRemovedShown({...removedShown});
         }, 100);
       });
     };
@@ -90,7 +104,7 @@ const AppAnimateGroup = ({
   const handleExit = (index: any) => {
     setTimeout(() => {
       delete removed[index];
-      setRemoved({ ...removed });
+      setRemoved({...removed});
     }, 300);
   };
 
@@ -104,7 +118,7 @@ const AppAnimateGroup = ({
           onExited={() => handleExit(0)}
           key={removed[0].key}
           shown={removedShown[0] !== undefined}
-          timeout={{ enter: 0 }}
+          timeout={{enter: 0}}
           animation={animation}
           animationProps={animationProps}>
           {removed[0]}
@@ -118,7 +132,7 @@ const AppAnimateGroup = ({
                 onExited={() => handleExit(i)}
                 key={removed[i].key}
                 shown={removedShown[i] !== undefined}
-                timeout={{ enter: 0, exit: 200 }}>
+                timeout={{enter: 0, exit: 200}}>
                 {removed[i]}
               </AnimatedItem>
             )}
@@ -129,7 +143,9 @@ const AppAnimateGroup = ({
               key={Child.key || i}
               onExited={() => handleExit(Child.key)}
               timeout={{
-                enter: previousChildren.find((p: any) => p.key === Child.key) ? 0 : getEnterDelayTime(i),
+                enter: previousChildren.find((p: any) => p.key === Child.key)
+                  ? 0
+                  : getEnterDelayTime(i),
               }}>
               {Child}
             </AnimatedItem>
@@ -140,7 +156,7 @@ const AppAnimateGroup = ({
                 onExited={() => handleExit(i + 1)}
                 key={removed[i + 1].key}
                 shown={removedShown[i + 1] !== undefined}
-                timeout={{ enter: 0, exit: 500 }}>
+                timeout={{enter: 0, exit: 500}}>
                 {removed[i + 1]}
               </AnimatedItem>
             )}

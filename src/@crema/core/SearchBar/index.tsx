@@ -1,11 +1,11 @@
-import React, { CSSProperties } from 'react';
+import React, {CSSProperties} from 'react';
 import InputBase from '@material-ui/core/InputBase';
-import { makeStyles } from '@material-ui/core/styles';
-import { Box, fade } from '@material-ui/core';
+import {makeStyles} from '@material-ui/core/styles';
+import {Box, fade} from '@material-ui/core';
 import clsx from 'clsx';
 import SearchIcon from '@material-ui/icons/Search';
-import { Fonts } from '../../../shared/constants/AppEnums';
-import { CremaTheme } from '../../../types/AppContextPropsType';
+import {Fonts} from '../../../shared/constants/AppEnums';
+import {CremaTheme} from '../../../types/AppContextPropsType';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
   root: {
@@ -26,7 +26,7 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
       display: 'block',
     },
   },
-  search: (props: { borderLight: boolean; align: string }) => ({
+  search: (props: {borderLight: boolean; align: string}) => ({
     position: 'relative',
     borderRadius: theme.shape.borderRadius,
     backgroundColor: fade(theme.palette.common.white, 0.15),
@@ -94,7 +94,7 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     backgroundColor: 'transparent',
     fontWeight: Fonts.MEDIUM,
     border: '1px solid',
-    borderColor: (props: { borderLight: boolean; align: string }) =>
+    borderColor: (props: {borderLight: boolean; align: string}) =>
       props.borderLight ? '#efefef' : theme.palette.text.secondary,
     color: 'black',
     borderRadius: 4,
@@ -150,10 +150,15 @@ const AppSearch: React.FC<AppSearchProps> = ({
   inputStyle,
   ...rest
 }) => {
-  const classes = useStyles({ borderLight, align });
+  const classes = useStyles({borderLight, align});
   return (
     <Box className={classes.root} style={containerStyle}>
-      <Box className={clsx(classes.search, { 'cr-search': overlap }, onlyIcon ? classes.searchIconBox : null)}>
+      <Box
+        className={clsx(
+          classes.search,
+          {'cr-search': overlap},
+          onlyIcon ? classes.searchIconBox : null,
+        )}>
         <Box
           className={clsx(classes.searchIcon, {
             right: iconPosition === 'right',
@@ -169,7 +174,7 @@ const AppSearch: React.FC<AppSearchProps> = ({
             root: classes.inputRoot,
             input: classes.inputInput,
           }}
-          inputProps={{ 'aria-label': 'search' }}
+          inputProps={{'aria-label': 'search'}}
         />
       </Box>
     </Box>

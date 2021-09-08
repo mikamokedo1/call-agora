@@ -1,14 +1,14 @@
-import React, { useState, useRef } from 'react';
+import React, {useState, useRef} from 'react';
 import Box from '@material-ui/core/Box';
 import styled from 'styled-components';
 import Button from '@material-ui/core/Button';
 import CameraAltIcon from '@material-ui/icons/CameraAlt';
 import ArrowRightAltIcon from '@material-ui/icons/ArrowRightAlt';
-import { userSelector } from 'src/redux/reducers/Auth';
-import { useDispatch, useSelector } from 'react-redux';
+import {userSelector} from 'src/redux/reducers/Auth';
+import {useDispatch, useSelector} from 'react-redux';
 import axios from 'axios';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { changeAvatar } from '../../../redux/actions/JWTAuth';
+import {changeAvatar} from '../../../redux/actions/JWTAuth';
 
 const StyledButton = styled(Button)`
   margin-top: 20px;
@@ -25,7 +25,10 @@ interface UserSettingFormProps {
   handleEditPassword: () => void;
 }
 
-const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingFormProps) => {
+const UserSettingForm = ({
+  handleEditBank,
+  handleEditPassword,
+}: UserSettingFormProps) => {
   const dispatch = useDispatch();
   const user = useSelector(userSelector);
   const refInput = useRef<HTMLInputElement>(null);
@@ -43,13 +46,17 @@ const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingForm
     formData.append('file', avatar as any);
     formData.append('upload_preset', 'krystal');
     axios
-      .post('https://api.cloudinary.com/v1_1/dofjvpahx/image/upload', formData, {
-        headers: { 'X-Requested-With': 'XMLHttpRequest' },
-      })
+      .post(
+        'https://api.cloudinary.com/v1_1/dofjvpahx/image/upload',
+        formData,
+        {
+          headers: {'X-Requested-With': 'XMLHttpRequest'},
+        },
+      )
       .then((response) => {
-        const { data } = response;
+        const {data} = response;
         const url = data.secure_url; // You should store this URL for future references in your app
-        dispatch(changeAvatar({ username: user?.displayName, url }));
+        dispatch(changeAvatar({username: user?.displayName, url}));
         setLoading(false);
       })
       .catch((error) => {
@@ -66,11 +73,15 @@ const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingForm
       display='flex'
       width='100%'
       boxShadow='0px 2x rgba(163, 171, 185, 0.24)'>
-      <Box display='flex' justifyContent='center' alignItems='center' flexDirection='column'>
+      <Box
+        display='flex'
+        justifyContent='center'
+        alignItems='center'
+        flexDirection='column'>
         <input
           type='file'
           ref={refInput}
-          style={{ display: 'none' }}
+          style={{display: 'none'}}
           onChange={handleChangeAvatar}
           accept='.jpg, .jpeg, .png, .svg'
         />
@@ -86,7 +97,7 @@ const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingForm
           <img
             src={avatar ? URL.createObjectURL(avatar) : user?.photoURL}
             alt='avatar'
-            style={{ borderRadius: '50%' }}
+            style={{borderRadius: '50%'}}
           />
           <Box
             display='flex'
@@ -94,12 +105,17 @@ const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingForm
             alignItems='center'
             width='24px'
             height='24px'
-            style={{ position: 'absolute', bottom: '5px', right: '5px', cursor: 'pointer' }}
+            style={{
+              position: 'absolute',
+              bottom: '5px',
+              right: '5px',
+              cursor: 'pointer',
+            }}
             bgcolor='#fff'
             borderRadius='50%'
             p='3px'
             onClick={() => refInput.current?.click()}>
-            <CameraAltIcon style={{ fontSize: '20px' }} />
+            <CameraAltIcon style={{fontSize: '20px'}} />
           </Box>
         </Box>
         <Box fontWeight='bold' mb='5px' mt='10px' fontSize='16px'>
@@ -168,10 +184,14 @@ const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingForm
       <StyledInfo>{user?.phone}</StyledInfo>
       <Box color='#90A0B7'>Email</Box>
       <StyledInfo>{user?.email}</StyledInfo>
-      <Button variant='outlined' color='primary' style={{ marginTop: '30px' }}>
+      <Button variant='outlined' color='primary' style={{marginTop: '30px'}}>
         Chính sách cộng tác viên
       </Button>
-      <StyledButton variant='contained' color='primary' onClick={submitAvatar} fullWidth>
+      <StyledButton
+        variant='contained'
+        color='primary'
+        onClick={submitAvatar}
+        fullWidth>
         {loading ? <CircularProgress size={30} color='inherit' /> : ' Cập nhật'}
       </StyledButton>
     </Box>

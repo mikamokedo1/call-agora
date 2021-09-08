@@ -1,14 +1,14 @@
-import { Dispatch } from 'redux';
-import { get } from 'lodash';
-import { v4 as uuidv4 } from 'uuid';
+import {Dispatch} from 'redux';
+import {get} from 'lodash';
+import {v4 as uuidv4} from 'uuid';
 import md5 from 'md5';
 import CryptoJS from 'crypto-js';
 import jwtAxios from '../../@crema/services/auth/jwt-auth/jwt-api';
-import { fetchError, fetchStart, fetchSuccess } from './Common';
-import { AuthType } from '../../shared/constants/AppEnums';
-import { defaultUser } from '../../shared/constants/AppConst';
-import { AuthUser } from '../../types/models/AuthUser';
-import { AppActions } from '../../types';
+import {fetchError, fetchStart, fetchSuccess} from './Common';
+import {AuthType} from '../../shared/constants/AppEnums';
+import {defaultUser} from '../../shared/constants/AppConst';
+import {AuthUser} from '../../types/models/AuthUser';
+import {AppActions} from '../../types';
 import {
   SET_AUTH_TOKEN,
   SIGNOUT_AUTH_SUCCESS,
@@ -21,7 +21,11 @@ import {
 } from '../../types/actions/Auth.actions';
 
 const keyHmac = process.env.REACT_APP_KEY_HASHMAC;
-export const onJwtUserSignUp = (body: { email: string; password: string; name: string }) => {
+export const onJwtUserSignUp = (body: {
+  email: string;
+  password: string;
+  name: string;
+}) => {
   return async (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     try {
@@ -37,7 +41,7 @@ export const onJwtUserSignUp = (body: { email: string; password: string; name: s
   };
 };
 
-export const onJwtSignIn = (body: { username: string; password: string }) => {
+export const onJwtSignIn = (body: {username: string; password: string}) => {
   return async (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchStart());
     const uid = uuidv4();
@@ -46,7 +50,10 @@ export const onJwtSignIn = (body: { username: string; password: string }) => {
     const has = CryptoJS.HmacSHA256(string, keyHmac ?? '').toString();
     try {
       jwtAxios.defaults.headers.common['x-requestid'] = uid;
-      const res = await jwtAxios.post('/users/login', { ...body, signature: has });
+      const res = await jwtAxios.post('/users/login', {
+        ...body,
+        signature: has,
+      });
 
       if (res.data) {
         localStorage.setItem('token', res.data.accessToken);
@@ -100,7 +107,7 @@ export const onJWTAuthSignout = () => {
   return (dispatch: Dispatch<AppActions>) => {
     dispatch(fetchSuccess());
     setTimeout(() => {
-      dispatch({ type: SIGNOUT_AUTH_SUCCESS });
+      dispatch({type: SIGNOUT_AUTH_SUCCESS});
       dispatch(fetchSuccess());
       localStorage.removeItem('token');
     }, 500);
@@ -110,19 +117,22 @@ export const onJWTAuthSignout = () => {
 export const changePassword = (payload: ChangePasswordParams) => {
   return async (dispatch: Dispatch<AppActions>) => {
     try {
-      dispatch({ type: CHANGE_PASSWORD.pending });
+      dispatch({type: CHANGE_PASSWORD.pending});
       const uid = uuidv4();
       jwtAxios.defaults.headers.common['x-requestid'] = uid;
       const res = await jwtAxios.put('/users/change-password', payload);
       if (res.result.code === 'success') {
-        dispatch({ type: CHANGE_PASSWORD.success });
-        dispatch({ type: SIGNOUT_AUTH_SUCCESS });
+        dispatch({type: CHANGE_PASSWORD.success});
+        dispatch({type: SIGNOUT_AUTH_SUCCESS});
         localStorage.removeItem('token');
       } else {
-        dispatch({ type: CHANGE_PASSWORD.error, message: get(res, 'result.message') });
+        dispatch({
+          type: CHANGE_PASSWORD.error,
+          message: get(res, 'result.message'),
+        });
       }
     } catch (error) {
-      dispatch({ type: CHANGE_PASSWORD.error, message: error });
+      dispatch({type: CHANGE_PASSWORD.error, message: error});
     }
   };
 };
@@ -130,34 +140,40 @@ export const changePassword = (payload: ChangePasswordParams) => {
 export const changeBankInfo = (payload: ChangeBankParams) => {
   return async (dispatch: Dispatch<AppActions>) => {
     try {
-      dispatch({ type: CHANGE_BANK_INFO.pending });
+      dispatch({type: CHANGE_BANK_INFO.pending});
       const uid = uuidv4();
       jwtAxios.defaults.headers.common['x-requestid'] = uid;
       const res = await jwtAxios.put('/users/update-bankinfor', payload);
       if (res.result.code === 'success') {
-        dispatch({ type: CHANGE_BANK_INFO.success, payload });
+        dispatch({type: CHANGE_BANK_INFO.success, payload});
       } else {
-        dispatch({ type: CHANGE_BANK_INFO.error, message: get(res, 'result.message') });
+        dispatch({
+          type: CHANGE_BANK_INFO.error,
+          message: get(res, 'result.message'),
+        });
       }
     } catch (error) {
-      dispatch({ type: CHANGE_BANK_INFO.error, message: error });
+      dispatch({type: CHANGE_BANK_INFO.error, message: error});
     }
   };
 };
-export const changeAvatar = (payload: { username: string; url: string }) => {
+export const changeAvatar = (payload: {username: string; url: string}) => {
   return async (dispatch: Dispatch<AppActions>) => {
     try {
-      dispatch({ type: CHANGE_AVATAR.pending });
+      dispatch({type: CHANGE_AVATAR.pending});
       const uid = uuidv4();
       jwtAxios.defaults.headers.common['x-requestid'] = uid;
       const res = await jwtAxios.put('/users/avatar-url', payload);
       if (res.result.code === 'success') {
-        dispatch({ type: CHANGE_AVATAR.success, payload: payload.url });
+        dispatch({type: CHANGE_AVATAR.success, payload: payload.url});
       } else {
-        dispatch({ type: CHANGE_AVATAR.error, message: get(res, 'result.message') });
+        dispatch({
+          type: CHANGE_AVATAR.error,
+          message: get(res, 'result.message'),
+        });
       }
     } catch (error) {
-      dispatch({ type: CHANGE_AVATAR.error, message: error });
+      dispatch({type: CHANGE_AVATAR.error, message: error});
     }
   };
 };

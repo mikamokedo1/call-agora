@@ -14,9 +14,8 @@ import AppContextPropsType from '../../../../types/AppContextPropsType';
 interface HorDefaultLayoutProps {}
 
 const HorDefault: React.FC<HorDefaultLayoutProps> = () => {
-  const {footer, layoutType, footerType} = useContext<AppContextPropsType>(
-    AppContext,
-  );
+  const {footer, layoutType, footerType} =
+    useContext<AppContextPropsType>(AppContext);
   const classes = useStyles();
 
   return (

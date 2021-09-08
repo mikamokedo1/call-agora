@@ -1,9 +1,11 @@
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import Box from '@material-ui/core/Box';
-import { Button, makeStyles } from '@material-ui/core';
+import {Button, makeStyles} from '@material-ui/core';
 import clsx from 'clsx';
 import AppContext from '../../utility/AppContext';
-import AppContextPropsType, { CremaTheme } from '../../../types/AppContextPropsType';
+import AppContextPropsType, {
+  CremaTheme,
+} from '../../../types/AppContextPropsType';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
   footer: {
@@ -35,7 +37,8 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
 interface AppFooterProps {}
 
 const AppFooter: React.FC<AppFooterProps> = () => {
-  const { footer, footerType, navStyle } = useContext<AppContextPropsType>(AppContext);
+  const {footer, footerType, navStyle} =
+    useContext<AppContextPropsType>(AppContext);
 
   const classes = useStyles();
 
@@ -47,7 +50,11 @@ const AppFooter: React.FC<AppFooterProps> = () => {
       navStyle !== 'hor-light-nav' &&
       navStyle !== 'hor-dark-layout' ? (
         <Box className={clsx(classes.footer, 'footer')}>
-          <Box className='footerContainer' alignItems='center' flexDirection='row' display='flex'>
+          <Box
+            className='footerContainer'
+            alignItems='center'
+            flexDirection='row'
+            display='flex'>
             <Box>Copy right @crema 2020</Box>
             <Box ml='auto'>
               <Button className={classes.btnRoot} color='primary'>

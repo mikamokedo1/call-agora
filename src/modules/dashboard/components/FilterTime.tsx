@@ -7,10 +7,10 @@ interface FilterTimeProps {
   handleClick: (id: string) => void;
   id: string;
 }
-const FilterTime = ({ title, isActive, handleClick, id }: FilterTimeProps) => {
+const FilterTime = ({title, isActive, handleClick, id}: FilterTimeProps) => {
   return (
     <Box
-      style={{ cursor: 'pointer' }}
+      style={{cursor: 'pointer'}}
       onClick={() => handleClick(id)}
       borderRadius='8px'
       ml='20px'

@@ -1,11 +1,11 @@
-import React, { CSSProperties, ReactNode } from 'react';
+import React, {CSSProperties, ReactNode} from 'react';
 import Card from '@material-ui/core/Card';
-import { Box, CardHeader, makeStyles } from '@material-ui/core';
-import { MessageFormatElement } from 'intl-messageformat-parser';
+import {Box, CardHeader, makeStyles} from '@material-ui/core';
+import {MessageFormatElement} from 'intl-messageformat-parser';
 import Link from '@material-ui/core/Link';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import { Fonts } from '../../../shared/constants/AppEnums';
+import {Fonts} from '../../../shared/constants/AppEnums';
 
 const useStyles = makeStyles(() => ({
   link: {
@@ -63,8 +63,12 @@ const AppCard: React.FC<AppCardProps> = ({
             style={{
               ...headerStyle,
             }}
-            title={(
-              <Box display='flex' flexDirection='row' alignItems='center' justifyContent='space-between'>
+            title={
+              <Box
+                display='flex'
+                flexDirection='row'
+                alignItems='center'
+                justifyContent='space-between'>
                 {React.isValidElement(title) ? (
                   title
                 ) : (
@@ -80,13 +84,23 @@ const AppCard: React.FC<AppCardProps> = ({
                   </Box>
                 )}
               </Box>
-            )}
+            }
             action={
               React.isValidElement(action) ? (
                 action
               ) : (
-                <Box component='span' ml='auto' mt={2} mr={2} style={actionStyle}>
-                  <Link href='#' color='secondary' component='button' underline='none' className={classes.link}>
+                <Box
+                  component='span'
+                  ml='auto'
+                  mt={2}
+                  mr={2}
+                  style={actionStyle}>
+                  <Link
+                    href='#'
+                    color='secondary'
+                    component='button'
+                    underline='none'
+                    className={classes.link}>
                     <Box component='span'>{action}</Box>
                   </Link>
                 </Box>
@@ -114,8 +128,14 @@ const AppCard: React.FC<AppCardProps> = ({
             {typeof footer === 'object' ? (
               footer
             ) : (
-              <Box component='span' ml={footerPosition === 'right' ? 'auto' : 0}>
-                <Link color='secondary' component='button' underline='none' className={classes.link}>
+              <Box
+                component='span'
+                ml={footerPosition === 'right' ? 'auto' : 0}>
+                <Link
+                  color='secondary'
+                  component='button'
+                  underline='none'
+                  className={classes.link}>
                   {footer}
                 </Link>
               </Box>

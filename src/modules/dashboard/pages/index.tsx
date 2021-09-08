@@ -1,11 +1,20 @@
-import React, { useEffect } from 'react';
+import React, {useEffect} from 'react';
 import Box from '@material-ui/core/Box';
-import { makeStyles } from '@material-ui/core/styles';
-import { useDispatch, useSelector } from 'react-redux';
+import {makeStyles} from '@material-ui/core/styles';
+import {useDispatch, useSelector} from 'react-redux';
 import AppAnimate from '../../../@crema/core/AppAnimate';
-import { CremaTheme } from '../../../types/AppContextPropsType';
-import { fetchStatistic, fetchOrders, fetchSummary, fetchStatisticChart } from '../../../redux/actions/dashboard';
-import { statisticSelector, summarySelector, ordersSelector } from '../../../redux/reducers/Dashboard';
+import {CremaTheme} from '../../../types/AppContextPropsType';
+import {
+  fetchStatistic,
+  fetchOrders,
+  fetchSummary,
+  fetchStatisticChart,
+} from '../../../redux/actions/dashboard';
+import {
+  statisticSelector,
+  summarySelector,
+  ordersSelector,
+} from '../../../redux/reducers/Dashboard';
 import TableList from '../container/TableList';
 import ChartStistic from '../container/ChartStistic';
 import ChartStacked from '../container/ChartStacked';
@@ -195,7 +204,10 @@ const PageOne = () => {
             <Box>
               <Box className={classes.sumItem}>
                 <Box className='left' bgcolor='rgb(52,172,109,0.2)'>
-                  <img src='/assets/images/dasboard/order.svg' alt='icon-shit' />
+                  <img
+                    src='/assets/images/dasboard/order.svg'
+                    alt='icon-shit'
+                  />
                 </Box>
                 <Box className='right'>
                   <Box color='#90A0B7' fontSize='16px'>
@@ -208,7 +220,10 @@ const PageOne = () => {
               </Box>
               <Box className={classes.sumItem}>
                 <Box className='left' bgcolor='rgb(16,156,241,0.2)'>
-                  <img src='/assets/images/dasboard/money.png' alt='icon-shit' />
+                  <img
+                    src='/assets/images/dasboard/money.png'
+                    alt='icon-shit'
+                  />
                 </Box>
                 <Box className='right'>
                   <Box color='#90A0B7' fontSize='16px'>
@@ -216,14 +231,20 @@ const PageOne = () => {
                   </Box>
                   <Box fontSize='18px' fontWeight='bold' color='334D6E'>
                     {summary
-                      ? `${summary.totalAmount.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}`
+                      ? `${summary.totalAmount.toLocaleString('it-IT', {
+                          style: 'currency',
+                          currency: 'VND',
+                        })}`
                       : '0 VND'}
                   </Box>
                 </Box>
               </Box>
               <Box className={classes.sumItem}>
                 <Box className='left' bgcolor='rgb(136,90,248,0.2)'>
-                  <img src='/assets/images/dasboard/wallet.png' alt='icon-shit' />
+                  <img
+                    src='/assets/images/dasboard/wallet.png'
+                    alt='icon-shit'
+                  />
                 </Box>
                 <Box className='right'>
                   <Box color='#90A0B7' fontSize='16px'>
@@ -231,14 +252,21 @@ const PageOne = () => {
                   </Box>
                   <Box fontSize='18px' fontWeight='bold' color='334D6E'>
                     {summary
-                      ? `${summary.commission.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}`
+                      ? `${summary.commission.toLocaleString('it-IT', {
+                          style: 'currency',
+                          currency: 'VND',
+                        })}`
                       : '0 VND'}
                   </Box>
                 </Box>
               </Box>
               <Box className={classes.sumItem}>
                 <Box className='left' bgcolor='rgb(255,187,70,0.2)'>
-                  <img src='/assets/images/dasboard/danhan.png' alt='icon-shit' style={{ width: '31px' }} />
+                  <img
+                    src='/assets/images/dasboard/danhan.png'
+                    alt='icon-shit'
+                    style={{width: '31px'}}
+                  />
                 </Box>
                 <Box className='right'>
                   <Box color='#90A0B7' fontSize='16px'>
@@ -246,7 +274,10 @@ const PageOne = () => {
                   </Box>
                   <Box fontSize='18px' fontWeight='bold' color='334D6E'>
                     {summary
-                      ? `${summary.paidCommission.toLocaleString('it-IT', { style: 'currency', currency: 'VND' })}`
+                      ? `${summary.paidCommission.toLocaleString('it-IT', {
+                          style: 'currency',
+                          currency: 'VND',
+                        })}`
                       : '0 VND'}
                   </Box>
                 </Box>

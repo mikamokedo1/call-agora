@@ -1,33 +1,38 @@
-import React, { ReactNode, useContext, useEffect } from 'react';
-import { useHistory, useLocation } from 'react-router-dom';
-import { useDispatch, useSelector } from 'react-redux';
-import { matchRoutes } from 'react-router-config';
+import React, {ReactNode, useContext, useEffect} from 'react';
+import {useHistory, useLocation} from 'react-router-dom';
+import {useDispatch, useSelector} from 'react-redux';
+import {matchRoutes} from 'react-router-config';
 import qs from 'qs';
 import AppContext from './AppContext';
-import { useAuthToken } from './AppHooks';
-import { Loader } from '../index';
-import { checkPermission } from './Utils';
-import { initialUrl } from '../../shared/constants/AppConst';
-import { setInitialPath } from '../../redux/actions';
-import { AppState } from '../../redux/store';
+import {useAuthToken} from './AppHooks';
+import {Loader} from '../index';
+import {checkPermission} from './Utils';
+import {initialUrl} from '../../shared/constants/AppConst';
+import {setInitialPath} from '../../redux/actions';
+import {AppState} from '../../redux/store';
 import AppContextPropsType from '../../types/AppContextPropsType';
-import { NavStyle, ThemeMode, ThemeStyle } from '../../shared/constants/AppEnums';
+import {NavStyle, ThemeMode, ThemeStyle} from '../../shared/constants/AppEnums';
 
 interface AuthRoutesProps {
   children: ReactNode;
 }
 
-const AuthRoutes: React.FC<AuthRoutesProps> = ({ children }) => {
-  const { pathname, search } = useLocation();
+const AuthRoutes: React.FC<AuthRoutesProps> = ({children}) => {
+  const {pathname, search} = useLocation();
   const dispatch = useDispatch();
   const history = useHistory();
-  const { routes, changeNavStyle, updateThemeStyle, updateThemeMode, setRTL } =
+  const {routes, changeNavStyle, updateThemeStyle, updateThemeMode, setRTL} =
     useContext<AppContextPropsType>(AppContext);
 
   const [loading, user] = useAuthToken();
-  const { initialPath } = useSelector<AppState, AppState['settings']>(({ settings }) => settings);
+  const {initialPath} = useSelector<AppState, AppState['settings']>(
+    ({settings}) => settings,
+  );
   const currentRoute = matchRoutes(routes, pathname)[0].route;
-  const isPermitted = checkPermission(currentRoute.auth, user ? user.role : null);
+  const isPermitted = checkPermission(
+    currentRoute.auth,
+    user ? user.role : null,
+  );
 
   useEffect(() => {
     function setInitPath() {
@@ -82,7 +87,12 @@ const AuthRoutes: React.FC<AuthRoutesProps> = ({ children }) => {
       } else if (user && !isPermitted) {
         history.push('/error-pages/error-404'); // Not found
       } else if (user && isPermitted) {
-        if ((pathname === '/' || pathname === '/signin' || pathname === '/signup') && localStorage.getItem('token')) {
+        if (
+          (pathname === '/' ||
+            pathname === '/signin' ||
+            pathname === '/signup') &&
+          localStorage.getItem('token')
+        ) {
           history.push(initialUrl);
         } else {
           // @ts-ignore
@@ -94,7 +104,7 @@ const AuthRoutes: React.FC<AuthRoutesProps> = ({ children }) => {
             // initialPath !== '/signup')
           ) {
             // history.push(initialPath);
-            console.log({ isPermitted, initialPath, initialUrl });
+            console.log({isPermitted, initialPath, initialUrl});
           }
         }
       }

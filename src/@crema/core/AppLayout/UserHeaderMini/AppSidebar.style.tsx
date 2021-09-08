@@ -97,9 +97,10 @@ const useStyles = makeStyles((theme: CremaTheme) => {
           '& .collapse-children .collapse-children .nav-item': {
             paddingLeft: 117,
           },
-          '& .collapse-children .collapse-children .collapse-children .nav-item': {
-            paddingLeft: 167,
-          },
+          '& .collapse-children .collapse-children .collapse-children .nav-item':
+            {
+              paddingLeft: 167,
+            },
         },
 
         [theme.breakpoints.up('xl')]: {
@@ -113,9 +114,10 @@ const useStyles = makeStyles((theme: CremaTheme) => {
           '& .collapse-children .collapse-children .nav-item': {
             paddingLeft: 124,
           },
-          '& .collapse-children .collapse-children .collapse-children .nav-item': {
-            paddingLeft: 174,
-          },
+          '& .collapse-children .collapse-children .collapse-children .nav-item':
+            {
+              paddingLeft: 174,
+            },
         },
       },
     },

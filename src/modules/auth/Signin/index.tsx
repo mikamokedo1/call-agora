@@ -1,17 +1,17 @@
 import React from 'react';
 import Box from '@material-ui/core/Box';
-import { makeStyles } from '@material-ui/core/styles';
+import {makeStyles} from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
-import { Form, Formik, useField } from 'formik';
+import {Form, Formik, useField} from 'formik';
 import * as yup from 'yup';
-import { useHistory } from 'react-router-dom';
+import {useHistory} from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-import { useDispatch, useSelector } from 'react-redux';
-import { AppState } from 'src/redux/store';
+import {useDispatch, useSelector} from 'react-redux';
+import {AppState} from 'src/redux/store';
 import CircularProgress from '@material-ui/core/CircularProgress';
-import { onJwtSignIn } from '../../../redux/actions';
-import { Fonts } from '../../../shared/constants/AppEnums';
-import { CremaTheme } from '../../../types/AppContextPropsType';
+import {onJwtSignIn} from '../../../redux/actions';
+import {Fonts} from '../../../shared/constants/AppEnums';
+import {CremaTheme} from '../../../types/AppContextPropsType';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
   wrap: {
@@ -92,7 +92,15 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
 const MyTextField = (props: any) => {
   const [field, meta] = useField(props);
   const errorText = meta.error && meta.touched ? meta.error : '';
-  return <TextField {...props} {...field} helperText={errorText} error={!!errorText} fullWidth />;
+  return (
+    <TextField
+      {...props}
+      {...field}
+      helperText={errorText}
+      error={!!errorText}
+      fullWidth
+    />
+  );
 };
 const validationSchema = yup.object({
   userName: yup.string().required('Bạn quên nhập tài khoản!'),
@@ -123,22 +131,37 @@ const Signin: React.FC<{}> = () => {
               password: '',
             }}
             validationSchema={validationSchema}
-            onSubmit={(data, { setSubmitting }) => {
+            onSubmit={(data, {setSubmitting}) => {
               setSubmitting(true);
-              dispatch(onJwtSignIn({ username: data.userName, password: data.password }));
+              dispatch(
+                onJwtSignIn({username: data.userName, password: data.password}),
+              );
               setSubmitting(false);
             }}>
-            {({ isSubmitting }) => (
+            {({isSubmitting}) => (
               <Form noValidate autoComplete='off'>
-                <Box mb={{ xs: 5, xl: 8 }}>
-                  <MyTextField placeholder='Nhập ID' name='userName' label='Tài Khoản' />
+                <Box mb={{xs: 5, xl: 8}}>
+                  <MyTextField
+                    placeholder='Nhập ID'
+                    name='userName'
+                    label='Tài Khoản'
+                  />
                 </Box>
 
-                <Box mb={{ xs: 3, lg: 4 }}>
-                  <MyTextField type='password' placeholder='Nhập mật khẩu' label='Mật khẩu' name='password' />
+                <Box mb={{xs: 3, lg: 4}}>
+                  <MyTextField
+                    type='password'
+                    placeholder='Nhập mật khẩu'
+                    label='Mật khẩu'
+                    name='password'
+                  />
                 </Box>
 
-                <Box component='span' className={classes.pointer} onClick={onGoToForgetPassword} fontSize={15}>
+                <Box
+                  component='span'
+                  className={classes.pointer}
+                  onClick={onGoToForgetPassword}
+                  fontSize={15}>
                   Quên mật khẩu?
                 </Box>
                 {common && <Box className={classes.error}>{common}</Box>}
@@ -151,7 +174,11 @@ const Signin: React.FC<{}> = () => {
                     disabled={isSubmitting || isLoading}
                     className={classes.btnRoot}
                     fullWidth>
-                    {isLoading ? <CircularProgress size={30} color='inherit' /> : 'Đăng nhập'}
+                    {isLoading ? (
+                      <CircularProgress size={30} color='inherit' />
+                    ) : (
+                      'Đăng nhập'
+                    )}
                   </Button>
                 </Box>
               </Form>

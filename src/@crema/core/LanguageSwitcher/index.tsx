@@ -1,14 +1,16 @@
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import Menu from '@material-ui/core/Menu';
 import IconButton from '@material-ui/core/IconButton';
 import MenuItem from '@material-ui/core/MenuItem';
 import clsx from 'clsx';
 import Box from '@material-ui/core/Box';
-import { makeStyles } from '@material-ui/core';
+import {makeStyles} from '@material-ui/core';
 import AppContext from '../../utility/AppContext';
-import languageData, { LanguageProps } from './data';
-import { Fonts } from '../../../shared/constants/AppEnums';
-import AppContextPropsType, { CremaTheme } from '../../../types/AppContextPropsType';
+import languageData, {LanguageProps} from './data';
+import {Fonts} from '../../../shared/constants/AppEnums';
+import AppContextPropsType, {
+  CremaTheme,
+} from '../../../types/AppContextPropsType';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
   langBtn: {
@@ -87,9 +89,13 @@ interface LanguageSwitcherProps {
   iconOnly?: boolean;
 }
 
-const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ iconOnly = false }) => {
-  const { changeLocale, rtlLocale, locale, setRTL } = useContext<AppContextPropsType>(AppContext);
-  const [anchorElLng, setAnchorElLng] = React.useState<HTMLButtonElement | null>(null);
+const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({
+  iconOnly = false,
+}) => {
+  const {changeLocale, rtlLocale, locale, setRTL} =
+    useContext<AppContextPropsType>(AppContext);
+  const [anchorElLng, setAnchorElLng] =
+    React.useState<HTMLButtonElement | null>(null);
 
   const onClickMenu = (event: React.MouseEvent<HTMLButtonElement>) => {
     setAnchorElLng(event.currentTarget);
@@ -125,7 +131,7 @@ const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ iconOnly = false })
           <>
             <Box
               component='span'
-              mr={{ xs: 2, md: 3 }}
+              mr={{xs: 2, md: 3}}
               height={48}
               width={48}
               display='flex'
@@ -135,7 +141,12 @@ const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ iconOnly = false })
               className={classes.overflowHidden}>
               <i className={`flag flag-24 flag-${locale.icon}`} />
             </Box>
-            <Box component='span' fontSize={16} fontFamily='Poppins' fontWeight={Fonts.REGULAR} display='inline-block'>
+            <Box
+              component='span'
+              fontSize={16}
+              fontFamily='Poppins'
+              fontWeight={Fonts.REGULAR}
+              display='inline-block'>
               {locale.name}
             </Box>
           </>
@@ -153,9 +164,18 @@ const LanguageSwitcher: React.FC<LanguageSwitcherProps> = ({ iconOnly = false })
         onClose={() => setAnchorElLng(null)}>
         {languageData.map((language: LanguageProps, index) => (
           <MenuItem key={index} onClick={() => changeLanguage(language)}>
-            <Box width={160} display='flex' flexDirection='row' alignItems='center'>
+            <Box
+              width={160}
+              display='flex'
+              flexDirection='row'
+              alignItems='center'>
               <i className={`flag flag-24 flag-${language.icon}`} />
-              <Box component='h4' ml={4} mb={0} fontSize={{ xs: 14, xl: 16 }} fontWeight={Fonts.MEDIUM}>
+              <Box
+                component='h4'
+                ml={4}
+                mb={0}
+                fontSize={{xs: 14, xl: 16}}
+                fontWeight={Fonts.MEDIUM}>
                 {language.name}
               </Box>
             </Box>

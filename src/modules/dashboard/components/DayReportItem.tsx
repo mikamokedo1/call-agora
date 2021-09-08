@@ -7,9 +7,18 @@ interface DayReportItemProps {
   difference: string;
   isLow: boolean;
 }
-const DayReportItem = ({ date, money, difference, isLow }: DayReportItemProps) => {
+const DayReportItem = ({
+  date,
+  money,
+  difference,
+  isLow,
+}: DayReportItemProps) => {
   return (
-    <Box display='flex' justifyContent='space-between' py='10px' borderTop='1px solid #E6EAF0'>
+    <Box
+      display='flex'
+      justifyContent='space-between'
+      py='10px'
+      borderTop='1px solid #E6EAF0'>
       <Box color='#1F4173'>{date}</Box>
       <Box color='#1F4173'>{money}</Box>
       <Box color={isLow ? '#F7685B' : '##34AC6D'}>{difference}</Box>

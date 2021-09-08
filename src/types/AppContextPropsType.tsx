@@ -1,15 +1,22 @@
-import { PaletteType, Theme, Transitions } from '@material-ui/core';
-import { Direction } from '@material-ui/core/styles/createMuiTheme';
-import { ZIndex } from '@material-ui/core/styles/zIndex';
-import { Spacing } from '@material-ui/core/styles/createSpacing';
-import { Mixins } from '@material-ui/core/styles/createMixins';
-import { Shape } from '@material-ui/core/styles/shape';
-import { Breakpoints } from '@material-ui/core/styles/createBreakpoints';
-import { ComponentsProps } from '@material-ui/core/styles/props';
-import { Shadows } from '@material-ui/core/styles/shadows';
-import { Palette } from '@material-ui/core/styles/createPalette';
-import { LanguageProps } from '../@crema/core/LanguageSwitcher/data';
-import { FooterType, LayoutType, NavStyle, RouteTransition, ThemeMode, ThemeStyle } from '../shared/constants/AppEnums';
+import {PaletteType, Theme, Transitions} from '@material-ui/core';
+import {Direction} from '@material-ui/core/styles/createMuiTheme';
+import {ZIndex} from '@material-ui/core/styles/zIndex';
+import {Spacing} from '@material-ui/core/styles/createSpacing';
+import {Mixins} from '@material-ui/core/styles/createMixins';
+import {Shape} from '@material-ui/core/styles/shape';
+import {Breakpoints} from '@material-ui/core/styles/createBreakpoints';
+import {ComponentsProps} from '@material-ui/core/styles/props';
+import {Shadows} from '@material-ui/core/styles/shadows';
+import {Palette} from '@material-ui/core/styles/createPalette';
+import {LanguageProps} from '../@crema/core/LanguageSwitcher/data';
+import {
+  FooterType,
+  LayoutType,
+  NavStyle,
+  RouteTransition,
+  ThemeMode,
+  ThemeStyle,
+} from '../shared/constants/AppEnums';
 
 interface CremaPalette extends Palette {
   type: PaletteType;

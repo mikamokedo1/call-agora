@@ -13,9 +13,8 @@ import AppContextPropsType from '../../../../types/AppContextPropsType';
 interface DrawerLayoutProps {}
 
 const DrawerLayout: React.FC<DrawerLayoutProps> = () => {
-  const {footer, layoutType, footerType} = useContext<AppContextPropsType>(
-    AppContext,
-  );
+  const {footer, layoutType, footerType} =
+    useContext<AppContextPropsType>(AppContext);
   const classes = useStyles({footer});
 
   return (

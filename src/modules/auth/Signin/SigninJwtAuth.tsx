@@ -1,20 +1,20 @@
 import React from 'react';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
-import { Checkbox } from '@material-ui/core';
-import { Form, Formik, useField } from 'formik';
+import {Checkbox} from '@material-ui/core';
+import {Form, Formik, useField} from 'formik';
 import * as yup from 'yup';
-import { useDispatch } from 'react-redux';
+import {useDispatch} from 'react-redux';
 import Box from '@material-ui/core/Box';
-import { useIntl } from 'react-intl';
-import { makeStyles } from '@material-ui/core/styles';
+import {useIntl} from 'react-intl';
+import {makeStyles} from '@material-ui/core/styles';
 import clsx from 'clsx';
-import { Link, useHistory } from 'react-router-dom';
-import { Fonts } from '../../../shared/constants/AppEnums';
+import {Link, useHistory} from 'react-router-dom';
+import {Fonts} from '../../../shared/constants/AppEnums';
 import IntlMessages from '../../../@crema/utility/IntlMessages';
-import { onJwtSignIn } from '../../../redux/actions';
+import {onJwtSignIn} from '../../../redux/actions';
 import InfoView from '../../../@crema/core/InfoView';
-import { CremaTheme } from '../../../types/AppContextPropsType';
+import {CremaTheme} from '../../../types/AppContextPropsType';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
   formRoot: {
@@ -66,7 +66,14 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
 const MyTextField = (props: any) => {
   const [field, meta] = useField(props);
   const errorText = meta.error && meta.touched ? meta.error : '';
-  return <TextField {...props} {...field} helperText={errorText} error={!!errorText} />;
+  return (
+    <TextField
+      {...props}
+      {...field}
+      helperText={errorText}
+      error={!!errorText}
+    />
+  );
 };
 
 const validationSchema = yup.object({
@@ -84,13 +91,18 @@ const SigninJwtAuth: React.FC<UserSigninProps> = (props) => {
     history.push('/forget-password');
   };
 
-  const { messages } = useIntl();
+  const {messages} = useIntl();
 
   const classes = useStyles(props);
 
   return (
     <Box flex={1} display='flex' flexDirection='column'>
-      <Box px={{ xs: 6, sm: 10, xl: 15 }} pt={8} flex={1} display='flex' flexDirection='column'>
+      <Box
+        px={{xs: 6, sm: 10, xl: 15}}
+        pt={8}
+        flex={1}
+        display='flex'
+        flexDirection='column'>
         <Formik
           validateOnChange
           initialValues={{
@@ -98,14 +110,16 @@ const SigninJwtAuth: React.FC<UserSigninProps> = (props) => {
             password: '',
           }}
           validationSchema={validationSchema}
-          onSubmit={(data, { setSubmitting }) => {
+          onSubmit={(data, {setSubmitting}) => {
             setSubmitting(true);
-            dispatch(onJwtSignIn({ username: data.email, password: data.password }));
+            dispatch(
+              onJwtSignIn({username: data.email, password: data.password}),
+            );
             setSubmitting(false);
           }}>
-          {({ isSubmitting }) => (
+          {({isSubmitting}) => (
             <Form className={classes.formRoot} noValidate autoComplete='off'>
-              <Box mb={{ xs: 5, xl: 8 }}>
+              <Box mb={{xs: 5, xl: 8}}>
                 <MyTextField
                   placeholder={messages['common.email']}
                   name='email'
@@ -115,7 +129,7 @@ const SigninJwtAuth: React.FC<UserSigninProps> = (props) => {
                 />
               </Box>
 
-              <Box mb={{ xs: 3, lg: 4 }}>
+              <Box mb={{xs: 3, lg: 4}}>
                 <MyTextField
                   type='password'
                   placeholder={messages['common.password']}
@@ -127,11 +141,11 @@ const SigninJwtAuth: React.FC<UserSigninProps> = (props) => {
               </Box>
 
               <Box
-                mb={{ xs: 3, xl: 4 }}
+                mb={{xs: 3, xl: 4}}
                 display='flex'
-                flexDirection={{ xs: 'column', sm: 'row' }}
-                alignItems={{ sm: 'center' }}
-                justifyContent={{ sm: 'space-between' }}
+                flexDirection={{xs: 'column', sm: 'row'}}
+                alignItems={{sm: 'center'}}
+                justifyContent={{sm: 'space-between'}}
                 fontSize={15}>
                 <Box display='flex' alignItems='center'>
                   <Checkbox className={classes.checkboxRoot} />
@@ -142,7 +156,7 @@ const SigninJwtAuth: React.FC<UserSigninProps> = (props) => {
                 <Box
                   color='primary.main'
                   component='span'
-                  ml={{ sm: 4 }}
+                  ml={{sm: 4}}
                   className={classes.pointer}
                   onClick={onGoToForgetPassword}
                   fontSize={15}>
@@ -153,9 +167,9 @@ const SigninJwtAuth: React.FC<UserSigninProps> = (props) => {
               <Box
                 mb={6}
                 display='flex'
-                flexDirection={{ xs: 'column', sm: 'row' }}
-                alignItems={{ sm: 'center' }}
-                justifyContent={{ sm: 'space-between' }}>
+                flexDirection={{xs: 'column', sm: 'row'}}
+                alignItems={{sm: 'center'}}
+                justifyContent={{sm: 'space-between'}}>
                 <Button
                   variant='contained'
                   color='secondary'
@@ -165,12 +179,21 @@ const SigninJwtAuth: React.FC<UserSigninProps> = (props) => {
                   <IntlMessages id='common.login' />
                 </Button>
 
-                <Box ml={{ xs: 0, sm: 4 }} mt={{ xs: 3, sm: 0 }} color='text.secondary' fontSize={15}>
+                <Box
+                  ml={{xs: 0, sm: 4}}
+                  mt={{xs: 3, sm: 0}}
+                  color='text.secondary'
+                  fontSize={15}>
                   <Box className={classes.textGrey} component='span' mr={2}>
                     <IntlMessages id='common.dontHaveAccount' />
                   </Box>
                   <Box component='span'>
-                    <Link to='/signup' className={clsx(classes.underlineNone, classes.colorTextPrimary)}>
+                    <Link
+                      to='/signup'
+                      className={clsx(
+                        classes.underlineNone,
+                        classes.colorTextPrimary,
+                      )}>
                       <IntlMessages id='common.signup' />
                     </Link>
                   </Box>

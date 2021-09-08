@@ -15,9 +15,8 @@ interface HorLightNavProps {}
 
 const HorLightNav: React.FC<HorLightNavProps> = () => {
   const classes = useStyles();
-  const {footer, layoutType, footerType} = useContext<AppContextPropsType>(
-    AppContext,
-  );
+  const {footer, layoutType, footerType} =
+    useContext<AppContextPropsType>(AppContext);
 
   return (
     <Box

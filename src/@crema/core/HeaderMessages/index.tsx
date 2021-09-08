@@ -98,10 +98,8 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
 interface HeaderMessagesProps {}
 
 const HeaderMessages: React.FC<HeaderMessagesProps> = () => {
-  const [
-    anchorMessages,
-    setAnchorMessages,
-  ] = React.useState<HTMLButtonElement | null>(null);
+  const [anchorMessages, setAnchorMessages] =
+    React.useState<HTMLButtonElement | null>(null);
 
   const onClickMessagesButton = (
     event: React.MouseEvent<HTMLButtonElement>,

@@ -15,9 +15,13 @@ const HorizontalNav: React.FC<HorizontalNavProps> = () => {
     <List className='navbarNav'>
       {routesConfig.map((item: any) => (
         <React.Fragment key={item.id}>
-          {item.type === 'group' && <HorizontalGroup item={item} nestedLevel={0} />}
+          {item.type === 'group' && (
+            <HorizontalGroup item={item} nestedLevel={0} />
+          )}
 
-          {item.type === 'collapse' && <HorizontalCollapse item={item} nestedLevel={0} />}
+          {item.type === 'collapse' && (
+            <HorizontalCollapse item={item} nestedLevel={0} />
+          )}
 
           {item.type === 'item' && <HorizontalItem item={item} />}
 

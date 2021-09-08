@@ -15,9 +15,8 @@ interface HorDarkLayoutProps {}
 
 const HorDarkLayout: React.FC<HorDarkLayoutProps> = () => {
   const classes = useStyles();
-  const {footer, layoutType, footerType} = useContext<AppContextPropsType>(
-    AppContext,
-  );
+  const {footer, layoutType, footerType} =
+    useContext<AppContextPropsType>(AppContext);
 
   return (
     <Box

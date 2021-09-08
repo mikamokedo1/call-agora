@@ -1,16 +1,26 @@
-import React, { CSSProperties } from 'react';
-import { makeStyles } from '@material-ui/core/styles';
+import React, {CSSProperties} from 'react';
+import {makeStyles} from '@material-ui/core/styles';
 import ProtoTypes from 'prop-types';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import Box from '@material-ui/core/Box';
-import { Fonts } from '../../../shared/constants/AppEnums';
-import { CremaTheme } from '../../../types/AppContextPropsType';
+import {Fonts} from '../../../shared/constants/AppEnums';
+import {CremaTheme} from '../../../types/AppContextPropsType';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
   root: {
     position: 'relative',
-    minWidth: (props: { pathColor: string; activeColor: string; minWidth: number; maxWidth: number }) => props.minWidth,
-    maxWidth: (props: { pathColor: string; activeColor: string; minWidth: number; maxWidth: number }) => props.maxWidth,
+    minWidth: (props: {
+      pathColor: string;
+      activeColor: string;
+      minWidth: number;
+      maxWidth: number;
+    }) => props.minWidth,
+    maxWidth: (props: {
+      pathColor: string;
+      activeColor: string;
+      minWidth: number;
+      maxWidth: number;
+    }) => props.maxWidth,
     margin: '0 auto',
   },
   circularProgressRoot: (props: any) => ({
@@ -100,7 +110,11 @@ const AppCircularProgress: React.FC<AppCircularProgressProps> = ({
       <Box className={classes.centerContent}>
         {centerNode}
         {hidePercentage ? null : (
-          <Box fontSize={30} fontWeight={500} color='secondary.main' style={valueStyle}>
+          <Box
+            fontSize={30}
+            fontWeight={500}
+            color='secondary.main'
+            style={valueStyle}>
             {value}%
           </Box>
         )}

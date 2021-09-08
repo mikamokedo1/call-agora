@@ -1,9 +1,12 @@
-import { reduxRequestActionGenerator } from '../../@crema/utility/Utils';
-import { Statistic, Order, Summary } from '../models/Dashboard';
+import {reduxRequestActionGenerator} from '../../@crema/utility/Utils';
+import {Statistic, Order, Summary} from '../models/Dashboard';
 
 const scope = 'dashboard';
 
-export const FETCH_STATISTIC = reduxRequestActionGenerator(scope, 'FETCH_STATISTIC');
+export const FETCH_STATISTIC = reduxRequestActionGenerator(
+  scope,
+  'FETCH_STATISTIC',
+);
 
 export interface FetchStatisticAction {
   type: typeof FETCH_STATISTIC.pending;
@@ -37,7 +40,10 @@ export interface FetchOrdersFailedAction {
   message: string;
 }
 
-export const FETCH_SUMMARY = reduxRequestActionGenerator(scope, 'FETCH_SUMMARY');
+export const FETCH_SUMMARY = reduxRequestActionGenerator(
+  scope,
+  'FETCH_SUMMARY',
+);
 
 export interface FetSummaryAction {
   type: typeof FETCH_SUMMARY.pending;
@@ -52,7 +58,10 @@ export interface FetSummaryFailedAction {
   message: string;
 }
 
-export const FETCH_STATISTIC_CHART = reduxRequestActionGenerator(scope, 'FETCH_STATISTIC_CHART');
+export const FETCH_STATISTIC_CHART = reduxRequestActionGenerator(
+  scope,
+  'FETCH_STATISTIC_CHART',
+);
 
 export interface FetchStatisticChartAction {
   type: typeof FETCH_STATISTIC_CHART.pending;

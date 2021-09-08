@@ -15,4 +15,7 @@ export interface RouteChangeAction {
   type: typeof ROUTE_CHANGE;
 }
 
-export type SettingsActionTypes = ToggleNavCollapsedAction | SetInitialPathAction | RouteChangeAction;
+export type SettingsActionTypes =
+  | ToggleNavCollapsedAction
+  | SetInitialPathAction
+  | RouteChangeAction;

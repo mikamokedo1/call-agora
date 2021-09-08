@@ -1,16 +1,16 @@
-import React, { useContext } from 'react';
+import React, {useContext} from 'react';
 import Avatar from '@material-ui/core/Avatar';
-import { makeStyles } from '@material-ui/core';
+import {makeStyles} from '@material-ui/core';
 import MenuItem from '@material-ui/core/MenuItem';
 import Menu from '@material-ui/core/Menu';
 import Box from '@material-ui/core/Box';
-import { orange } from '@material-ui/core/colors';
-import { useDispatch } from 'react-redux';
-import { ThemeMode } from '../../../../shared/constants/AppEnums';
+import {orange} from '@material-ui/core/colors';
+import {useDispatch} from 'react-redux';
+import {ThemeMode} from '../../../../shared/constants/AppEnums';
 import AppContext from '../../../utility/AppContext';
-import { useAuthUser } from '../../../utility/AppHooks';
-import { onJWTAuthSignout } from '../../../../redux/actions';
-import { CremaTheme } from '../../../../types/AppContextPropsType';
+import {useAuthUser} from '../../../utility/AppHooks';
+import {onJWTAuthSignout} from '../../../../redux/actions';
+import {CremaTheme} from '../../../../types/AppContextPropsType';
 
 const useStyles = makeStyles((theme: CremaTheme) => {
   return {
@@ -28,7 +28,8 @@ const useStyles = makeStyles((theme: CremaTheme) => {
       width: 'calc(100% - 75px)',
     },
     userName: {
-      color: (props: { themeMode: ThemeMode }) => (props.themeMode === 'light' ? '#313541' : 'white'),
+      color: (props: {themeMode: ThemeMode}) =>
+        props.themeMode === 'light' ? '#313541' : 'white',
     },
     pointer: {
       cursor: 'pointer',
@@ -39,7 +40,7 @@ const useStyles = makeStyles((theme: CremaTheme) => {
 interface UserInfoProps {}
 
 const UserInfo: React.FC<UserInfoProps> = () => {
-  const { themeMode } = useContext(AppContext);
+  const {themeMode} = useContext(AppContext);
   const dispatch = useDispatch();
   const user = useAuthUser();
 
@@ -61,10 +62,10 @@ const UserInfo: React.FC<UserInfoProps> = () => {
       return user.email.charAt(0).toUpperCase();
     }
   };
-  const classes = useStyles({ themeMode });
+  const classes = useStyles({themeMode});
 
   return (
-    <Box py={3} pl={{ xs: 2, sm: 6 }}>
+    <Box py={3} pl={{xs: 2, sm: 6}}>
       <Box className={classes.pointer} onClick={handleClick}>
         {user && user.photoURL ? (
           <Avatar className={classes.avatar} src={user.photoURL} />
@@ -73,9 +74,16 @@ const UserInfo: React.FC<UserInfoProps> = () => {
         )}
       </Box>
       <Box className={classes.userInfo}>
-        <Menu id='simple-menu' anchorEl={anchorEl} keepMounted open={Boolean(anchorEl)} onClose={handleClose}>
+        <Menu
+          id='simple-menu'
+          anchorEl={anchorEl}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}>
           <MenuItem>My account</MenuItem>
-          <MenuItem onClick={() => dispatch(onJWTAuthSignout())}>Logout</MenuItem>
+          <MenuItem onClick={() => dispatch(onJWTAuthSignout())}>
+            Logout
+          </MenuItem>
         </Menu>
       </Box>
     </Box>

@@ -1,5 +1,5 @@
-import { AuthUser } from '../models/AuthUser';
-import { reduxRequestActionGenerator } from '../../@crema/utility/Utils';
+import {AuthUser} from '../models/AuthUser';
+import {reduxRequestActionGenerator} from '../../@crema/utility/Utils';
 
 export const UPDATE_AUTH_USER = 'UPDATE_AUTH_USER';
 export const SET_AUTH_TOKEN = 'SET_AUTH_TOKEN';
@@ -23,7 +23,10 @@ export interface SignoutAuthUserActions {
 
 const scope = 'auth';
 
-export const CHANGE_PASSWORD = reduxRequestActionGenerator(scope, 'CHANGE_PASSWORD');
+export const CHANGE_PASSWORD = reduxRequestActionGenerator(
+  scope,
+  'CHANGE_PASSWORD',
+);
 
 export interface ChangePasswordParams {
   username: string;
@@ -44,7 +47,10 @@ export interface ChangePasswordFailedAction {
   message: string;
 }
 
-export const CHANGE_BANK_INFO = reduxRequestActionGenerator(scope, 'CHANGE_BANK_INFO');
+export const CHANGE_BANK_INFO = reduxRequestActionGenerator(
+  scope,
+  'CHANGE_BANK_INFO',
+);
 
 export interface ChangeBankParams {
   bankAccount: string;
@@ -65,10 +71,13 @@ export interface ChangeBankInfoFailedAction {
   type: typeof CHANGE_BANK_INFO.error;
   message: string;
 }
-export const CHANGE_AVATAR = reduxRequestActionGenerator(scope, 'CHANGE_AVATAR');
+export const CHANGE_AVATAR = reduxRequestActionGenerator(
+  scope,
+  'CHANGE_AVATAR',
+);
 export interface ChangeAvatarAction {
   type: typeof CHANGE_AVATAR.pending;
-  payload: { username: string; url: string };
+  payload: {username: string; url: string};
 }
 
 export interface ChangeAvatarSuccessAction {

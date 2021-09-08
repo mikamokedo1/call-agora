@@ -22,10 +22,8 @@ interface AppHeaderProps {}
 const AppHeader: React.FC<AppHeaderProps> = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const [
-    mobileMoreAnchorEl,
-    setMobileMoreAnchorEl,
-  ] = useState<null | HTMLElement>(null);
+  const [mobileMoreAnchorEl, setMobileMoreAnchorEl] =
+    useState<null | HTMLElement>(null);
   const isMobileMenuOpen = Boolean(mobileMoreAnchorEl);
 
   function handleMobileMenuClose() {

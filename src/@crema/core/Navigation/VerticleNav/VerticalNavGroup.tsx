@@ -20,10 +20,10 @@ const VerticalNavGroup: React.FC<VerticalNavGroupProps> = ({item, level}) => {
   const {themeMode} = useContext(AppContext);
   const classes = useStyles({level, themeMode});
   const {user} = useSelector<AppState, AppState['auth']>(({auth}) => auth);
-  const hasPermission = useMemo(() => checkPermission(item.auth, user!.role), [
-    item.auth,
-    user,
-  ]);
+  const hasPermission = useMemo(
+    () => checkPermission(item.auth, user!.role),
+    [item.auth, user],
+  );
   if (!hasPermission) {
     return null;
   }

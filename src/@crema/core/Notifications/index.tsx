@@ -94,10 +94,8 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
 interface NotificationsProps {}
 
 const Notifications: React.FC<NotificationsProps> = () => {
-  const [
-    anchorNotification,
-    setAnchorNotification,
-  ] = React.useState<HTMLButtonElement | null>(null);
+  const [anchorNotification, setAnchorNotification] =
+    React.useState<HTMLButtonElement | null>(null);
 
   const onClickNotificationButton = (
     event: React.MouseEvent<HTMLButtonElement>,

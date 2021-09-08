@@ -45,9 +45,10 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     '& .slick-dots': {
       bottom: 10,
     },
-    '& .slick-dots li button:before, & .slick-dots li.slick-active button:before': {
-      backgroundColor: theme.palette.background.paper,
-    },
+    '& .slick-dots li button:before, & .slick-dots li.slick-active button:before':
+      {
+        backgroundColor: theme.palette.background.paper,
+      },
     '& .embed-responsive': {
       position: 'relative',
       display: 'block',

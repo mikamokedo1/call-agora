@@ -1,6 +1,6 @@
-import { AnyAction } from 'redux';
+import {AnyAction} from 'redux';
 import jwt_decode from 'jwt-decode';
-import { AuthType } from '../../shared/constants/AppEnums';
+import {AuthType} from '../../shared/constants/AppEnums';
 import {
   SET_AUTH_TOKEN,
   SIGNOUT_AUTH_SUCCESS,
@@ -9,10 +9,14 @@ import {
   CHANGE_BANK_INFO,
   CHANGE_AVATAR,
 } from '../../types/actions/Auth.actions';
-import { AuthUser } from '../../types/models/AuthUser';
-import { AppState } from '../store';
+import {AuthUser} from '../../types/models/AuthUser';
+import {AppState} from '../store';
 
-type ActionType = 'login' | 'changePassword' | 'changeBankInfo' | 'changeAvatar';
+type ActionType =
+  | 'login'
+  | 'changePassword'
+  | 'changeBankInfo'
+  | 'changeAvatar';
 interface JWTdecode {
   email: string;
   exp: number;
@@ -95,27 +99,27 @@ const Auth = (state: INIT_AUTH = INIT_STATE, action: AnyAction): INIT_AUTH => {
     case CHANGE_PASSWORD.pending:
       return {
         ...state,
-        errors: { ...state.errors, changePassword: null },
-        loadings: { ...state.loadings, changePassword: true },
+        errors: {...state.errors, changePassword: null},
+        loadings: {...state.loadings, changePassword: true},
       };
     case CHANGE_PASSWORD.success:
-      return { ...state, loadings: { ...state.loadings, changePassword: false } };
+      return {...state, loadings: {...state.loadings, changePassword: false}};
     case CHANGE_PASSWORD.error:
       return {
         ...state,
-        errors: { ...state.errors, changePassword: action.message },
-        loadings: { ...state.loadings, changePassword: false },
+        errors: {...state.errors, changePassword: action.message},
+        loadings: {...state.loadings, changePassword: false},
       };
     case CHANGE_BANK_INFO.pending:
       return {
         ...state,
-        errors: { ...state.errors, changeBankInfo: null },
-        loadings: { ...state.loadings, changeBankInfo: true },
+        errors: {...state.errors, changeBankInfo: null},
+        loadings: {...state.loadings, changeBankInfo: true},
       };
     case CHANGE_BANK_INFO.success:
       return {
         ...state,
-        loadings: { ...state.loadings, changeBankInfo: false },
+        loadings: {...state.loadings, changeBankInfo: false},
         user: {
           ...state.user,
           bankAccount: action.payload.bankAccount ?? '',
@@ -126,20 +130,20 @@ const Auth = (state: INIT_AUTH = INIT_STATE, action: AnyAction): INIT_AUTH => {
     case CHANGE_BANK_INFO.error:
       return {
         ...state,
-        errors: { ...state.errors, changeAvatar: action.message },
-        loadings: { ...state.loadings, changeAvatar: false },
+        errors: {...state.errors, changeAvatar: action.message},
+        loadings: {...state.loadings, changeAvatar: false},
       };
 
     case CHANGE_AVATAR.pending:
       return {
         ...state,
-        errors: { ...state.errors, changeAvatar: null },
-        loadings: { ...state.loadings, changeAvatar: true },
+        errors: {...state.errors, changeAvatar: null},
+        loadings: {...state.loadings, changeAvatar: true},
       };
     case CHANGE_AVATAR.success:
       return {
         ...state,
-        loadings: { ...state.loadings, changeAvatar: false },
+        loadings: {...state.loadings, changeAvatar: false},
         user: {
           ...state.user,
           photoURL: action.payload,
@@ -148,8 +152,8 @@ const Auth = (state: INIT_AUTH = INIT_STATE, action: AnyAction): INIT_AUTH => {
     case CHANGE_AVATAR.error:
       return {
         ...state,
-        errors: { ...state.errors, changeAvatar: action.message },
-        loadings: { ...state.loadings, changeAvatar: false },
+        errors: {...state.errors, changeAvatar: action.message},
+        loadings: {...state.loadings, changeAvatar: false},
       };
 
     default:

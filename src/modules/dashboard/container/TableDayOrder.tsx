@@ -1,4 +1,4 @@
-import React, { useState, useRef } from 'react';
+import React, {useState, useRef} from 'react';
 import Box from '@material-ui/core/Box';
 import SearchIcon from '@material-ui/icons/Search';
 import DatePicker from 'react-datepicker';
@@ -6,12 +6,12 @@ import styled from 'styled-components';
 import FilterTime from '../components/FilterTime';
 import DayReportItem from '../components/DayReportItem';
 import 'react-datepicker/dist/react-datepicker.css';
-import { format } from 'date-fns';
+import {format} from 'date-fns';
 
 const TIME_FILTER = [
-  { label: 'Ngày', id: 'ngay' },
-  { label: 'Tuần', id: 'tuan' },
-  { label: 'Tháng', id: 'thang' },
+  {label: 'Ngày', id: 'ngay'},
+  {label: 'Tuần', id: 'tuan'},
+  {label: 'Tháng', id: 'thang'},
 ];
 
 const StyledDate = styled(Box)`
@@ -50,7 +50,11 @@ const TableDayOrder = () => {
         Table Theo ngày
       </Box>
       <Box color='#334D6E'>Search</Box>
-      <Box display='flex' justifyContent='space-between' alignItems='start' marginTop='10px'>
+      <Box
+        display='flex'
+        justifyContent='space-between'
+        alignItems='start'
+        marginTop='10px'>
         <StyledDate>
           <DatePicker
             wrapperClassName='datePicker'
@@ -59,7 +63,7 @@ const TableDayOrder = () => {
             placeholderText='Nhập ngày'
             ref={DatePickerRef}
           />
-          <Box style={{ cursor: 'pointer' }} onClick={onClickSearchDate}>
+          <Box style={{cursor: 'pointer'}} onClick={onClickSearchDate}>
             <SearchIcon />
           </Box>
         </StyledDate>
@@ -74,21 +78,70 @@ const TableDayOrder = () => {
           ))}
         </Box>
       </Box>
-      <Box display='flex' flexDirection='column' px='10px' height='calc(100% - 95px)'>
-        <Box display='flex' justifyContent='space-between' mt='30px' fontWeight='bold' mb='10px'>
+      <Box
+        display='flex'
+        flexDirection='column'
+        px='10px'
+        height='calc(100% - 95px)'>
+        <Box
+          display='flex'
+          justifyContent='space-between'
+          mt='30px'
+          fontWeight='bold'
+          mb='10px'>
           <Box color='#1F4173'>Ngày</Box>
           <Box color='#1F4173'>Tổng Tiền</Box>
           <Box color='#1F4173'>Chênh lệch</Box>
         </Box>
         <Box height='calc(100% - 58px)' overflow='auto' pr='10px'>
-          <DayReportItem date='275' money='dsadsa' difference='asdasdsa' isLow />
-          <DayReportItem date='275' money='dsadsa' difference='asdasdsa' isLow />
-          <DayReportItem date='275' money='dsadsa' difference='asdasdsa' isLow />
-          <DayReportItem date='275' money='dsadsa' difference='asdasdsa' isLow />
-          <DayReportItem date='275' money='dsadsa' difference='asdasdsa' isLow />
-          <DayReportItem date='275' money='dsadsa' difference='asdasdsa' isLow />
-          <DayReportItem date='275' money='dsadsa' difference='asdasdsa' isLow />
-          <DayReportItem date='275' money='dsadsa' difference='asdasdsa' isLow />
+          <DayReportItem
+            date='275'
+            money='dsadsa'
+            difference='asdasdsa'
+            isLow
+          />
+          <DayReportItem
+            date='275'
+            money='dsadsa'
+            difference='asdasdsa'
+            isLow
+          />
+          <DayReportItem
+            date='275'
+            money='dsadsa'
+            difference='asdasdsa'
+            isLow
+          />
+          <DayReportItem
+            date='275'
+            money='dsadsa'
+            difference='asdasdsa'
+            isLow
+          />
+          <DayReportItem
+            date='275'
+            money='dsadsa'
+            difference='asdasdsa'
+            isLow
+          />
+          <DayReportItem
+            date='275'
+            money='dsadsa'
+            difference='asdasdsa'
+            isLow
+          />
+          <DayReportItem
+            date='275'
+            money='dsadsa'
+            difference='asdasdsa'
+            isLow
+          />
+          <DayReportItem
+            date='275'
+            money='dsadsa'
+            difference='asdasdsa'
+            isLow
+          />
         </Box>
       </Box>
     </Box>

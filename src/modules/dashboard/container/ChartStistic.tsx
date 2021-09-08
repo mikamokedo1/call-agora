@@ -1,8 +1,8 @@
-import React, { useMemo } from 'react';
-import { Bar } from 'react-chartjs-2';
-import { useSelector } from 'react-redux';
-import { format } from 'date-fns';
-import { statisticChartSelector } from '../../../redux/reducers/Dashboard';
+import React, {useMemo} from 'react';
+import {Bar} from 'react-chartjs-2';
+import {useSelector} from 'react-redux';
+import {format} from 'date-fns';
+import {statisticChartSelector} from '../../../redux/reducers/Dashboard';
 
 const options = {
   scales: {

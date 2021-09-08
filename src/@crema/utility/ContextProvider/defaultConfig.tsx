@@ -106,7 +106,9 @@ const defaultConfig: any = {
       MuiCardLg: {
         root: {
           borderRadius:
-            cardRadius === ThemeStyleRadius.STANDARD ? ThemeStyleRadius.STANDARD : ThemeStyleRadius.MODERN + 20,
+            cardRadius === ThemeStyleRadius.STANDARD
+              ? ThemeStyleRadius.STANDARD
+              : ThemeStyleRadius.MODERN + 20,
         },
       },
       MuiCard: {

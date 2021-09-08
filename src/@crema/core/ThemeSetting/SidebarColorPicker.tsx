@@ -1,16 +1,16 @@
-import React, { useContext, useState } from 'react';
-import { SketchPicker } from 'react-color';
-import { makeStyles } from '@material-ui/core/index';
+import React, {useContext, useState} from 'react';
+import {SketchPicker} from 'react-color';
+import {makeStyles} from '@material-ui/core/index';
 import Box from '@material-ui/core/Box';
-import { grey } from '@material-ui/core/colors';
+import {grey} from '@material-ui/core/colors';
 import AppContext from '../../utility/AppContext';
-import { CremaTheme } from '../../../types/AppContextPropsType';
+import {CremaTheme} from '../../../types/AppContextPropsType';
 
 interface SidebarColorPickerProps {}
 
 const SidebarColorPicker: React.FC<SidebarColorPickerProps> = () => {
   const [visible, setVisibility] = useState(false);
-  const { theme, sidebarColor, updateTheme } = useContext(AppContext);
+  const {theme, sidebarColor, updateTheme} = useContext(AppContext);
 
   const useStyles = makeStyles((theme: CremaTheme) => ({
     cpSwatch: {

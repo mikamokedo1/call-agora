@@ -14,9 +14,8 @@ import AppContextPropsType from '../../../../types/AppContextPropsType';
 interface HeaderUserMiniLayoutProps {}
 
 const HeaderUserMiniLayout: React.FC<HeaderUserMiniLayoutProps> = () => {
-  const {footer, themeStyle, layoutType, footerType} = useContext<
-    AppContextPropsType
-  >(AppContext);
+  const {footer, themeStyle, layoutType, footerType} =
+    useContext<AppContextPropsType>(AppContext);
 
   const classes = useStyles({footer, themeStyle});
   return (

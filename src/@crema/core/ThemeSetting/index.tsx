@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, {useContext, useState} from 'react';
 import ToggleButton from '@material-ui/lab/ToggleButton';
 import ToggleButtonGroup from '@material-ui/lab/ToggleButtonGroup';
 import IconButton from '@material-ui/core/IconButton';
@@ -11,8 +11,8 @@ import Switch from '@material-ui/core/Switch';
 import clsx from 'clsx';
 import Box from '@material-ui/core/Box';
 import CheckIcon from '@material-ui/icons/Check';
-import { layoutTypes, navStyles } from '../../services/db/navigationStyle';
-import { Scrollbar } from '../../index';
+import {layoutTypes, navStyles} from '../../services/db/navigationStyle';
+import {Scrollbar} from '../../index';
 import IntlMessages from '../../utility/IntlMessages';
 import useStyles from './index.style';
 import SidebarColorPicker from './SidebarColorPicker';
@@ -56,17 +56,26 @@ const ThemeSetting: React.FC<ThemeSettingProps> = () => {
     updateLayoutStyle,
     changeNavStyle,
   } = useContext<AppContextPropsType>(AppContext);
-  const onStyleChange = (event: React.MouseEvent<HTMLElement>, themeStyle: ThemeStyle) => {
+  const onStyleChange = (
+    event: React.MouseEvent<HTMLElement>,
+    themeStyle: ThemeStyle,
+  ) => {
     if (themeStyle) {
       updateThemeStyle!(themeStyle as ThemeStyle);
     }
   };
 
-  const onModeChange = (event: React.MouseEvent<HTMLElement>, themeMode: ThemeMode) => {
+  const onModeChange = (
+    event: React.MouseEvent<HTMLElement>,
+    themeMode: ThemeMode,
+  ) => {
     if (themeMode) updateThemeMode!(themeMode);
   };
 
-  const onSelectThemeColor = (event: React.MouseEvent<HTMLElement>, color: any) => {
+  const onSelectThemeColor = (
+    event: React.MouseEvent<HTMLElement>,
+    color: any,
+  ) => {
     if (color) setThemeColor(color);
   };
 
@@ -92,7 +101,13 @@ const ThemeSetting: React.FC<ThemeSettingProps> = () => {
     <Box className={clsx(classes.customizerOption, 'customizerOption')}>
       <Box className={classes.customizerButton}>
         <IconButton onClick={() => setCustomizerStatus(!open)}>
-          <i className={clsx(classes.textWhite, 'material-icons animated infinite pulse')}>settings</i>
+          <i
+            className={clsx(
+              classes.textWhite,
+              'material-icons animated infinite pulse',
+            )}>
+            settings
+          </i>
         </IconButton>
       </Box>
       <Drawer
@@ -111,10 +126,14 @@ const ThemeSetting: React.FC<ThemeSettingProps> = () => {
           </Box>
           <Box className={classes.rightSidebarMain}>
             <Box className={classes.customizerItem}>
-              <Box component='h4' mb={{ xs: 2, xl: 3 }}>
+              <Box component='h4' mb={{xs: 2, xl: 3}}>
                 <IntlMessages id='customizer.themeStyle' />
               </Box>
-              <ToggleButtonGroup value={themeStyle} exclusive onChange={onStyleChange} aria-label='text alignment'>
+              <ToggleButtonGroup
+                value={themeStyle}
+                exclusive
+                onChange={onStyleChange}
+                aria-label='text alignment'>
                 <ToggleButton
                   value={ThemeStyle.MODERN}
                   className={clsx(classes.toggleBtn, {
@@ -135,14 +154,20 @@ const ThemeSetting: React.FC<ThemeSettingProps> = () => {
             </Box>
 
             <Box className={classes.customizerItem}>
-              <Box component='h4' mb={{ xs: 2, xl: 3 }}>
+              <Box component='h4' mb={{xs: 2, xl: 3}}>
                 <IntlMessages id='customizer.themeMode' />
               </Box>
-              <ToggleButtonGroup value={themeMode} exclusive onChange={onModeChange} aria-label='text alignment'>
+              <ToggleButtonGroup
+                value={themeMode}
+                exclusive
+                onChange={onModeChange}
+                aria-label='text alignment'>
                 <ToggleButton
                   value={ThemeMode.LIGHT}
                   className={clsx(classes.toggleBtn, {
-                    active: themeMode === ThemeMode.LIGHT && theme.palette.type === ThemeMode.LIGHT,
+                    active:
+                      themeMode === ThemeMode.LIGHT &&
+                      theme.palette.type === ThemeMode.LIGHT,
                   })}
                   aria-label='left aligned'>
                   <IntlMessages id='customizer.light' />
@@ -150,7 +175,9 @@ const ThemeSetting: React.FC<ThemeSettingProps> = () => {
                 <ToggleButton
                   value={ThemeMode.SEMI_DARK}
                   className={clsx(classes.toggleBtn, {
-                    active: themeMode === ThemeMode.SEMI_DARK && theme.palette.type === ThemeMode.LIGHT,
+                    active:
+                      themeMode === ThemeMode.SEMI_DARK &&
+                      theme.palette.type === ThemeMode.LIGHT,
                   })}
                   aria-label='centered'>
                   <IntlMessages id='customizer.semiDark' />
@@ -158,7 +185,9 @@ const ThemeSetting: React.FC<ThemeSettingProps> = () => {
                 <ToggleButton
                   value={ThemeMode.DARK}
                   className={clsx(classes.toggleBtn, {
-                    active: themeMode === ThemeMode.DARK || theme.palette.type === ThemeMode.DARK,
+                    active:
+                      themeMode === ThemeMode.DARK ||
+                      theme.palette.type === ThemeMode.DARK,
                   })}
                   aria-label='right aligned'>
                   <IntlMessages id='customizer.dark' />
@@ -167,10 +196,14 @@ const ThemeSetting: React.FC<ThemeSettingProps> = () => {
             </Box>
 
             <Box className={classes.customizerItem}>
-              <Box component='h4' mb={{ xs: 2, xl: 3 }}>
+              <Box component='h4' mb={{xs: 2, xl: 3}}>
                 <IntlMessages id='customizer.themeColors' />
               </Box>
-              <ToggleButtonGroup value={themeColor} exclusive onChange={onSelectThemeColor} aria-label='text alignment'>
+              <ToggleButtonGroup
+                value={themeColor}
+                exclusive
+                onChange={onSelectThemeColor}
+                aria-label='text alignment'>
                 <ToggleButton
                   value='preset'
                   className={clsx(classes.toggleBtn, {
@@ -198,7 +231,11 @@ const ThemeSetting: React.FC<ThemeSettingProps> = () => {
                 <Box mt={4}>
                   <Box component='ul' className={classes.colorOptionList}>
                     {themeColorSets.map((colorSet, index) => (
-                      <CustomColorCell key={index} updateThemeColors={updateThemeColors} themeColorSet={colorSet} />
+                      <CustomColorCell
+                        key={index}
+                        updateThemeColors={updateThemeColors}
+                        themeColorSet={colorSet}
+                      />
                     ))}
                   </Box>
                 </Box>
@@ -215,21 +252,23 @@ const ThemeSetting: React.FC<ThemeSettingProps> = () => {
                     checked={isRTL}
                     onChange={onChangeRtlSetting}
                     value='checkedA'
-                    inputProps={{ 'aria-label': 'secondary checkbox' }}
+                    inputProps={{'aria-label': 'secondary checkbox'}}
                   />
                 </Box>
               </Box>
             </Box>
 
             <Box pb={1} className={clsx(classes.customizerItem)}>
-              <Box component='h4' mb={{ xs: 2, xl: 3 }}>
+              <Box component='h4' mb={{xs: 2, xl: 3}}>
                 <IntlMessages id='customizer.navigationStyles' />
               </Box>
               <Box className={classes.navOption}>
                 {navStyles.map((navLayout) => {
                   return (
                     <Box className={classes.navOptionItem} key={navLayout.id}>
-                      <Box className={classes.navOptionContent} onClick={() => onNavStyleChange(navLayout.alias)}>
+                      <Box
+                        className={classes.navOptionContent}
+                        onClick={() => onNavStyleChange(navLayout.alias)}>
                         <img src={navLayout.image} alt='nav' />
                         {navStyle === navLayout.alias ? (
                           <span className={classes.navOptionRightIcon}>
@@ -246,14 +285,16 @@ const ThemeSetting: React.FC<ThemeSettingProps> = () => {
             </Box>
 
             <Box pb={1} className={clsx(classes.customizerItem)}>
-              <Box component='h4' mb={{ xs: 2, xl: 3 }}>
+              <Box component='h4' mb={{xs: 2, xl: 3}}>
                 <IntlMessages id='customizer.layoutTypes' />
               </Box>
               <Box className={classes.navOption}>
                 {layoutTypes.map((layout) => {
                   return (
                     <Box className={classes.navOptionItem} key={layout.id}>
-                      <Box className={classes.navOptionContent} onClick={() => onLayoutChange(layout.alias)}>
+                      <Box
+                        className={classes.navOptionContent}
+                        onClick={() => onLayoutChange(layout.alias)}>
                         <img src={layout.image} alt='nav' />
                         {layoutType === layout.alias ? (
                           <span className={classes.navOptionRightIcon}>
@@ -277,13 +318,13 @@ const ThemeSetting: React.FC<ThemeSettingProps> = () => {
                     checked={footer}
                     onChange={() => setFooter!(!footer)}
                     value='checkedA'
-                    inputProps={{ 'aria-label': 'secondary checkbox' }}
+                    inputProps={{'aria-label': 'secondary checkbox'}}
                   />
                 </Box>
               </Box>
             </Box>
             <Box className={classes.customizerItem}>
-              <Box component='h4' mb={{ xs: 2, xl: 3 }}>
+              <Box component='h4' mb={{xs: 2, xl: 3}}>
                 Footer Type
               </Box>
               <FormControl variant='outlined' className={classes.wFull}>
@@ -304,7 +345,7 @@ const ThemeSetting: React.FC<ThemeSettingProps> = () => {
             </Box>
 
             <Box className={classes.customizerItem}>
-              <Box component='h4' mb={{ xs: 2, xl: 3 }}>
+              <Box component='h4' mb={{xs: 2, xl: 3}}>
                 <IntlMessages id='customizer.routeTransition' />
               </Box>
               <FormControl variant='outlined' className={classes.wFull}>
@@ -315,7 +356,9 @@ const ThemeSetting: React.FC<ThemeSettingProps> = () => {
                   className={classes.selectBox}
                   value={rtAnim}
                   labelWidth={100}
-                  onChange={(e) => changeRTAnim!(e.target.value as RouteTransition)}
+                  onChange={(e) =>
+                    changeRTAnim!(e.target.value as RouteTransition)
+                  }
                   inputProps={{
                     name: 'rt',
                     id: 'outlined-rt',
