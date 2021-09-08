@@ -5,22 +5,22 @@ ENV NODE_ENV production
 # Add a work directory
 WORKDIR /app
 # Cache and Install dependencies
-COPY package.json yarn.lock ./
+# COPY package.json yarn.lock ./
 # RUN yarn install --production
-RUN yarn install
 # Copy app files
 COPY . .
+RUN yarn install
 # Build the app
 RUN yarn build
 
 # Bundle static assets with nginx
-FROM nginx:1.21.0-alpine as production
-ENV NODE_ENV production
+FROM docker.io/library/node:16-alpine AS production
+WORKDIR /app
+# Install serve
+RUN yarn global add serve
 # Copy built assets from builder
-COPY --from=builder /app/build /usr/share/nginx/html
-# Add your nginx.conf
-COPY nginx.conf /etc/nginx/conf.d/default.conf
+COPY --from=builder /app/build /app/build
 # Expose port
-EXPOSE 80
+EXPOSE 5000
 # Start nginx
-CMD ["nginx", "-g", "daemon off;"]
+CMD ["pm2-runtime", "serve", "-s", "build"]
