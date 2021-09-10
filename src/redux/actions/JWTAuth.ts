@@ -5,19 +5,16 @@ import md5 from 'md5';
 import CryptoJS from 'crypto-js';
 import jwtAxios from '../../@crema/services/auth/jwt-auth/jwt-api';
 import { fetchError, fetchStart, fetchSuccess } from './Common';
-import { AuthType } from '../../shared/constants/AppEnums';
-import { defaultUser } from '../../shared/constants/AppConst';
-import { AuthUser } from '../../types/models/AuthUser';
 import { AppActions } from '../../types';
 import {
   SET_AUTH_TOKEN,
   SIGNOUT_AUTH_SUCCESS,
-  UPDATE_AUTH_USER,
   CHANGE_PASSWORD,
   ChangePasswordParams,
   ChangeBankParams,
   CHANGE_BANK_INFO,
   CHANGE_AVATAR,
+  FORGET_PASSWORD,
 } from '../../types/actions/Auth.actions';
 
 const keyHmac = process.env.REACT_APP_KEY_HASHMAC;
@@ -26,12 +23,10 @@ export const onJwtUserSignUp = (body: { email: string; password: string; name: s
     dispatch(fetchStart());
     try {
       const res = await jwtAxios.post('/users/login', body);
-      console.log(res);
       localStorage.setItem('token', res.data.token);
       dispatch(setJWTToken(res.data.token));
       // await loadJWTUser(dispatch);
     } catch (err) {
-      console.log('error!!!!', err.response.data.error);
       dispatch(fetchError(err.response.data.error));
     }
   };
@@ -87,17 +82,17 @@ export const setJWTToken = (token: string): AppActions => ({
   },
 });
 
-const getUserObject = (authUser: any): AuthUser => {
-  return {
-    authType: AuthType.JWT_AUTH,
-    displayName: authUser.name,
-    email: authUser.email,
-    role: defaultUser.role,
-    token: authUser._id,
-    uid: authUser._id,
-    photoURL: authUser.avatar,
-  };
-};
+// const getUserObject = (authUser: any): AuthUser => {
+//   return {
+//     authType: AuthType.JWT_AUTH,
+//     displayName: authUser.name,
+//     email: authUser.email,
+//     role: defaultUser.role,
+//     token: authUser._id,
+//     uid: authUser._id,
+//     photoURL: authUser.avatar,
+//   };
+// };
 
 export const onJWTAuthSignout = () => {
   return (dispatch: Dispatch<AppActions>) => {
@@ -170,6 +165,27 @@ export const changeAvatar = (payload: { username: string; url: string }) => {
       }
     } catch (error) {
       dispatch({ type: CHANGE_AVATAR.error, message: error });
+    }
+  };
+};
+
+export const forgetPassword = (payload: { username: string; email: string }) => {
+  return async (dispatch: Dispatch<AppActions>) => {
+    try {
+      dispatch({ type: FORGET_PASSWORD.pending });
+      const uid = uuidv4();
+      jwtAxios.defaults.headers.common['x-requestid'] = uid;
+      const res = await jwtAxios.put('/users/forgot-password', payload);
+      if (res.result.code === 'success') {
+        dispatch({ type: FORGET_PASSWORD.success });
+      } else {
+        dispatch({
+          type: FORGET_PASSWORD.error,
+          message: get(res, 'result.message'),
+        });
+      }
+    } catch (error) {
+      dispatch({ type: FORGET_PASSWORD.error, message: error });
     }
   };
 };

@@ -8,11 +8,12 @@ import {
   CHANGE_PASSWORD,
   CHANGE_BANK_INFO,
   CHANGE_AVATAR,
+  FORGET_PASSWORD,
 } from '../../types/actions/Auth.actions';
 import { AuthUser } from '../../types/models/AuthUser';
 import { AppState } from '../store';
 
-type ActionType = 'login' | 'changePassword' | 'changeBankInfo' | 'changeAvatar';
+type ActionType = 'login' | 'changePassword' | 'changeBankInfo' | 'changeAvatar' | 'forgetPassword';
 interface JWTdecode {
   email: string;
   exp: number;
@@ -29,6 +30,7 @@ interface JWTdecode {
 interface INIT_AUTH {
   user: AuthUser | null;
   token: string | null;
+  forgotPasswordSuccess: boolean;
   errors: {
     [k in ActionType]: null | string;
   };
@@ -40,17 +42,20 @@ interface INIT_AUTH {
 const INIT_STATE: INIT_AUTH = {
   user: null,
   token: null,
+  forgotPasswordSuccess: false,
   errors: {
     login: null,
     changePassword: null,
     changeBankInfo: null,
     changeAvatar: null,
+    forgetPassword: null,
   },
   loadings: {
     login: false,
     changePassword: false,
     changeBankInfo: false,
     changeAvatar: false,
+    forgetPassword: false,
   },
 };
 
@@ -152,6 +157,27 @@ const Auth = (state: INIT_AUTH = INIT_STATE, action: AnyAction): INIT_AUTH => {
         errors: { ...state.errors, changeAvatar: action.message },
         loadings: { ...state.loadings, changeAvatar: false },
       };
+
+    case FORGET_PASSWORD.pending:
+      return {
+        ...state,
+        errors: { ...state.errors, forgetPassword: null },
+        loadings: { ...state.loadings, forgetPassword: true },
+      };
+    case FORGET_PASSWORD.success:
+      return {
+        ...state,
+        loadings: { ...state.loadings, forgetPassword: false },
+        forgotPasswordSuccess: true,
+      };
+    case FORGET_PASSWORD.error:
+      return {
+        ...state,
+        errors: { ...state.errors, forgetPassword: action.message },
+        loadings: { ...state.loadings, forgetPassword: false },
+      };
+    case 'RESET_FORGET_PASSWORD_SUCCESS_STATUS':
+      return INIT_STATE;
 
     default:
       return state;

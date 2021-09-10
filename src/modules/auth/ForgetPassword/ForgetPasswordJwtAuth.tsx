@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -6,10 +6,12 @@ import { Form, Formik, useField } from 'formik';
 import * as yup from 'yup';
 import { useHistory } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { AppState } from 'src/redux/store';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import { Fonts } from '../../../shared/constants/AppEnums';
 import { CremaTheme } from '../../../types/AppContextPropsType';
-import OTPInput from './InputOtp';
+import { forgetPassword } from '../../../redux/actions/JWTAuth';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
   wrap: {
@@ -82,6 +84,14 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     fontSize: '14px',
     color: '#F7685B',
   },
+  loginAgain: {
+    cursor: 'pointer',
+    textAlign: 'left',
+    display: 'block',
+    marginBottom: '15px',
+    fontWeight: 'bold',
+    textDecoration: 'underline',
+  },
 }));
 
 const MyTextField = (props: any) => {
@@ -91,73 +101,57 @@ const MyTextField = (props: any) => {
 };
 const validationSchema = yup.object({
   email: yup.string().email().required('Bạn quên nhập email!'),
+  username: yup.string().required('Bạn quên nhập tên đăng nhập'),
 });
 
 const Signin: React.FC<{}> = () => {
   const classes = useStyles();
   const dispatch = useDispatch();
   const history = useHistory();
-  const [requested, setRequested] = useState(false);
-  const [submitEmail, setSubmitEmail] = useState('');
-  const [otp, setOtp] = React.useState('');
+  const error = useSelector((state: AppState) => state.auth.errors.forgetPassword);
+  const isLoading = useSelector((state: AppState) => state.auth.loadings.forgetPassword);
+  const isFogotSuccess = useSelector((state: AppState) => state.auth.forgotPasswordSuccess);
+
   const onGoToSignIn = () => {
     history.push('/signin');
+    dispatch({ type: 'RESET_FORGET_PASSWORD_SUCCESS_STATUS' });
   };
-  const handleSubmitOtp = () => {
-    console.log('handleSubmitOtp');
-  };
+
   return (
     <Box className={classes.wrap}>
       <Box className={classes.left} />
       <Box className={classes.right}>
-        {requested ? (
-          <Box>
-            <Box className={classes.title}>Xác minh email</Box>
-            <Box fontSize="16px" color="#90A0B7" mb="30px">
-              Nhập 4 mã code được gửi tới&nbsp;<b>{submitEmail}</b>
-            </Box>
-            <OTPInput
-              disabled={false}
-              error={false}
-              autoFocus
-              isNumberInput
-              length={6}
-              onChangeOTP={(otp) => setOtp(otp)}
-            />
-            <Button
-              onClick={handleSubmitOtp}
-              variant="contained"
-              color="primary"
-              disabled={false}
-              className={classes.btnRoot}
-              fullWidth
-              style={{ marginTop: '30px' }}
-            >
-              Tìm lại mật khẩu
-            </Button>
-          </Box>
-        ) : (
-          <Box className={classes.rightInner}>
-            <Box className={classes.title}>Tìm lại mật khẩu</Box>
-            <Box fontSize="16px" color="#90A0B7" mb="30px">
-              Nhập mail bạn đã đăng ký cho tài khoản
-            </Box>
+        <Box className={classes.rightInner}>
+          <Box className={classes.title}>Tìm lại mật khẩu</Box>
+          {isFogotSuccess ? (
+            <>
+              <Box fontSize="16px" color="#90A0B7" mb="30px">
+                Bạn hãy đăng nhập vào email để lấy lại mật khẩu mới!
+              </Box>
+              <Box component="span" className={classes.loginAgain} onClick={onGoToSignIn} fontSize={15}>
+                Quay về trang đăng nhập
+              </Box>
+            </>
+          ) : (
             <Formik
               validateOnChange
               initialValues={{
                 email: '',
+                username: '',
               }}
               validationSchema={validationSchema}
               onSubmit={(data, { setSubmitting }) => {
                 setSubmitting(true);
-                console.log('foget password');
+                dispatch(forgetPassword({ username: data.username, email: data.email }));
                 setSubmitting(false);
-                setSubmitEmail(data.email);
-                setRequested(true);
               }}
             >
               {({ isSubmitting }) => (
                 <Form noValidate autoComplete="off">
+                  <Box mb={{ xs: 5, xl: 8 }}>
+                    <MyTextField placeholder="Nhập tên đăng nhập" name="username" label="Tên đăng nhập" fullWidth />
+                  </Box>
+
                   <Box mb={{ xs: 5, xl: 8 }}>
                     <MyTextField placeholder="Nhập email" name="email" label="Email" fullWidth />
                   </Box>
@@ -165,6 +159,11 @@ const Signin: React.FC<{}> = () => {
                     Đăng nhập
                   </Box>
                   <Box>
+                    {error && (
+                      <Box fontSize="14px" color="#F7685B" marginBottom="10px" textAlign="center">
+                        {error}
+                      </Box>
+                    )}
                     <Button
                       variant="contained"
                       color="primary"
@@ -173,14 +172,14 @@ const Signin: React.FC<{}> = () => {
                       className={classes.btnRoot}
                       fullWidth
                     >
-                      Tìm lại mật khẩu
+                      {isLoading ? <CircularProgress size={30} color="inherit" /> : 'Tìm lại mật khẩu'}
                     </Button>
                   </Box>
                 </Form>
               )}
             </Formik>
-          </Box>
-        )}
+          )}
+        </Box>
       </Box>
     </Box>
   );

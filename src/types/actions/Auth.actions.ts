@@ -80,6 +80,20 @@ export interface ChangeAvatarFailedAction {
   message: string;
 }
 
+export const FORGET_PASSWORD = reduxRequestActionGenerator(scope, 'FORGET_PASSWORD');
+export interface ForgetPasswordAction {
+  type: typeof FORGET_PASSWORD.pending;
+  payload: { username: string; email: string };
+}
+
+export interface ForgetPasswordSuccessAction {
+  type: typeof FORGET_PASSWORD.success;
+}
+export interface ForgetPasswordFailedAction {
+  type: typeof FORGET_PASSWORD.error;
+  message: string;
+}
+
 export type AuthActions =
   | UpdateAuthUserActions
   | SetAuthTokenActions
@@ -92,4 +106,7 @@ export type AuthActions =
   | ChangeBankInfoFailedAction
   | ChangeAvatarAction
   | ChangeAvatarSuccessAction
-  | ChangeAvatarFailedAction;
+  | ChangeAvatarFailedAction
+  | ForgetPasswordAction
+  | ForgetPasswordSuccessAction
+  | ForgetPasswordFailedAction;
