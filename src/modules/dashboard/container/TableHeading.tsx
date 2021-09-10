@@ -11,9 +11,15 @@ const useStyles = makeStyles(() => ({
       fontWeight: 'bold',
       '&:first-child': {
         paddingLeft: 20,
+        '@media screen and (max-width: 750px)': {
+          paddingLeft: 10,
+        },
       },
       '&:last-child': {
         paddingRight: 20,
+        '@media screen and (max-width: 750px)': {
+          paddingRight: 10,
+        },
       },
     },
   },

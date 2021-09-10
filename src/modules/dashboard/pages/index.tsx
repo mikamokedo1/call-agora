@@ -76,8 +76,15 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     borderRadius: '5px',
     padding: '15px',
     marginBottom: '15px',
+    '@media screen and (max-width: 750px)': {
+      padding: '10px',
+      marginBottom: '10px',
+    },
     '&:last-child': {
       marginBottom: '0px',
+      '@media screen and (max-width: 750px)': {
+        marginBottom: '10px',
+      },
     },
     '& .left': {
       width: '53px',
@@ -159,6 +166,7 @@ const PageOne = () => {
     if (statistics.length === 0) {
       dispatch(fetchStatistic());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
   useEffect(() => {
     dispatch(fetchStatisticChart());
@@ -168,6 +176,7 @@ const PageOne = () => {
     if (orders.length === 0) {
       dispatch(fetchOrders());
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [dispatch]);
 
   useEffect(() => {

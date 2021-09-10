@@ -3,6 +3,7 @@ import Table from '@material-ui/core/Table';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import { useSelector, useDispatch } from 'react-redux';
+import { makeStyles } from '@material-ui/core/styles';
 import TableContainer from '@material-ui/core/TableContainer';
 import SelectDate from './SelectDate';
 import TableItem from './TableItem';
@@ -12,8 +13,17 @@ import AppSelect from '../../../@crema/core/AppSelect';
 import { statisticSelector } from '../../../redux/reducers/Dashboard';
 import { fetchStatistic } from '../../../redux/actions/dashboard';
 
+const useStyles = makeStyles({
+  root: {
+    width: '100%',
+  },
+  container: {
+    maxHeight: 300,
+  },
+});
 const TableList = () => {
   const statistics = useSelector(statisticSelector);
+  const classes = useStyles();
   const dispatch = useDispatch();
   const handleSelectionType = (data: unknown) => {
     if (data === 'Ngày') {
@@ -41,8 +51,8 @@ const TableList = () => {
       action={<AppSelect menus={['Ngày', 'Tuần', 'Tháng']} defaultValue="Ngày" onChange={handleSelectionType} />}
     >
       <SelectDate />
-      <TableContainer>
-        <Table>
+      <TableContainer className={classes.container}>
+        <Table stickyHeader aria-label="sticky table">
           <TableHead>
             <TableHeading />
           </TableHead>

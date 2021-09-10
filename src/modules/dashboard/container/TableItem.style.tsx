@@ -7,9 +7,15 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     padding: 8,
     '&:first-child': {
       paddingLeft: 20,
+      '@media screen and (max-width: 750px)': {
+        paddingLeft: 10,
+      },
     },
     '&:last-child': {
       paddingRight: 20,
+      '@media screen and (max-width: 750px)': {
+        paddingRight: 10,
+      },
     },
   },
   whiteSpace: {
