@@ -19,10 +19,10 @@ RUN yarn build
 FROM docker.io/library/node:16-alpine AS production
 WORKDIR /app
 # Install serve
-RUN yarn global add serve pm2
+RUN yarn global add serve
 # Copy built assets from builder
 COPY --from=builder /app/build /app/build
 # Expose port
 EXPOSE 5000
 # Start nginx
-CMD ["pm2-runtime", "serve", "-s", "build"]
+CMD ["serve", "-s", "build"]
