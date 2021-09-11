@@ -19,7 +19,7 @@ RUN yarn build
 FROM docker.io/library/node:16-alpine AS production
 WORKDIR /app
 # Install serve
-RUN yarn global add serve
+RUN yarn global add serve pm2
 # Copy built assets from builder
 COPY --from=builder /app/build /app/build
 # Expose port
