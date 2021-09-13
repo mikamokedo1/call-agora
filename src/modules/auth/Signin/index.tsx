@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import TextField from '@material-ui/core/TextField';
@@ -109,6 +109,9 @@ const Signin: React.FC<{}> = () => {
   const onGoToForgetPassword = () => {
     history.push('/forget-password');
   };
+  useEffect(() => {
+    dispatch({ type: 'RESET_FORGET_PASSWORD_SUCCESS_STATUS' });
+  }, [dispatch]);
 
   return (
     <Box className={classes.wrap}>
