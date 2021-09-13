@@ -23,4 +23,4 @@ COPY --from=builder /app/build /app/build
 # Expose port
 EXPOSE 5000
 # Start nginx
-CMD ["pm2-runtime", "serve", "-s", "build"]
+CMD ["serve", "-s", "build"]
