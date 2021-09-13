@@ -14,6 +14,9 @@ const StyledDate = styled(Box)`
   display: flex;
   max-width: 200px;
   border-bottom: 1px solid #e6eaf0;
+  & .react-datepicker-popper {
+    z-index: 3;
+  }
   & input {
     border: none;
     font-size: 15px;
