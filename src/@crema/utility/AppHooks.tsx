@@ -24,8 +24,9 @@ export const useAuthToken = (): [boolean, AuthUser | null] => {
         return;
       }
       const expieed = fromUnixTime(jwt_decode(token ?? '').exp);
-      if (expieed.getTime() < new Date().getTime) {
+      if (expieed.getTime() < new Date().getTime()) {
         dispatch(fetchSuccess());
+        dispatch({ type: 'RESET_FORGET_PASSWORD_SUCCESS_STATUS' });
         return;
       }
 
