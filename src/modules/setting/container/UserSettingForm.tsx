@@ -49,7 +49,7 @@ const UserSettingForm = ({ handleEditBank, handleEditPassword }: UserSettingForm
       .then((response) => {
         const { data } = response;
         const url = data.secure_url; // You should store this URL for future references in your app
-        dispatch(changeAvatar({ username: user?.displayName, url }));
+        dispatch(changeAvatar({ username: user?.displayName ?? '', url }));
         setLoading(false);
       })
       .catch((error) => {

@@ -94,7 +94,7 @@ const AuthRoutes: React.FC<AuthRoutesProps> = ({ children }) => {
             // initialPath !== '/signup')
           ) {
             // history.push(initialPath);
-            console.log({ isPermitted, initialPath, initialUrl });
+            // console.log({ isPermitted, initialPath, initialUrl });
           }
         }
       }

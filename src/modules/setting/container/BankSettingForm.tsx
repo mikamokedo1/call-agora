@@ -48,7 +48,7 @@ export const useStyles = makeStyles(() => ({
 
 const validationSchema = yup.object({
   bankAccount: yup.string().required('Bạn quên nhập tên!'),
-  bankName: yup.string().required('Bạn quên nhập số điện thoại!'),
+  bankName: yup.string().required('Bạn quên nhập số tài khoản ngân hàng!'),
   bankAccountNumber: yup.number().required('Bạn quên nhập số tài khoản!'),
 });
 interface BankSettingFormProps {

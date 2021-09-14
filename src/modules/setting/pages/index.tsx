@@ -16,7 +16,7 @@ const PageOne = () => {
   const [editPasswordFlag, setEditPasswordFlag] = useState(false);
   return (
     <AppAnimate animation="transition.slideUpIn" delay={200}>
-      <>
+      <Box>
         {editBankFlag && <BankSettingForm handleClose={() => setEditBankFlag(false)} />}
         {editPasswordFlag && <PasswordSettingForm handleClose={() => setEditPasswordFlag(false)} />}
         <StyledBox>
@@ -25,7 +25,7 @@ const PageOne = () => {
             handleEditPassword={() => setEditPasswordFlag(true)}
           />
         </StyledBox>
-      </>
+      </Box>
     </AppAnimate>
   );
 };
