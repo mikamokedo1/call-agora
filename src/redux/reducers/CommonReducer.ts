@@ -1,3 +1,4 @@
+import { AnyAction } from 'redux';
 import { Common } from '../../types/models/Common';
 import {
   CommonActionTypes,
@@ -17,7 +18,7 @@ const INIT_STATE: Common = {
   message: '',
 };
 
-const CommonReducer = (state = INIT_STATE, action: CommonActionTypes): Common => {
+const CommonReducer = (state = INIT_STATE, action: AnyAction): Common => {
   switch (action.type) {
     case FETCH_START: {
       return { ...state, error: '', message: '', loading: true };
@@ -63,6 +64,9 @@ const CommonReducer = (state = INIT_STATE, action: CommonActionTypes): Common =>
         ...state,
         isAppDrawerOpen: !state.isAppDrawerOpen,
       };
+    }
+    case 'RESET_FORGET_PASSWORD_SUCCESS_STATUS': {
+      return INIT_STATE;
     }
     default:
       return state;
