@@ -15,18 +15,18 @@ const PageOne = () => {
   const [editBankFlag, setEditBankFlag] = useState(false);
   const [editPasswordFlag, setEditPasswordFlag] = useState(false);
   return (
-    <AppAnimate animation="transition.slideUpIn" delay={200}>
-      <Box>
-        {editBankFlag && <BankSettingForm handleClose={() => setEditBankFlag(false)} />}
-        {editPasswordFlag && <PasswordSettingForm handleClose={() => setEditPasswordFlag(false)} />}
+    <>
+      {editBankFlag && <BankSettingForm handleClose={() => setEditBankFlag(false)} />}
+      {editPasswordFlag && <PasswordSettingForm handleClose={() => setEditPasswordFlag(false)} />}
+      <AppAnimate animation="transition.slideUpIn" delay={200}>
         <StyledBox>
           <UserSettingForm
             handleEditBank={() => setEditBankFlag(true)}
             handleEditPassword={() => setEditPasswordFlag(true)}
           />
         </StyledBox>
-      </Box>
-    </AppAnimate>
+      </AppAnimate>
+    </>
   );
 };
 

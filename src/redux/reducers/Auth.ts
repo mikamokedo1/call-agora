@@ -84,7 +84,7 @@ const Auth = (state: INIT_AUTH = INIT_STATE, action: AnyAction): INIT_AUTH => {
         token: action.payload.token,
         user: {
           uid: '1',
-          role: ['user', 'admin'],
+          role: ['manager', 'user'],
           authType: AuthType.JWT_AUTH,
           displayName: decoded?.username,
           email: decoded?.email,

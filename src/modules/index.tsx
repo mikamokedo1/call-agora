@@ -3,12 +3,26 @@ import { Redirect } from 'react-router-dom';
 
 import { createRoutes } from '../@crema/utility/Utils';
 import { dashboardPagesConfig } from './dashboard/dashboardPagesConfig';
+import { dashboardManagerPagesConfig } from './dashboardManager/dashboardManagerPagesConfig';
+import { ordersRouterConfig } from './orders/ordersRouterConfig';
+import { userRouterConfig } from './users/userRouterConfig';
 import { settingRouterConfig } from './setting/settingRouterConfig';
+import { ticketRouterConfig } from './ticket/ticketRouterConfig';
+
 import { errorPagesConfigs } from './errorPages';
 import { authRouteConfig } from './auth';
 import { initialUrl } from '../shared/constants/AppConst';
 
-const routeConfigs = [...dashboardPagesConfig, ...settingRouterConfig, ...errorPagesConfigs, ...authRouteConfig];
+const routeConfigs = [
+  ...dashboardPagesConfig,
+  ...dashboardManagerPagesConfig,
+  ...ordersRouterConfig,
+  ...userRouterConfig,
+  ...settingRouterConfig,
+  ...ticketRouterConfig,
+  ...errorPagesConfigs,
+  ...authRouteConfig,
+];
 
 const routes = [
   ...createRoutes(routeConfigs),
