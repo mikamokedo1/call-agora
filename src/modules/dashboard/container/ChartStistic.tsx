@@ -14,6 +14,7 @@ const options = {
       },
     ],
   },
+
   animation: false,
   responsive: true,
 };

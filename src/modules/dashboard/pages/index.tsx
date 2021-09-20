@@ -2,17 +2,16 @@ import React, { useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
+import { userSelector } from 'src/redux/reducers/Auth';
 import AppAnimate from '../../../@crema/core/AppAnimate';
-import { CremaTheme } from '../../../types/AppContextPropsType';
 import { fetchStatistic, fetchOrders, fetchSummary, fetchStatisticChart } from '../../../redux/actions/dashboard';
 import { statisticSelector, summarySelector, ordersSelector } from '../../../redux/reducers/Dashboard';
 import TableList from '../container/TableList';
 import ChartStistic from '../container/ChartStistic';
 import ChartStacked from '../container/ChartStacked';
-
 import 'react-datepicker/dist/react-datepicker.css';
 
-const useStyles = makeStyles((theme: CremaTheme) => ({
+const useStyles = makeStyles(() => ({
   wrap: {
     height: '100%',
   },
@@ -156,7 +155,7 @@ const PageOne = () => {
   const summary = useSelector(summarySelector);
   const statistics = useSelector(statisticSelector);
   const orders = useSelector(ordersSelector);
-
+  const user = useSelector(userSelector);
   const classes = useStyles();
   const handleCopy = () => {
     navigator.clipboard.writeText(boxRef.current?.textContent ?? '');
@@ -193,7 +192,7 @@ const PageOne = () => {
           <Box className={classes.topLeft}>
             <Box className={classes.link}>
               <div className={classes.url} ref={boxRef}>
-                https://www.figma.com/file/vi0MjvT1lR6rWdWyArrduZ/GoTRUST-CRM?node-id=84%3A667
+                {`https://vtmd.gotrust.vn?r=${user?.reseller}`}
               </div>
 
               <Box className={classes.copyButton} onClick={handleCopy}>

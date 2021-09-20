@@ -25,6 +25,14 @@ const options2 = {
   },
   responsive: true,
   animation: false,
+  plugins: {
+    legend: {
+      align: 'center',
+      labels: {
+        boxWidth: 16,
+      },
+    },
+  },
 };
 
 const ChartStacked = () => {
