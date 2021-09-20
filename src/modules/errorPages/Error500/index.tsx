@@ -7,8 +7,9 @@ import { makeStyles } from '@material-ui/core';
 import { grey } from '@material-ui/core/colors';
 import IntlMessages from '../../../@crema/utility/IntlMessages';
 import { Fonts } from '../../../shared/constants/AppEnums';
-import { initialUrl } from '../../../shared/constants/AppConst';
 import AppAnimate from '../../../@crema/core/AppAnimate';
+import {useSelector} from 'react-redux'
+import { AppState } from 'src/redux/store';
 
 const useStyles = makeStyles(() => {
   return {
@@ -25,6 +26,7 @@ const useStyles = makeStyles(() => {
 
 const Error500 = () => {
   const history = useHistory();
+  const initialUrl = useSelector((state: AppState) => state.auth.initialUrl);
 
   const onGoBackToHome = () => {
     history.push(initialUrl);

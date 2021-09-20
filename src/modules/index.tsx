@@ -7,11 +7,10 @@ import { dashboardManagerPagesConfig } from './dashboardManager/dashboardManager
 import { ordersRouterConfig } from './orders/ordersRouterConfig';
 import { userRouterConfig } from './users/userRouterConfig';
 import { settingRouterConfig } from './setting/settingRouterConfig';
-import { ticketRouterConfig } from './ticket/ticketRouterConfig';
+// import { ticketRouterConfig } from './ticket/ticketRouterConfig';
 
 import { errorPagesConfigs } from './errorPages';
 import { authRouteConfig } from './auth';
-import { initialUrl } from '../shared/constants/AppConst';
 
 const routeConfigs = [
   ...dashboardPagesConfig,
@@ -19,18 +18,18 @@ const routeConfigs = [
   ...ordersRouterConfig,
   ...userRouterConfig,
   ...settingRouterConfig,
-  ...ticketRouterConfig,
+  // ...ticketRouterConfig,
   ...errorPagesConfigs,
   ...authRouteConfig,
 ];
 
 const routes = [
   ...createRoutes(routeConfigs),
-  {
-    path: '/',
-    exact: true,
-    component: () => <Redirect to={initialUrl} />,
-  },
+  // {
+  //   path: '/',
+  //   exact: true,
+  //   component: () => <Redirect to={initialUrl} />,
+  // },
   {
     component: () => <Redirect to="/error-pages/error-404" />,
   },

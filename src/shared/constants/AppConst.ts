@@ -15,4 +15,4 @@ export const defaultUser: AuthUser = {
   authType: AuthType.AUTH0,
   photoURL: '/assets/images/avatar/A11.jpg',
 };
-export const initialUrl = '/partner'; // this url will open after login
+// export const initialUrl = '/partner'; // this url will open after login

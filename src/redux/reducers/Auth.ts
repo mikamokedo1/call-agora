@@ -31,6 +31,7 @@ interface INIT_AUTH {
   user: AuthUser | null;
   token: string | null;
   forgotPasswordSuccess: boolean;
+  initialUrl: string;
   errors: {
     [k in ActionType]: null | string;
   };
@@ -43,6 +44,7 @@ const INIT_STATE: INIT_AUTH = {
   user: null,
   token: null,
   forgotPasswordSuccess: false,
+  initialUrl: '/partner',
   errors: {
     login: null,
     changePassword: null,
@@ -84,7 +86,7 @@ const Auth = (state: INIT_AUTH = INIT_STATE, action: AnyAction): INIT_AUTH => {
         token: action.payload.token,
         user: {
           uid: '1',
-          role: ['manager', 'user'],
+          role: ['user'],
           authType: AuthType.JWT_AUTH,
           displayName: decoded?.username,
           email: decoded?.email,

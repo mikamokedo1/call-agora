@@ -7,8 +7,9 @@ import Typography from '@material-ui/core/Typography';
 import { grey } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core';
 import { Fonts } from '../../../shared/constants/AppEnums';
-import { initialUrl } from '../../../shared/constants/AppConst';
 import AppAnimate from '../../../@crema/core/AppAnimate';
+import {useSelector} from 'react-redux'
+import { AppState } from 'src/redux/store';
 
 const useStyles = makeStyles(() => {
   return {
@@ -24,6 +25,7 @@ const useStyles = makeStyles(() => {
 });
 const Error404 = () => {
   const history = useHistory();
+  const initialUrl = useSelector((state: AppState) => state.auth.initialUrl);
 
   const onGoBackToHome = () => {
     history.push(initialUrl);

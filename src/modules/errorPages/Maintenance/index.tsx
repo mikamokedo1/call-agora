@@ -1,14 +1,15 @@
 import React from 'react';
 import Button from '@material-ui/core/Button';
 import { useHistory } from 'react-router-dom';
-import IntlMessages from '../../../@crema/utility/IntlMessages';
 import Box from '@material-ui/core/Box';
 import Typography from '@material-ui/core/Typography';
 import { grey } from '@material-ui/core/colors';
 import { makeStyles } from '@material-ui/core';
+import { useSelector } from 'react-redux';
+import { AppState } from 'src/redux/store';
 import { Fonts } from '../../../shared/constants/AppEnums';
-import { initialUrl } from '../../../shared/constants/AppConst';
 import AppAnimate from '../../../@crema/core/AppAnimate';
+import IntlMessages from '../../../@crema/utility/IntlMessages';
 
 const useStyles = makeStyles(() => {
   return {
@@ -22,6 +23,7 @@ const useStyles = makeStyles(() => {
 
 const Maintenance = () => {
   const history = useHistory();
+  const initialUrl = useSelector((state: AppState) => state.auth.initialUrl);
 
   const onGoBackToHome = () => {
     history.push(initialUrl);
@@ -57,7 +59,7 @@ const Maintenance = () => {
           </Button>
         </Box>
         <Box mb={5} maxWidth={{ xs: 300, sm: 400, xl: 672 }} width="100%">
-          <img src={'/assets/images/errorPageImages/maintenance.png'} alt="404" />
+          <img src="/assets/images/errorPageImages/maintenance.png" alt="404" />
         </Box>
       </Box>
     </AppAnimate>
