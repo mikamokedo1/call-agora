@@ -58,7 +58,7 @@ createAuthRefreshInterceptor(jwtAxios, refreshAuthLogic);
 jwtAxios.interceptors.response.use(
   (response) => response.data,
   (error) => {
-    let errorMessage = `[Error] Unknown error, status code: ${error.response?.status ?? 0}`;
+    let errorMessage = `Server hiện tại đang bão trì. vui lòng thử lại sau!`;
     if (error.response?.status >= 400) {
       try {
         const errJson = error.response.data;

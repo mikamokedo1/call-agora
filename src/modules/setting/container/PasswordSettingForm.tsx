@@ -62,7 +62,7 @@ const PasswordSettingForm = ({ handleClose }: PasswordSettingFormProps) => {
       <Box width="100%" height="100%" bgcolor="rgba(0,0,0,0.7)" position="absolute" left="0px" top="0px" zIndex={10} />
       <Box className={classes.wrap}>
         <Box display="flex" justifyContent="space-between">
-          <Box fontWeight="bold" mb="10px">
+          <Box fontWeight="bold" mb="10px" fontSize="16px">
             Đổi mật khẩu
           </Box>
           <CloseIcon onClick={handleClose} style={{ cursor: 'pointer' }} />

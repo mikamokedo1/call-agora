@@ -10,6 +10,7 @@ export interface NavItemProps {
   color?: string;
   auth?: string[];
   children?: NavItemProps[] | NavItemProps;
+  role: string;
 }
 
 const routesConfig: NavItemProps[] = [
@@ -19,7 +20,44 @@ const routesConfig: NavItemProps[] = [
     messageId: 'sidebar.app.dashboard',
     type: 'item',
     icon: 'dashboard',
-    url: '/dashboards/ctv',
+    url: '/partner',
+    role: 'user',
+  },
+  {
+    id: 'dashboard',
+    title: 'Dashboard',
+    messageId: 'sidebar.app.dashboard',
+    type: 'item',
+    icon: 'dashboard',
+    url: '/manager',
+    role: 'manager',
+  },
+  // {
+  //   id: 'ticket',
+  //   title: 'yêu cầu hổ trợ',
+  //   messageId: 'sidebar.app.ticket',
+  //   type: 'item',
+  //   icon: 'email',
+  //   url: '/ticket',
+  //   role: 'user',
+  // },
+  {
+    id: 'users',
+    title: 'Cộng tác viên',
+    messageId: 'sidebar.app.users',
+    type: 'item',
+    icon: 'person',
+    url: '/users',
+    role: 'manager',
+  },
+  {
+    id: 'oders',
+    title: 'Danh sách đơn hàng',
+    messageId: 'sidebar.app.orders',
+    type: 'item',
+    icon: 'listAlt',
+    url: '/orders',
+    role: 'manager',
   },
   {
     id: 'setting',
@@ -28,6 +66,7 @@ const routesConfig: NavItemProps[] = [
     type: 'item',
     icon: 'settings',
     url: '/setting',
+    role: 'user',
   },
 ];
 export default routesConfig;

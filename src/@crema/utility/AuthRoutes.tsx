@@ -7,7 +7,6 @@ import AppContext from './AppContext';
 import { useAuthToken } from './AppHooks';
 import { Loader } from '../index';
 import { checkPermission } from './Utils';
-import { initialUrl } from '../../shared/constants/AppConst';
 import { setInitialPath } from '../../redux/actions';
 import { AppState } from '../../redux/store';
 import AppContextPropsType from '../../types/AppContextPropsType';
@@ -28,6 +27,7 @@ const AuthRoutes: React.FC<AuthRoutesProps> = ({ children }) => {
   const { initialPath } = useSelector<AppState, AppState['settings']>(({ settings }) => settings);
   const currentRoute = matchRoutes(routes, pathname)[0].route;
   const isPermitted = checkPermission(currentRoute.auth, user ? user.role : null);
+  const initialUrl = useSelector((state: AppState) => state.auth.initialUrl);
 
   useEffect(() => {
     function setInitPath() {

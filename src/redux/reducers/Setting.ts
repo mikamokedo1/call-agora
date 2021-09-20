@@ -4,11 +4,13 @@ import {
   SET_INITIAL_PATH,
   SettingsActionTypes,
   TOGGLE_NAV_COLLAPSED,
+  SET_INITIAL_URL,
 } from '../../types/actions/Settings.action';
 
 const initialSettings: Setting = {
   navCollapsed: false,
   initialPath: '/',
+  inititalUrl: '/',
 };
 
 const Settings = (state = initialSettings, action: SettingsActionTypes) => {
@@ -29,6 +31,11 @@ const Settings = (state = initialSettings, action: SettingsActionTypes) => {
       return {
         ...state,
         initialPath: action.initialPath,
+      };
+    case SET_INITIAL_URL:
+      return {
+        ...state,
+        initialPath: action.payload,
       };
 
     default:

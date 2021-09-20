@@ -1,11 +1,11 @@
 import React from 'react';
 
-export const dashboardPagesConfig = [
+export const userRouterConfig = [
   {
-    auth: ['user'],
+    auth: ['manager'],
     routes: [
       {
-        path: '/partner',
+        path: '/users',
         component: React.lazy(() => import('./pages/index')),
       },
     ],
