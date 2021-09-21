@@ -4,7 +4,7 @@ import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
 import { userSelector } from 'src/redux/reducers/Auth';
 import AppAnimate from '../../../@crema/core/AppAnimate';
-import { fetchStatistic, fetchOrders, fetchSummary, fetchStatisticChart } from '../../../redux/actions/dashboard';
+import { fetchStatistic, fetchOrders, fetchSummary } from '../../../redux/actions/dashboard';
 import { statisticSelector, summarySelector, ordersSelector } from '../../../redux/reducers/Dashboard';
 import TableList from '../container/TableList';
 import ChartStistic from '../container/ChartStistic';
@@ -166,9 +166,6 @@ const PageOne = () => {
       dispatch(fetchStatistic());
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [dispatch]);
-  useEffect(() => {
-    dispatch(fetchStatisticChart());
   }, [dispatch]);
 
   useEffect(() => {

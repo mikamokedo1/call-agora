@@ -1,7 +1,8 @@
 import { AnyAction } from 'redux';
 import { FETCH_STATISTIC, FETCH_ORDERS, FETCH_SUMMARY, FETCH_STATISTIC_CHART } from '../../types/actions/Dashboard';
 import { AppState } from '../store/index';
-import { Statistic, Order, Sumary } from '../../types/models/Dashboard';
+import { Statistic, Order, Summary } from '../../types/models/Dashboard';
+import { SIGNOUT_AUTH_SUCCESS } from '../../types/actions/Auth.actions';
 
 type ActionType = 'statistic' | 'orders' | 'summary' | 'statisticChart';
 
@@ -9,7 +10,7 @@ interface INIT_DASHBOARD {
   statistic: Statistic[];
   statisticChart: Statistic[];
   orders: Order[];
-  summary?: Sumary;
+  summary?: Summary;
   errors: {
     [k in ActionType]: null | string;
   };
@@ -49,6 +50,7 @@ const DashboardReducer = (state: INIT_DASHBOARD = INIT_STATE, action: AnyAction)
       return {
         ...state,
         statistic: action.payload,
+        statisticChart: state.statisticChart.length === 0 ? action.payload : state.statisticChart,
         loadings: { ...state.loadings, statistic: false },
       };
     case FETCH_STATISTIC.error:
@@ -112,7 +114,10 @@ const DashboardReducer = (state: INIT_DASHBOARD = INIT_STATE, action: AnyAction)
         errors: { ...state.errors, statisticChart: action.message },
         loadings: { ...state.loadings, statisticChart: false },
       };
-
+    case 'RESET_FORGET_PASSWORD_SUCCESS_STATUS':
+      return INIT_STATE;
+    case SIGNOUT_AUTH_SUCCESS:
+      return INIT_STATE;
     default:
       return state;
   }
