@@ -49,6 +49,7 @@ const TableList = () => {
       contentStyle={{ paddingRight: 0, paddingLeft: 0 }}
       title="Table theo ngày"
       action={<AppSelect menus={['Ngày', 'Tuần', 'Tháng']} defaultValue="Ngày" onChange={handleSelectionType} />}
+      height="100%"
     >
       <SelectDate />
       <TableContainer className={classes.container}>

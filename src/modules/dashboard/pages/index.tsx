@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import React, { useEffect, useRef } from 'react';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import { useDispatch, useSelector } from 'react-redux';
@@ -131,6 +131,7 @@ const useStyles = makeStyles(() => ({
     backgroundColor: '#fff',
     borderRadius: '5px',
     padding: '15px',
+
     '@media screen and (max-width: 750px)': {
       width: '100%',
     },
@@ -151,11 +152,12 @@ const useStyles = makeStyles(() => ({
 
 const PageOne = () => {
   const dispatch = useDispatch();
-  const boxRef = React.useRef<HTMLInputElement>(null);
+  const boxRef = useRef<HTMLInputElement>(null);
   const summary = useSelector(summarySelector);
   const statistics = useSelector(statisticSelector);
   const orders = useSelector(ordersSelector);
   const user = useSelector(userSelector);
+  const pageTop = useRef<HTMLDivElement>(null);
   const classes = useStyles();
   const handleCopy = () => {
     navigator.clipboard.writeText(boxRef.current?.textContent ?? '');
@@ -182,7 +184,7 @@ const PageOne = () => {
   return (
     <AppAnimate animation="transition.slideUpIn" delay={200}>
       <Box className={classes.wrap}>
-        <Box className={classes.top}>
+        <div className={classes.top} ref={pageTop}>
           <Box className={classes.topRight}>
             <TableList />
           </Box>
@@ -267,8 +269,8 @@ const PageOne = () => {
               </Box>
             </Box>
           </Box>
-        </Box>
-        <Box className={classes.bottom}>
+        </div>
+        <Box className={classes.bottom} height={`calc(100% - ${(pageTop.current?.offsetHeight ?? 434) + 20}px)`}>
           <Box className={classes.bottomRight}>
             <Box fontWeight="bold" color="#334D6E" mb="15px">
               Biểu đồ bán theo ngày đơn/triệu đồng

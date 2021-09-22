@@ -5,6 +5,7 @@ import { format } from 'date-fns';
 import { statisticChartSelector } from '../../../redux/reducers/Dashboard';
 
 const options = {
+  maintainAspectRatio: false,
   scales: {
     yAxes: [
       {

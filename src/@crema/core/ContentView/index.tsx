@@ -34,7 +34,7 @@ const TransitionWrapper: React.FC<TransitionWrapperProps> = ({ children }) => {
 const ContentView = () => {
   return (
     <Scrollbar>
-      <Box display="flex" flex={1} flexDirection="column" className="main-content-view">
+      <Box display="flex" flex={1} flexDirection="column" className="main-content-view" height="100%">
         <AppSuspense>
           <AppErrorBoundary>
             <TransitionWrapper>{renderRoutes(routes)}</TransitionWrapper>
