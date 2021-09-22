@@ -118,7 +118,7 @@ const Signin: React.FC<{}> = () => {
       <Box className={classes.left} />
       <Box className={classes.right}>
         <Box className={classes.rightInner}>
-          <Box className={classes.title}>Đăng nhập CRM Site</Box>
+          <Box className={classes.title}>Đăng nhập cổng đối tác GoTRUST</Box>
           <Formik
             validateOnChange
             initialValues={{
