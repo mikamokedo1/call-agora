@@ -10,6 +10,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { AppState } from 'src/redux/store';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import { makeStyles } from '@material-ui/core/styles';
+import { createSellers } from 'src/redux/actions/dashboard';
 
 const StyledTextField = styled(TextField)`
   margin-bottom: 10px;
@@ -45,7 +46,7 @@ export const useStyles = makeStyles(() => ({
 }));
 
 const validationSchema = yup.object({
-  name: yup.string().required('Bạn quên nhập tên!'),
+  fullName: yup.string().required('Bạn quên nhập tên!'),
   phone: yup.number().required('Bạn quên nhập số điện thoại!'),
   email: yup.string().email().required('Bạn quên nhập email!'),
 });
@@ -56,17 +57,17 @@ interface FormAddPartnerProps {
 const FormAddPartner = ({ handleClose }: FormAddPartnerProps) => {
   const classes = useStyles();
   const dispatch = useDispatch();
-  const error = useSelector((state: AppState) => state.auth.errors.changeBankInfo);
-  const isLoading = useSelector((state: AppState) => state.auth.loadings.changeBankInfo);
+  const error = useSelector((state: AppState) => state.dashboard.errors.createSeller);
+  const isLoading = useSelector((state: AppState) => state.dashboard.loadings.createSeller);
   const formik = useFormik({
     initialValues: {
-      name: '',
+      fullName: '',
       phone: '',
       email: '',
     },
     validationSchema,
     onSubmit: (values) => {
-      console.log(values);
+      dispatch(createSellers(values.fullName, values.email, values.phone));
     },
   });
 
@@ -80,13 +81,12 @@ const FormAddPartner = ({ handleClose }: FormAddPartnerProps) => {
           </Box>
           <CloseIcon onClick={handleClose} style={{ cursor: 'pointer' }} />
         </Box>
-
         <StyledTextField
-          label="Tên cộng tác viên"
-          value={formik.values.name}
-          name="name"
+          label="Họ và tên"
+          value={formik.values.fullName}
+          name="fullName"
           onChange={formik.handleChange}
-          error={formik.touched.name && Boolean(formik.errors.name)}
+          error={formik.touched.fullName && Boolean(formik.errors.fullName)}
         />
         <StyledTextField
           label="Số điện thoại"
@@ -97,12 +97,13 @@ const FormAddPartner = ({ handleClose }: FormAddPartnerProps) => {
           type="number"
         />
         <StyledTextField
-          label="Số tài khoản"
+          label="Email"
           name="email"
           value={formik.values.email}
           onChange={formik.handleChange}
           error={formik.touched.email && Boolean(formik.errors.email)}
         />
+
         {error && (
           <Box fontSize="14px" color="#F7685B" marginBottom="10px" textAlign="center">
             {error}

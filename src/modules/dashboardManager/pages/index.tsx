@@ -14,6 +14,7 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 const useStyles = makeStyles((theme: CremaTheme) => ({
   wrap: {
+    height: '100%',
     display: 'flex',
     justifyContent: 'space-between',
     '@media screen and (max-width: 750px)': {
@@ -24,26 +25,28 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
   left: {
     display: 'flex',
     width: '70%',
+    height: '100%',
     flexDirection: 'column',
     '@media screen and (max-width: 750px)': {
       flexDirection: 'column',
       alignItems: 'center',
       width: '100%',
+      height: 'auto',
     },
   },
   topLeft: {
     '@media screen and (max-width: 750px)': {
       width: '100%',
-      order: 1,
     },
   },
   topRight: {
+    height: 'calc((100% - 20px) / 2)',
     backgroundColor: '#fff',
     borderRadius: '4px',
-    marginBottom: '30px',
+    marginBottom: '20px',
     '@media screen and (max-width: 750px)': {
       width: '100%',
-      order: 2,
+      height: 'auto',
     },
   },
   link: {
@@ -117,6 +120,7 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     },
   },
   right: {
+    height: '100%',
     display: 'flex',
     width: 'calc(30% - 30px)',
     flexDirection: 'column',
@@ -124,6 +128,7 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
       flexDirection: 'column',
       alignItems: 'center',
       width: '100%',
+      height: 'auto',
     },
   },
   bottomLeft: {
@@ -140,6 +145,7 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     },
   },
   bottomRight: {
+    height: 'calc((100% - 20px) / 2)',
     display: 'flex',
     flexDirection: 'column',
     justifyContent: 'space-between',
@@ -149,6 +155,7 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
     '@media screen and (max-width: 750px)': {
       width: '100%',
       marginBottom: '20px',
+      height: 'auto',
     },
   },
 }));

@@ -1,5 +1,5 @@
 import { reduxRequestActionGenerator } from '../../@crema/utility/Utils';
-import { Statistic, Order, Summary } from '../models/Dashboard';
+import { Statistic, Order, Summary, Seller } from '../models/Dashboard';
 
 const scope = 'dashboard';
 
@@ -67,6 +67,41 @@ export interface FetchStatisticChartFailedAction {
   message: string;
 }
 
+export const FETCH_SELLERS = reduxRequestActionGenerator(scope, 'FETCH_SELLERS');
+
+export interface FetchSellersAction {
+  type: typeof FETCH_SELLERS.pending;
+}
+
+export interface FetchSellersSuccessAction {
+  type: typeof FETCH_SELLERS.success;
+  payload: Seller[];
+}
+export interface FetchSellersFailedAction {
+  type: typeof FETCH_SELLERS.error;
+  message: string;
+}
+
+export const CREATE_SELLER = reduxRequestActionGenerator(scope, 'CREATE_SELLER');
+
+export interface CreateSellerAction {
+  type: typeof CREATE_SELLER.pending;
+}
+
+export interface CreateSellerSuccessAction {
+  type: typeof CREATE_SELLER.success;
+  payload: Seller;
+}
+export interface CreateSellerFailedAction {
+  type: typeof CREATE_SELLER.error;
+  message: string;
+}
+
+export const RESET_CREATE_SELLER_STATUS = reduxRequestActionGenerator(scope, 'RESET_CREATE_SELLER_STATUS');
+export interface ResetCreateUserAction {
+  type: typeof CREATE_SELLER.pending;
+}
+
 export type DashboardActionTypes =
   | FetchStatisticAction
   | FetchStatisticSuccessAction
@@ -79,4 +114,11 @@ export type DashboardActionTypes =
   | FetSummaryFailedAction
   | FetchStatisticChartAction
   | FetchStatisticChartSuccessAction
-  | FetchStatisticChartFailedAction;
+  | FetchStatisticChartFailedAction
+  | FetchSellersAction
+  | FetchSellersSuccessAction
+  | FetchSellersFailedAction
+  | CreateSellerAction
+  | CreateSellerSuccessAction
+  | CreateSellerFailedAction
+  | ResetCreateUserAction;

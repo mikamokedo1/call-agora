@@ -20,3 +20,16 @@ export interface Summary {
   commission: number;
   paidCommission: number;
 }
+
+export interface Seller {
+  fullName: string;
+  email: string;
+  phone: string;
+  avatar: string;
+  reseller: string;
+  saleName: string;
+  bankAccountNumber: string;
+  bankName: string;
+  bankAccount: string;
+  commissionPercent: number;
+}

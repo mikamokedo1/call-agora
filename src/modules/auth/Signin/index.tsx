@@ -70,7 +70,7 @@ const useStyles = makeStyles((theme: CremaTheme) => ({
   },
   title: {
     fontWeight: 'bold',
-    fontSize: '36px',
+    fontSize: '26px',
     marginBottom: '30px',
     '@media screen and (max-width: 750px)': {
       fontSize: '18px',

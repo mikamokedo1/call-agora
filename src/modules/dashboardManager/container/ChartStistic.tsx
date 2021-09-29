@@ -16,6 +16,7 @@ const options = {
   },
   animation: false,
   responsive: true,
+  maintainAspectRatio: false,
 };
 const ChartStistic = () => {
   const statisticsChart = useSelector(statisticChartSelector);

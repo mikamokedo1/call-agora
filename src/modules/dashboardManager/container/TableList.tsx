@@ -1,5 +1,6 @@
 import React, { useMemo, useState } from 'react';
 import Table from '@material-ui/core/Table';
+import Box from '@material-ui/core/Box';
 import TableHead from '@material-ui/core/TableHead';
 import TableBody from '@material-ui/core/TableBody';
 import { useSelector, useDispatch } from 'react-redux';
@@ -23,8 +24,8 @@ const useStyles = makeStyles({
     maxHeight: 300,
   },
   input: {
-    marginBottom: '20px',
     marginLeft: '20px',
+    marginBottom: '10px',
   },
 });
 const TableList = () => {
@@ -59,20 +60,22 @@ const TableList = () => {
       contentStyle={{ paddingRight: 0, paddingLeft: 0 }}
       title="Nhân viên xuất sắc"
       action={<AppSelect menus={['Ngày', 'Tuần', 'Tháng']} defaultValue="Ngày" onChange={handleSelectionType} />}
+      height="100%"
     >
-      <TextField
-        value={searchText}
-        onChange={(e) => setSearchText(e.target.value)}
-        className={classes.input}
-        placeholder="Nhập tên nhân viên"
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="start">
-              <SearchIcon style={{ cursor: 'pointer' }} onClick={onClickSearchDate} />
-            </InputAdornment>
-          ),
-        }}
-      />
+      <Box className={classes.input}>
+        <TextField
+          value={searchText}
+          onChange={(e) => setSearchText(e.target.value)}
+          placeholder="Nhập tên nhân viên"
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="start">
+                <SearchIcon style={{ cursor: 'pointer' }} onClick={onClickSearchDate} />
+              </InputAdornment>
+            ),
+          }}
+        />
+      </Box>
       <TableContainer className={classes.container}>
         <Table stickyHeader aria-label="sticky table">
           <TableHead>

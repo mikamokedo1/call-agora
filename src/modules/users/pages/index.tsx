@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import Button from '@material-ui/core/Button';
@@ -11,6 +11,9 @@ import * as R from 'lodash';
 import DeleteIcon from '@material-ui/icons/Delete';
 import { CSVLink } from 'react-csv';
 import styled from 'styled-components';
+import { useDispatch, useSelector } from 'react-redux';
+import { resetCreateUserStatus, fetchSellers } from 'src/redux/actions/dashboard';
+import { AppState } from 'src/redux/store';
 import AppAnimate from '../../../@crema/core/AppAnimate';
 import AppSelect from '../../../@crema/core/AppSelect';
 import TableItem from '../components/TableItem';
@@ -110,9 +113,11 @@ const DATA_TABLE = [
 ];
 const PageOne = () => {
   const classes = useStyles();
+  const dispatch = useDispatch();
   const [selectedUsers, setSelectedUsers] = useState<string[]>([]);
   const [checkedAll, setCheckedAll] = useState(false);
   const [addUserFlag, setAddUserFlag] = useState(false);
+  const createUserStatus = useSelector((state: AppState) => state.dashboard.createUserStatus);
   const handleSelectionType = (data: unknown) => {
     console.log(data);
   };
@@ -156,6 +161,15 @@ const PageOne = () => {
 
     return headers;
   };
+  useEffect(() => {
+    dispatch(fetchSellers());
+  }, [dispatch]);
+  useEffect(() => {
+    if (createUserStatus) {
+      setAddUserFlag(false);
+    }
+  }, [createUserStatus]);
+
   return (
     <>
       {addUserFlag && <FormAddPartner handleClose={() => setAddUserFlag(false)} />}
@@ -194,7 +208,10 @@ const PageOne = () => {
             <Button
               variant="contained"
               color="primary"
-              onClick={() => setAddUserFlag(true)}
+              onClick={() => {
+                setAddUserFlag(true);
+                dispatch(resetCreateUserStatus());
+              }}
               className={classes.addButton}
             >
               Thêm user

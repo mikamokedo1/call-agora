@@ -1,16 +1,26 @@
 import { AnyAction } from 'redux';
-import { FETCH_STATISTIC, FETCH_ORDERS, FETCH_SUMMARY, FETCH_STATISTIC_CHART } from '../../types/actions/Dashboard';
+import {
+  FETCH_STATISTIC,
+  FETCH_ORDERS,
+  FETCH_SUMMARY,
+  FETCH_STATISTIC_CHART,
+  FETCH_SELLERS,
+  CREATE_SELLER,
+  RESET_CREATE_SELLER_STATUS,
+} from '../../types/actions/Dashboard';
 import { AppState } from '../store/index';
-import { Statistic, Order, Summary } from '../../types/models/Dashboard';
+import { Statistic, Order, Summary, Seller } from '../../types/models/Dashboard';
 import { SIGNOUT_AUTH_SUCCESS } from '../../types/actions/Auth.actions';
 
-type ActionType = 'statistic' | 'orders' | 'summary' | 'statisticChart';
+type ActionType = 'statistic' | 'orders' | 'summary' | 'statisticChart' | 'sellers' | 'createSeller';
 
 interface INIT_DASHBOARD {
   statistic: Statistic[];
   statisticChart: Statistic[];
   orders: Order[];
   summary?: Summary;
+  sellers: Seller[];
+  createUserStatus: boolean;
   errors: {
     [k in ActionType]: null | string;
   };
@@ -24,17 +34,23 @@ const INIT_STATE: INIT_DASHBOARD = {
   orders: [],
   statisticChart: [],
   summary: undefined,
+  sellers: [],
+  createUserStatus: false,
   errors: {
     statistic: null,
     orders: null,
     summary: null,
     statisticChart: null,
+    sellers: null,
+    createSeller: null,
   },
   loadings: {
     statistic: false,
     orders: false,
     summary: false,
     statisticChart: false,
+    sellers: false,
+    createSeller: false,
   },
 };
 
@@ -107,6 +123,7 @@ const DashboardReducer = (state: INIT_DASHBOARD = INIT_STATE, action: AnyAction)
         ...state,
         statisticChart: action.payload,
         loadings: { ...state.loadings, statisticChart: false },
+        createUserStatus: true,
       };
     case FETCH_STATISTIC_CHART.error:
       return {
@@ -118,6 +135,49 @@ const DashboardReducer = (state: INIT_DASHBOARD = INIT_STATE, action: AnyAction)
       return INIT_STATE;
     case SIGNOUT_AUTH_SUCCESS:
       return INIT_STATE;
+    case FETCH_SELLERS.pending:
+      return {
+        ...state,
+        errors: { ...state.errors, sellers: null },
+        loadings: { ...state.loadings, sellers: true },
+      };
+    case FETCH_SELLERS.success:
+      return {
+        ...state,
+        sellers: action.payload,
+        loadings: { ...state.loadings, sellers: false },
+      };
+    case FETCH_SELLERS.error:
+      return {
+        ...state,
+        errors: { ...state.errors, sellers: action.message },
+        loadings: { ...state.loadings, sellers: false },
+      };
+    case CREATE_SELLER.pending:
+      return {
+        ...state,
+        errors: { ...state.errors, createSeller: null },
+        loadings: { ...state.loadings, createSeller: true },
+      };
+    case CREATE_SELLER.success:
+      return {
+        ...state,
+        createUserStatus: true,
+        loadings: { ...state.loadings, createSeller: false },
+      };
+    case CREATE_SELLER.error:
+      return {
+        ...state,
+        errors: { ...state.errors, createSeller: action.message },
+        loadings: { ...state.loadings, createSeller: false },
+      };
+    case RESET_CREATE_SELLER_STATUS.pending: {
+      return {
+        ...state,
+        createUserStatus: false,
+        errors: { ...state.errors, createSeller: null },
+      };
+    }
     default:
       return state;
   }
