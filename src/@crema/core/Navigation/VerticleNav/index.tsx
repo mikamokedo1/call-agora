@@ -8,6 +8,7 @@ import VerticalCollapse from './VerticalCollapse';
 import VerticalItem from './VerticalItem';
 import VerticalNavGroup from './VerticalNavGroup';
 
+// eslint-disable-next-line @typescript-eslint/no-empty-interface
 interface NavigationProps {}
 
 const Navigation: React.FC<NavigationProps> = () => {
@@ -15,7 +16,7 @@ const Navigation: React.FC<NavigationProps> = () => {
   return (
     <List>
       {routesConfig.map((item: NavItemProps) => {
-        const isPermision = (user?.role ?? []).includes(item.role);
+        const isPermision = (item.role && (user?.role ?? []).includes(item.role)) || !item.role;
         return (
           <React.Fragment key={item.id}>
             {isPermision && item.type === 'group' && <VerticalNavGroup item={item} level={0} />}

@@ -10,7 +10,7 @@ export interface NavItemProps {
   color?: string;
   auth?: string[];
   children?: NavItemProps[] | NavItemProps;
-  role: string;
+  role?: string;
 }
 
 const routesConfig: NavItemProps[] = [
@@ -58,6 +58,15 @@ const routesConfig: NavItemProps[] = [
     icon: 'listAlt',
     url: '/orders',
     role: 'manager',
+  },
+  {
+    id: 'chat',
+    title: 'Chăm sóc khách hàng',
+    messageId: 'sidebar.app.chat',
+    type: 'item',
+    icon: 'chatIcon',
+    url: '/chat',
+    role: '',
   },
   {
     id: 'setting',

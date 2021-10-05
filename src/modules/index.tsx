@@ -7,6 +7,7 @@ import { dashboardManagerPagesConfig } from './dashboardManager/dashboardManager
 import { ordersRouterConfig } from './orders/ordersRouterConfig';
 import { userRouterConfig } from './users/userRouterConfig';
 import { settingRouterConfig } from './setting/settingRouterConfig';
+import { chatPagesConfig } from './chat/chatPagesConfig';
 // import { ticketRouterConfig } from './ticket/ticketRouterConfig';
 
 import { errorPagesConfigs } from './errorPages';
@@ -18,6 +19,7 @@ const routeConfigs = [
   ...ordersRouterConfig,
   ...userRouterConfig,
   ...settingRouterConfig,
+  ...chatPagesConfig,
   // ...ticketRouterConfig,
   ...errorPagesConfigs,
   ...authRouteConfig,

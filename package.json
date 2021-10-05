@@ -33,6 +33,7 @@
     "connected-react-router": "^6.8.0",
     "crypto-js": "^4.1.1",
     "date-fns": "^2.23.0",
+    "emoji-picker-react": "^3.4.8",
     "eslint": "^7.12.1",
     "eslint-config-airbnb": "^18.2.1",
     "eslint-config-prettier": "^6.15.0",
