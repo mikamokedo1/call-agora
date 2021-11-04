@@ -55,9 +55,14 @@ const ChatRoomView = () => {
             'b00c0b18d1194540bcef5c8be131eef8',
             payload.new.channel,
             '006b00c0b18d1194540bcef5c8be131eef8IAB3k9RqdFU1oZCkwxoLU0q97o1sXYM6NRnAqOwo+M1jr5d+x8wAAAAAEAAAIFGKgSqFYQEAAQB/KoVh',
+            userIdSupbase,
           );
         }
+        if (payload.new.type === 'videoCall-end') {
+          leave();
+        }
       })
+
       .subscribe();
 
     return () => {
@@ -83,6 +88,14 @@ const ChatRoomView = () => {
       },
     ]);
   };
+  const onEndedCall = async () => {
+    await supabase.from('messages').insert([
+      {
+        type: 'videoCall-end',
+        channel: 'taone',
+      },
+    ]);
+  };
 
   return (
     <Box className={classes.wrap}>
@@ -102,7 +115,7 @@ const ChatRoomView = () => {
               <MediaPlayer videoTrack={user.videoTrack} audioTrack={user.audioTrack} />
             </div>
           ))}
-          <Button onClick={() => leave()} fullWidth>
+          <Button onClick={onEndedCall} fullWidth>
             Kết thúc
           </Button>
         </Box>
