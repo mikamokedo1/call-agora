@@ -93,6 +93,7 @@ const ChatRoomView = () => {
       {
         type: 'videoCall-end',
         channel: 'taone',
+        created_by: userIdSupbase,
       },
     ]);
   };
