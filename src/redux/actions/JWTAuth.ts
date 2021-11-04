@@ -3,6 +3,9 @@ import { get } from 'lodash';
 import { v4 as uuidv4 } from 'uuid';
 import md5 from 'md5';
 import CryptoJS from 'crypto-js';
+import { supabase } from 'src/shared/supabaseClient';
+import jwt_decode from 'jwt-decode';
+import { JWTdecode } from 'src/redux/reducers/Auth';
 import jwtAxios from '../../@crema/services/auth/jwt-auth/jwt-api';
 import { fetchError, fetchStart, fetchSuccess } from './Common';
 import { AppActions } from '../../types';
@@ -25,7 +28,6 @@ export const onJwtUserSignUp = (body: { email: string; password: string; name: s
       const res = await jwtAxios.post('/users/login', body);
       localStorage.setItem('token', res.data.token);
       dispatch(setJWTToken(res.data.token));
-      // await loadJWTUser(dispatch);
     } catch (err) {
       dispatch(fetchError(err.response.data.error));
     }
@@ -49,6 +51,26 @@ export const onJwtSignIn = (body: { username: string; password: string }) => {
       if (res.data) {
         localStorage.setItem('token', res.data.accessToken);
         dispatch(setJWTToken(res.data.accessToken));
+        const decoded: JWTdecode = jwt_decode(res.data.accessToken);
+        const { user, error } = await supabase.auth.signIn({
+          email: decoded.email,
+          password: decoded.email,
+        });
+        if (error) {
+          const { user } = await supabase.auth.signUp({
+            email: decoded.email,
+            password: decoded.email,
+          });
+          dispatch({
+            type: 'USER_ID_SUPBASE',
+            payload: user?.id,
+          });
+        } else {
+          dispatch({
+            type: 'USER_ID_SUPBASE',
+            payload: user?.id,
+          });
+        }
       } else {
         dispatch(fetchError(get(res, 'result.message')));
       }

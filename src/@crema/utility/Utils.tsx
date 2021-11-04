@@ -131,3 +131,44 @@ export const reduxRequestActionGenerator = (scope: string, actionName: string) =
     error: reduxActionName(scope, `${actionName}_error`),
   };
 };
+
+export const fileToByte = async (file: File) => {
+  // const reader = new FileReader();
+  // const fileByteArray: number[] = [];
+  // reader.readAsArrayBuffer(file);
+  // reader.onloadend = (evt) => {
+  //   if (!evt.target) {
+  //     return;
+  //   }
+  //   if (evt.target.readyState === FileReader.DONE) {
+  //     const arrayBuffer = evt.target.result;
+  //     if (!arrayBuffer) {
+  //       return;
+  //     }
+  //     const array =  new Uint8Array(arrayBuffer as ArrayBuffer);
+  //     array.forEach((a) => {
+  //       fileByteArray.push(a);
+  //     });
+
+  //   }
+  // };
+  const fileByteArray: number[] = [];
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.addEventListener('loadend', (e) => {
+      const arrayBuffer = e?.target?.result;
+      if (!arrayBuffer) {
+        return;
+      }
+      const array = new Uint8Array(arrayBuffer as ArrayBuffer);
+      array.forEach((a) => {
+        fileByteArray.push(a);
+      });
+      resolve(fileByteArray);
+    });
+    reader.addEventListener('error', reject);
+
+    // Read file
+    reader.readAsArrayBuffer(file);
+  });
+};

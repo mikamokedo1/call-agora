@@ -1,4 +1,4 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import Select from '@material-ui/core/Select';
@@ -9,10 +9,20 @@ import { useFormik } from 'formik';
 import * as yup from 'yup';
 import TextField from '@material-ui/core/TextField';
 import AddIcon from '@material-ui/icons/Add';
-import { Button } from '@material-ui/core';
-import { useSelector } from 'react-redux';
+import { Button, CircularProgress } from '@material-ui/core';
+import { useDispatch, useSelector } from 'react-redux';
 import { userSelector } from 'src/redux/reducers/Auth';
+import {
+  departmentsSelector,
+  relatedServicesSelector,
+  isLoadingSendTicketSelector,
+  isErrorSendTicketSelector,
+  prioritySelector,
+} from 'src/redux/reducers/Ticket';
+import { fetchDepartmentList, fetchPriority, fetchRelatedServices, sendTicket } from 'src/redux/actions/Ticket';
+import axios from 'axios';
 import AppAnimate from '../../../@crema/core/AppAnimate';
+import { fileToByte } from '../../../@crema/utility/Utils';
 
 const useStyles = makeStyles(() => ({
   inner: {
@@ -83,35 +93,86 @@ const useStyles = makeStyles(() => ({
 }));
 
 const validationSchema = yup.object({
+  phong: yup.string().required('Bạn quên chọn phòng ban!'),
+  dichvu: yup.string().required('Bạn quên chọn dịch vụ liên quan!'),
   title: yup.string().required('Bạn quên nhập tiêu đề!'),
   description: yup.string().required('Bạn quên nhập nội dung!'),
 });
 
 const PageOne = () => {
+  const dispatch = useDispatch();
   const user = useSelector(userSelector);
+  const departments = useSelector(departmentsSelector);
+  const relatedServices = useSelector(relatedServicesSelector);
+  const priority = useSelector(prioritySelector);
+  const isLoadingSendTicket = useSelector(isLoadingSendTicketSelector);
+  const isErrorSendTicket = useSelector(isErrorSendTicketSelector);
+  const [binaryList, setBinaryList] = useState<number[][]>([]);
+  const ticketUrl = process.env.REACT_APP_API_UPLOAD_FILE;
+
   const refInput = useRef<HTMLInputElement>(null);
   const [avatar, setAvatar] = useState<FileList>();
   const classes = useStyles();
   const formik = useFormik({
     initialValues: {
       phong: 1,
-      danhsach: 1,
-      dichvu: 1,
       uutien: 1,
+      dichvu: 1,
       title: '',
       description: '',
     },
     validationSchema,
-    onSubmit: (values) => {
-      console.log(values);
+    onSubmit: async (values) => {
+      const resultUploadImage = await axios.post(ticketUrl ?? '', {
+        data: binaryList.map((item) => {
+          return { optionon: 2, file: item, fileName: 'shit', userName: user?.displayName };
+        }),
+      });
+      console.log(resultUploadImage);
+      // dispatch(
+      //   sendTicket({
+      //     subject: values.title,
+      //     body: values.description,
+      //     userId: user?.uid ?? '',
+      //     userName: user?.displayName ?? '',
+      //     email: user?.email ?? '',
+      //     relatedServices: values.dichvu,
+      //     department: values.phong,
+      //     priority: values.uutien,
+      //     image: [],
+      //   }),
+      // );
     },
   });
-  const handleChangeAvatar = (e: React.ChangeEvent<HTMLInputElement>) => {
+  const handleChangeAvatar = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (e.target.files) {
       const image = e.target.files;
       setAvatar(image);
+      const bytesArrays: number[][] = [];
+      await Promise.all(
+        Array.from(image).map(async (item) => {
+          const result = await fileToByte(item);
+          bytesArrays.push(result);
+        }),
+      );
+
+      setBinaryList(bytesArrays);
     }
   };
+
+  useEffect(() => {
+    if (!departments.length) {
+      dispatch(fetchDepartmentList());
+    }
+    if (!relatedServices.length) {
+      dispatch(fetchRelatedServices());
+    }
+    if (!priority.length) {
+      dispatch(fetchPriority());
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [dispatch]);
+
   return (
     <AppAnimate animation="transition.slideUpIn" delay={200}>
       <Box>
@@ -124,6 +185,11 @@ const PageOne = () => {
           multiple
         />
         <Box className={classes.inner} mb="20px">
+          {isErrorSendTicket && (
+            <Box fontSize="14px" color="#F7685B" marginBottom="10px" textAlign="center">
+              {isErrorSendTicket}
+            </Box>
+          )}
           <Box className={classes.title}>Thông tin yêu cầu hỗ trợ</Box>
           <Box className={classes.flex}>
             <Box className={classes.marginRight}>
@@ -149,23 +215,9 @@ const PageOne = () => {
                 value={formik.values.phong}
                 onChange={formik.handleChange}
               >
-                <MenuItem value={1}>Phòng kinh doanh</MenuItem>
-                <MenuItem value={2}>Phòng kinh doanh 2</MenuItem>
-                <MenuItem value={3}>Phòng kinh doanh 3</MenuItem>
-              </Select>
-            </FormControl>
-            <FormControl className={classes.formControl}>
-              <InputLabel id="danhsach">Danh sách yêu cầu</InputLabel>
-              <Select
-                labelId="danhsach"
-                id="danhsach"
-                name="danhsach"
-                value={formik.values.danhsach}
-                onChange={formik.handleChange}
-              >
-                <MenuItem value={1}>Phòng kinh doanh</MenuItem>
-                <MenuItem value={2}>Phòng kinh doanh 2</MenuItem>
-                <MenuItem value={3}>Phòng kinh doanh 3</MenuItem>
+                {(departments ?? []).map((item) => {
+                  return <MenuItem value={item.id}>{item.departmentName}</MenuItem>;
+                })}
               </Select>
             </FormControl>
             <FormControl className={classes.formControl}>
@@ -177,9 +229,9 @@ const PageOne = () => {
                 value={formik.values.dichvu}
                 onChange={formik.handleChange}
               >
-                <MenuItem value={1}>Phòng kinh doanh</MenuItem>
-                <MenuItem value={2}>Phòng kinh doanh 2</MenuItem>
-                <MenuItem value={3}>Phòng kinh doanh 3</MenuItem>
+                {(relatedServices ?? []).map((item) => {
+                  return <MenuItem value={item.id}>{item.relatedServicesName}</MenuItem>;
+                })}
               </Select>
             </FormControl>
             <FormControl className={classes.formControl}>
@@ -191,9 +243,9 @@ const PageOne = () => {
                 value={formik.values.uutien}
                 onChange={formik.handleChange}
               >
-                <MenuItem value={1}>Phòng kinh doanh</MenuItem>
-                <MenuItem value={2}>Phòng kinh doanh 2</MenuItem>
-                <MenuItem value={3}>Phòng kinh doanh 3</MenuItem>
+                {(priority ?? []).map((item) => {
+                  return <MenuItem value={item.id}>{item.priorityName}</MenuItem>;
+                })}
               </Select>
             </FormControl>
           </Box>
@@ -246,8 +298,14 @@ const PageOne = () => {
             </Box>
           )}
           <Box className={classes.flex}>
-            <Button color="primary" fullWidth variant="contained" onClick={() => formik.handleSubmit()}>
-              Gữi ngay
+            <Button
+              color="primary"
+              fullWidth
+              variant="contained"
+              onClick={() => formik.handleSubmit()}
+              disabled={isLoadingSendTicket}
+            >
+              {isLoadingSendTicket ? <CircularProgress size={30} color="inherit" /> : 'Gữi ngay'}
             </Button>
             <Button className={classes.buttonDisabled} variant="contained" onClick={(e) => formik.handleReset(e)}>
               Hủy

@@ -15,7 +15,7 @@ export interface NavItemProps {
 
 const routesConfig: NavItemProps[] = [
   {
-    id: 'dashboard',
+    id: 'dashboardUser',
     title: 'Dashboard',
     messageId: 'sidebar.app.dashboard',
     type: 'item',
@@ -24,7 +24,7 @@ const routesConfig: NavItemProps[] = [
     role: 'user',
   },
   {
-    id: 'dashboard',
+    id: 'dashboardManager',
     title: 'Dashboard',
     messageId: 'sidebar.app.dashboard',
     type: 'item',
@@ -32,15 +32,15 @@ const routesConfig: NavItemProps[] = [
     url: '/manager',
     role: 'manager',
   },
-  // {
-  //   id: 'ticket',
-  //   title: 'yêu cầu hổ trợ',
-  //   messageId: 'sidebar.app.ticket',
-  //   type: 'item',
-  //   icon: 'email',
-  //   url: '/ticket',
-  //   role: 'user',
-  // },
+  {
+    id: 'ticket',
+    title: 'yêu cầu hổ trợ',
+    messageId: 'sidebar.app.ticket',
+    type: 'item',
+    icon: 'email',
+    url: '/ticket',
+    role: 'user',
+  },
   {
     id: 'users',
     title: 'Cộng tác viên',

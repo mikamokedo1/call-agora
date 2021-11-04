@@ -1,13 +1,11 @@
 import axios from 'axios';
 import createAuthRefreshInterceptor from 'axios-auth-refresh';
-import { v4 as uuidv4 } from 'uuid';
 import configureStore, { history } from '../../../../redux/store/index';
 
 const BaseAPI = process.env.REACT_APP_API_URL;
 const axiosConfig = {
   headers: {
     'Content-Type': 'application/json',
-    common: { 'x-requestid': uuidv4() },
   },
 };
 

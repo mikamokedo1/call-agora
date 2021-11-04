@@ -5,6 +5,11 @@ import { makeStyles } from '@material-ui/core/styles';
 import styled from 'styled-components';
 import TextareaAutosize from '@material-ui/core/TextareaAutosize';
 import InsertEmoticonIcon from '@material-ui/icons/InsertEmoticon';
+import { updateInputComposer } from 'src/redux/actions/Chat';
+import { useDispatch, useSelector } from 'react-redux';
+import { inputComposerReducer } from 'src/redux/reducers/Chat';
+import { supabase } from 'src/shared/supabaseClient';
+import { userIdSupbaseSelector } from 'src/redux/reducers/Auth';
 import useOnClickOutside from '../../../@crema/utility/useOnClickOutside';
 
 const StyledEmoji = styled.div`
@@ -40,24 +45,46 @@ const useStyles = makeStyles(() => ({
   },
 }));
 const Composer = () => {
+  const dispatch = useDispatch();
+  const inputComposer = useSelector(inputComposerReducer);
+  const userIdSupbase = useSelector(userIdSupbaseSelector);
   const classes = useStyles();
   const [flagEmojiTab, setFlagEmojiTab] = React.useState(false);
   const emojiRef = React.useRef(null);
   useOnClickOutside(emojiRef, () => {
     setFlagEmojiTab(false);
   });
-  const onEmojiClick = useCallback((e: any, emojiObject: IEmojiData) => {
-    console.log(emojiObject.emoji);
-  }, []);
+  const onEmojiClick = useCallback(
+    (e: any, emojiObject: IEmojiData) => {
+      dispatch(updateInputComposer(`${inputComposer}${emojiObject.emoji}`));
+    },
+    [dispatch, inputComposer],
+  );
   const setText = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
-    console.log(e.currentTarget.value);
+    dispatch(updateInputComposer(e.target.value));
   };
-
+  const onPressInput = useCallback(
+    async (e: React.KeyboardEvent<HTMLTextAreaElement>) => {
+      if (e.key === 'Enter' && e.shiftKey) {
+        e.preventDefault();
+      } else if (e.key === 'Enter' && inputComposer) {
+        e.preventDefault();
+        const { data, error } = await supabase
+          .from('messages')
+          .insert([{ text: inputComposer, type: 'text', roomId: userIdSupbase, created_by: userIdSupbase }]);
+        dispatch(updateInputComposer(''));
+        if (error) {
+          console.log(error);
+        }
+      }
+    },
+    [dispatch, inputComposer],
+  );
   return (
     <Box className={classes.wrap} id="composer">
-      <StyledTextArea rowsMax={4} onChange={setText} />
+      <StyledTextArea rowsMax={4} onChange={setText} value={inputComposer} onKeyDown={onPressInput} />
       <Box onClick={() => setFlagEmojiTab(true)} position="relative">
-        <InsertEmoticonIcon />
+        <InsertEmoticonIcon color="primary" />
         {flagEmojiTab && (
           <StyledEmoji ref={emojiRef}>
             <Picker

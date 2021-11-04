@@ -8,7 +8,7 @@ import { ordersRouterConfig } from './orders/ordersRouterConfig';
 import { userRouterConfig } from './users/userRouterConfig';
 import { settingRouterConfig } from './setting/settingRouterConfig';
 import { chatPagesConfig } from './chat/chatPagesConfig';
-// import { ticketRouterConfig } from './ticket/ticketRouterConfig';
+import { ticketRouterConfig } from './ticket/ticketRouterConfig';
 
 import { errorPagesConfigs } from './errorPages';
 import { authRouteConfig } from './auth';
@@ -20,7 +20,7 @@ const routeConfigs = [
   ...userRouterConfig,
   ...settingRouterConfig,
   ...chatPagesConfig,
-  // ...ticketRouterConfig,
+  ...ticketRouterConfig,
   ...errorPagesConfigs,
   ...authRouteConfig,
 ];

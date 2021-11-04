@@ -14,7 +14,7 @@ import { AuthUser } from '../../types/models/AuthUser';
 import { AppState } from '../store';
 
 type ActionType = 'login' | 'changePassword' | 'changeBankInfo' | 'changeAvatar' | 'forgetPassword';
-interface JWTdecode {
+export interface JWTdecode {
   email: string;
   exp: number;
   iat: number;
@@ -38,6 +38,7 @@ interface INIT_AUTH {
   loadings: {
     [k in ActionType]: boolean;
   };
+  userIdSupbase: string;
 }
 
 const INIT_STATE: INIT_AUTH = {
@@ -45,6 +46,7 @@ const INIT_STATE: INIT_AUTH = {
   token: null,
   forgotPasswordSuccess: false,
   initialUrl: '/partner',
+  userIdSupbase: '',
   errors: {
     login: null,
     changePassword: null,
@@ -86,7 +88,7 @@ const Auth = (state: INIT_AUTH = INIT_STATE, action: AnyAction): INIT_AUTH => {
         token: action.payload.token,
         user: {
           uid: '1',
-          role: ['user', 'manager'],
+          role: ['user'],
           authType: AuthType.JWT_AUTH,
           displayName: decoded?.username,
           email: decoded?.email,
@@ -180,7 +182,8 @@ const Auth = (state: INIT_AUTH = INIT_STATE, action: AnyAction): INIT_AUTH => {
       };
     case 'RESET_FORGET_PASSWORD_SUCCESS_STATUS':
       return INIT_STATE;
-
+    case 'USER_ID_SUPBASE':
+      return { ...state, userIdSupbase: action.payload };
     default:
       return state;
   }
@@ -188,3 +191,4 @@ const Auth = (state: INIT_AUTH = INIT_STATE, action: AnyAction): INIT_AUTH => {
 export default Auth;
 
 export const userSelector = (state: AppState) => state.auth.user;
+export const userIdSupbaseSelector = (state: AppState) => state.auth.userIdSupbase;
