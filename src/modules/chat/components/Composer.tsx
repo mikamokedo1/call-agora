@@ -71,7 +71,7 @@ const Composer = () => {
         e.preventDefault();
         const { data, error } = await supabase
           .from('messages')
-          .insert([{ text: inputComposer, type: 'text', roomId: userIdSupbase, created_by: userIdSupbase }]);
+          .insert([{ text: inputComposer, type: 'text', roomId: 1, created_by: userIdSupbase }]);
         dispatch(updateInputComposer(''));
         if (error) {
           console.log(error);

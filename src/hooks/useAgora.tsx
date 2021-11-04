@@ -39,7 +39,7 @@ export default function useAgora(client: IAgoraRTCClient | undefined): {
     if (!client) return;
     const [microphoneTrack, cameraTrack] = await createLocalTracks();
 
-    const joinClient = await client.join(appid, channel, token || null, 'taonee');
+    const joinClient = await client.join(appid, channel, token || null, uid);
     console.log(joinClient);
     await client.publish([microphoneTrack, cameraTrack]);
 

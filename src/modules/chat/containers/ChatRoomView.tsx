@@ -49,7 +49,7 @@ const ChatRoomView = () => {
       .from('messages')
       .on('*', (payload) => {
         setMessagesList((state) => [...state, payload.new]);
-        if (payload.new.type === 'videoCall') {
+        if (payload.new.type === 'videoCall' && payload.new.created_by !== userIdSupbase) {
           setOnCall(true);
           join('b00c0b18d1194540bcef5c8be131eef8', payload.new.channel, payload.new.token);
         }
@@ -67,6 +67,7 @@ const ChatRoomView = () => {
       'b00c0b18d1194540bcef5c8be131eef8',
       'taone',
       '006b00c0b18d1194540bcef5c8be131eef8IADr6TYmXn4ZqZUBRW5y2f3UNoHos+sN/3f+FW2+VOQ8S5d+x8wAAAAAEAAAIFGK0xSFYQEAAQDRFIVh',
+      userIdSupbase,
     );
     const { data, error } = await supabase.from('messages').insert([
       {
