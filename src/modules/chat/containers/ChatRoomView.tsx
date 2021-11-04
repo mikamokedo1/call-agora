@@ -8,11 +8,14 @@ import { Message } from 'src/types/models/Chat';
 import useAgora from 'src/hooks/useAgora';
 import AgoraRTC from 'agora-rtc-sdk-ng';
 import { Button } from '@material-ui/core';
+import agoraToken from 'agora-access-token';
 import Header from '../components/Header';
 import MessageBubble from '../components/MessageBubble';
 import Composer from '../components/Composer';
 import { scrollToLastMessage } from '../../../@crema/utility/scrollTobottom';
 import MediaPlayer from '../components/MediaPlayer';
+
+const APP_ID = 'b00c0b18d1194540bcef5c8be131eef8';
 
 const useStyles = makeStyles(() => ({
   wrap: {
@@ -35,6 +38,26 @@ const ChatRoomView = () => {
   const classes = useStyles();
   const { localAudioTrack, localVideoTrack, leave, join, joinState, remoteUsers } = useAgora(client);
 
+  const renderToken = (isPublisher: boolean, channel: string) => {
+    const appID = APP_ID;
+    const appCertificate = 'a4251e593b9e44a9b990770f4c6682b3';
+    const expirationTimeInSeconds = 3600;
+    const role = isPublisher ? agoraToken.RtcRole.PUBLISHER : agoraToken.RtcRole.SUBSCRIBER;
+    const uid = Math.floor(Math.random() * 100000);
+    const currentTimestamp = Math.floor(Date.now() / 1000);
+    const expirationTimestamp = currentTimestamp + expirationTimeInSeconds;
+
+    const token = agoraToken.RtcTokenBuilder.buildTokenWithUid(
+      appID,
+      appCertificate,
+      channel,
+      uid,
+      role,
+      expirationTimestamp,
+    );
+    return token;
+  };
+
   useEffect(() => {
     scrollToLastMessage(false, 0, 'chatview');
   }, [messageList]);
@@ -51,14 +74,9 @@ const ChatRoomView = () => {
         setMessagesList((state) => [...state, payload.new]);
         if (payload.new.type === 'videoCall' && payload.new.created_by !== userIdSupbase) {
           setOnCall(true);
-          join(
-            'b00c0b18d1194540bcef5c8be131eef8',
-            payload.new.channel,
-            '006b00c0b18d1194540bcef5c8be131eef8IAB3k9RqdFU1oZCkwxoLU0q97o1sXYM6NRnAqOwo+M1jr5d+x8wAAAAAEAAAIFGKgSqFYQEAAQB/KoVh',
-            userIdSupbase,
-          );
+          join(APP_ID, payload.new.channel, renderToken(false, userIdSupbase), userIdSupbase);
         }
-        if (payload.new.type === 'videoCall-end') {
+        if (payload.new.type === 'videoCall-end' && payload.new.created_by !== userIdSupbase) {
           leave();
         }
       })
@@ -72,23 +90,20 @@ const ChatRoomView = () => {
   }, []);
   const onVideoCall = async () => {
     setOnCall(true);
-    join(
-      'b00c0b18d1194540bcef5c8be131eef8',
-      'taone',
-      '006b00c0b18d1194540bcef5c8be131eef8IADr6TYmXn4ZqZUBRW5y2f3UNoHos+sN/3f+FW2+VOQ8S5d+x8wAAAAAEAAAIFGK0xSFYQEAAQDRFIVh',
-      userIdSupbase,
-    );
+    join(APP_ID, 'taone', renderToken(true, userIdSupbase), userIdSupbase);
     const { data, error } = await supabase.from('messages').insert([
       {
         type: 'videoCall',
         channel: 'taone',
         created_by: userIdSupbase,
-        token:
-          '006b00c0b18d1194540bcef5c8be131eef8IADr6TYmXn4ZqZUBRW5y2f3UNoHos+sN/3f+FW2+VOQ8S5d+x8wAAAAAEAAAIFGK0xSFYQEAAQDRFIVh',
       },
     ]);
   };
   const onEndedCall = async () => {
+    if (!joinState) {
+      return;
+    }
+    leave();
     await supabase.from('messages').insert([
       {
         type: 'videoCall-end',
@@ -100,7 +115,7 @@ const ChatRoomView = () => {
 
   return (
     <Box className={classes.wrap}>
-      <Header onVideoCall={onVideoCall} />
+      <Header onVideoCall={onVideoCall} disabled={joinState} />
       {onCall ? (
         <Box height={`calc(100% - ${(listFileWrapRef.current?.offsetHeight ?? 59) + 71}px)`}>
           <div className="local-player-wrapper">

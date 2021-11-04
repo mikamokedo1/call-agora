@@ -50,13 +50,16 @@ export default function useAgora(client: IAgoraRTCClient | undefined): {
   }
 
   async function leave() {
+    console.log({ 'LOCAL VIDEO': localAudioTrack });
     if (localAudioTrack) {
       localAudioTrack.stop();
       localAudioTrack.close();
+      console.log('CLOSE AUDIO');
     }
     if (localVideoTrack) {
       localVideoTrack.stop();
       localVideoTrack.close();
+      console.log('CLOSE VIDEO');
     }
     setRemoteUsers([]);
     setJoinState(false);

@@ -20,9 +20,10 @@ const useStyles = makeStyles(() => ({
 
 interface HeaderProps {
   onVideoCall: () => void;
+  disabled: boolean;
 }
 
-const Header = ({ onVideoCall }: HeaderProps) => {
+const Header = ({ onVideoCall, disabled }: HeaderProps) => {
   const classes = useStyles();
   return (
     <Box className={classes.wrap}>
@@ -36,7 +37,7 @@ const Header = ({ onVideoCall }: HeaderProps) => {
           <Box>Active Now</Box>
         </Box>
       </Box>
-      <Box display="flex" alignItems="center">
+      <Box display="flex" alignItems="center" style={{ pointerEvents: disabled ? 'none' : 'auto' }}>
         <Box mr={2} display="flex" alignItems="center" justifyContent="center">
           <PhoneIcon />
         </Box>
