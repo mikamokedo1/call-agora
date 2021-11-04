@@ -18,7 +18,11 @@ const useStyles = makeStyles(() => ({
   },
 }));
 
-const Header = () => {
+interface HeaderProps {
+  onVideoCall: () => void;
+}
+
+const Header = ({ onVideoCall }: HeaderProps) => {
   const classes = useStyles();
   return (
     <Box className={classes.wrap}>
@@ -36,7 +40,7 @@ const Header = () => {
         <Box mr={2} display="flex" alignItems="center" justifyContent="center">
           <PhoneIcon />
         </Box>
-        <Box display="flex" alignItems="center" justifyContent="center">
+        <Box display="flex" alignItems="center" justifyContent="center" onClick={onVideoCall}>
           <VideocamIcon />
         </Box>
       </Box>

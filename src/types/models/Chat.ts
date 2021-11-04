@@ -1,5 +1,5 @@
 export interface Message {
-  create_at: string;
+  created_at: string;
   created_by: string;
   id: number;
   media?: string[];

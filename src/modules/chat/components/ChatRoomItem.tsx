@@ -9,6 +9,7 @@ const useStyles = makeStyles(() => ({
     alignItems: 'center',
     padding: '5px',
     borderRadius: '4px',
+    cursor: 'pointer',
   },
   avatar: {
     width: '55px',
@@ -33,11 +34,14 @@ const useStyles = makeStyles(() => ({
     textOverflow: 'ellipsis',
   },
 }));
+interface ChatRoomItemProps {
+  active: boolean;
+}
 
-const ChatRoomItem = () => {
+const ChatRoomItem = ({ active }: ChatRoomItemProps) => {
   const classes = useStyles();
   return (
-    <Box className={classes.wrap}>
+    <Box className={classes.wrap} bgcolor={active ? '#fff' : 'inherit'}>
       <Avatar
         size="big"
         url="https://scontent.fsgn5-6.fna.fbcdn.net/v/t1.6435-1/p100x100/152721571_909248686503731_2445109993268764589_n.jpg?_nc_cat=111&ccb=1-5&_nc_sid=7206a8&_nc_ohc=a-GCz6Y0caMAX_yLDxF&_nc_ad=z-m&_nc_cid=0&_nc_ht=scontent.fsgn5-6.fna&oh=fdaae27dc810f9ef99a22d62e0d7d651&oe=61834A9F"

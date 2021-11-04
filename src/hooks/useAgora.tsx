@@ -14,8 +14,8 @@ export default function useAgora(client: IAgoraRTCClient | undefined): {
   localAudioTrack: ILocalAudioTrack | undefined;
   localVideoTrack: ILocalVideoTrack | undefined;
   joinState: boolean;
-  leave: () => void;
-  join: (channel: string, token?: string, uid?: string | number | null) => Promise<void>;
+  leave: Function;
+  join: Function;
   remoteUsers: IAgoraRTCRemoteUser[];
 } {
   const [localVideoTrack, setLocalVideoTrack] = useState<ILocalVideoTrack | undefined>(undefined);
@@ -35,8 +35,7 @@ export default function useAgora(client: IAgoraRTCClient | undefined): {
     return [microphoneTrack, cameraTrack];
   }
 
-  async function join(channel: string, token?: string, uid?: string | number | null) {
-    const appid = "56d316acac184b05ac2639602a97d516";
+  async function join(appid: string, channel: string, token?: string, uid?: string | number | null) {
     if (!client) return;
     const [microphoneTrack, cameraTrack] = await createLocalTracks();
 

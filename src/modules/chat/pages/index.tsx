@@ -28,8 +28,7 @@ const PageOne = () => {
     <AppAnimate animation="transition.slideUpIn" delay={200}>
       <Box className={classes.wrap}>
         <Box className={classes.chatList}>
-          <ChatRoomItem />
-          <ChatRoomItem />
+          <ChatRoomItem active />
         </Box>
         <Box className={classes.chatView}>
           <ChatRoomView />
