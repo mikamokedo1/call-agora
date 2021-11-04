@@ -38,12 +38,11 @@ const ChatRoomView = () => {
   const classes = useStyles();
   const { localAudioTrack, localVideoTrack, leave, join, joinState, remoteUsers } = useAgora(client);
 
-  const renderToken = (isPublisher: boolean, channel: string) => {
+  const renderToken = (isPublisher: boolean, channel: string, uid) => {
     const appID = APP_ID;
     const appCertificate = 'a4251e593b9e44a9b990770f4c6682b3';
     const expirationTimeInSeconds = 3600;
     const role = isPublisher ? agoraToken.RtcRole.PUBLISHER : agoraToken.RtcRole.SUBSCRIBER;
-    const uid = Math.floor(Math.random() * 100000);
     const currentTimestamp = Math.floor(Date.now() / 1000);
     const expirationTimestamp = currentTimestamp + expirationTimeInSeconds;
 
@@ -73,8 +72,9 @@ const ChatRoomView = () => {
       .on('*', (payload) => {
         setMessagesList((state) => [...state, payload.new]);
         if (payload.new.type === 'videoCall' && payload.new.created_by !== userIdSupbase) {
+          const uid = Math.floor(Math.random() * 100000);
           setOnCall(true);
-          join(APP_ID, payload.new.channel, renderToken(false, userIdSupbase), userIdSupbase);
+          join(APP_ID, payload.new.channel, renderToken(false, userIdSupbase, uid), uid);
         }
         if (payload.new.type === 'videoCall-end' && payload.new.created_by !== userIdSupbase) {
           leave();
@@ -90,11 +90,13 @@ const ChatRoomView = () => {
   }, []);
   const onVideoCall = async () => {
     setOnCall(true);
-    join(APP_ID, 'taone', renderToken(true, userIdSupbase), userIdSupbase);
+    const uid = Math.floor(Math.random() * 100000);
+    const token = renderToken(true, userIdSupbase, uid);
+    join(APP_ID, userIdSupbase, token, uid);
     const { data, error } = await supabase.from('messages').insert([
       {
         type: 'videoCall',
-        channel: 'taone',
+        channel: userIdSupbase,
         created_by: userIdSupbase,
       },
     ]);
@@ -117,12 +119,13 @@ const ChatRoomView = () => {
     <Box className={classes.wrap}>
       <Header onVideoCall={onVideoCall} disabled={joinState} />
       {onCall ? (
-        <Box height={`calc(100% - ${(listFileWrapRef.current?.offsetHeight ?? 59) + 71}px)`}>
+        <Box
+          height={`calc(100% - ${(listFileWrapRef.current?.offsetHeight ?? 59) + 71}px)`}
+          display="flex"
+          justifyContent="center"
+          alignItems="center"
+        >
           <div className="local-player-wrapper">
-            <p className="local-player-text">
-              {localVideoTrack && `localTrack`}
-              {joinState && localVideoTrack ? `(${client.uid})` : ''}
-            </p>
             <MediaPlayer videoTrack={localVideoTrack} audioTrack={undefined} />
           </div>
           {remoteUsers.map((user) => (
