@@ -77,6 +77,7 @@ export default function useAgora(client: IAgoraRTCClient | undefined): {
     };
     const handleUserJoined = (user: IAgoraRTCRemoteUser) => {
       setRemoteUsers((remoteUsers) => Array.from(client.remoteUsers));
+      console.log('CLIENT JOIN');
     };
     const handleUserLeft = (user: IAgoraRTCRemoteUser) => {
       setRemoteUsers((remoteUsers) => Array.from(client.remoteUsers));
