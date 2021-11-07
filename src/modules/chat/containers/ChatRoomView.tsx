@@ -65,7 +65,8 @@ const ChatRoomView = () => {
   };
   const handleAcceptedCall = () => {
     const uid = Math.floor(Math.random() * 100000);
-    join(APP_ID, channelCall, renderToken(false, userIdSupbase, uid), uid);
+    join(APP_ID, channelCall, renderToken(true, channelCall, uid), uid);
+    console.log({ APP_ID, channelCall, uid });
   };
   const handleCancelcall = async () => {
     await supabase.from('messages').insert([
@@ -185,7 +186,9 @@ const ChatRoomView = () => {
                 />
               );
             }
-            return null;
+            return (
+              <MessageBubble isOut={item.created_by === userIdSupbase} text={item.type} created_at={item.created_at} />
+            );
           })}
         </Box>
       )}
