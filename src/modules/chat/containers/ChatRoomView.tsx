@@ -14,6 +14,7 @@ import MessageBubble from '../components/MessageBubble';
 import Composer from '../components/Composer';
 import { scrollToLastMessage } from '../../../@crema/utility/scrollTobottom';
 import MediaPlayer from '../components/MediaPlayer';
+import CallIncoming from '../components/CallIncoming';
 
 const APP_ID = 'b00c0b18d1194540bcef5c8be131eef8';
 
@@ -37,8 +38,9 @@ const ChatRoomView = () => {
   const [onCall, setOnCall] = useState(false);
   const classes = useStyles();
   const { localAudioTrack, localVideoTrack, leave, join, joinState, remoteUsers } = useAgora(client);
+  const [channelCall, setChannelCall] = useState('');
 
-  const renderToken = (isPublisher: boolean, channel: string, uid) => {
+  const renderToken = (isPublisher: boolean, channel: string, uid: number) => {
     const appID = APP_ID;
     const appCertificate = 'a4251e593b9e44a9b990770f4c6682b3';
     const expirationTimeInSeconds = 3600;
@@ -57,6 +59,26 @@ const ChatRoomView = () => {
     return token;
   };
 
+  const handleCallComing = (message: Message) => {
+    setOnCall(true);
+    setChannelCall(message.channel);
+  };
+  const handleAcceptedCall = () => {
+    const uid = Math.floor(Math.random() * 100000);
+    join(APP_ID, channelCall, renderToken(false, userIdSupbase, uid), uid);
+  };
+  const handleCancelcall = async () => {
+    await supabase.from('messages').insert([
+      {
+        type: 'videoCall-end',
+        channel: userIdSupbase,
+        created_by: userIdSupbase,
+      },
+    ]);
+    setOnCall(false);
+    setChannelCall('');
+  };
+
   useEffect(() => {
     scrollToLastMessage(false, 0, 'chatview');
   }, [messageList]);
@@ -72,12 +94,11 @@ const ChatRoomView = () => {
       .on('*', (payload) => {
         setMessagesList((state) => [...state, payload.new]);
         if (payload.new.type === 'videoCall' && payload.new.created_by !== userIdSupbase) {
-          const uid = Math.floor(Math.random() * 100000);
-          setOnCall(true);
-          join(APP_ID, payload.new.channel, renderToken(false, userIdSupbase, uid), uid);
+          handleCallComing(payload.new);
         }
         if (payload.new.type === 'videoCall-end' && payload.new.created_by !== userIdSupbase) {
           leave();
+          setOnCall(false);
         }
       })
 
@@ -89,7 +110,6 @@ const ChatRoomView = () => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   const onVideoCall = async () => {
-    setOnCall(true);
     const uid = Math.floor(Math.random() * 100000);
     const token = renderToken(true, userIdSupbase, uid);
     join(APP_ID, userIdSupbase, token, uid);
@@ -100,16 +120,18 @@ const ChatRoomView = () => {
         created_by: userIdSupbase,
       },
     ]);
+    setOnCall(true);
   };
   const onEndedCall = async () => {
     if (!joinState) {
       return;
     }
     leave();
+    setOnCall(false);
     await supabase.from('messages').insert([
       {
         type: 'videoCall-end',
-        channel: 'taone',
+        channel: userIdSupbase,
         created_by: userIdSupbase,
       },
     ]);
@@ -119,25 +141,34 @@ const ChatRoomView = () => {
     <Box className={classes.wrap}>
       <Header onVideoCall={onVideoCall} disabled={joinState} />
       {onCall ? (
-        <Box
-          height={`calc(100% - ${(listFileWrapRef.current?.offsetHeight ?? 59) + 71}px)`}
-          display="flex"
-          justifyContent="center"
-          alignItems="center"
-        >
-          <div className="local-player-wrapper">
-            <MediaPlayer videoTrack={localVideoTrack} audioTrack={undefined} />
-          </div>
-          {remoteUsers.map((user) => (
-            <div className="remote-player-wrapper" key={user.uid}>
-              <p className="remote-player-text">{`remoteVideo(${user.uid})`}</p>
-              <MediaPlayer videoTrack={user.videoTrack} audioTrack={user.audioTrack} />
-            </div>
-          ))}
-          <Button onClick={onEndedCall} fullWidth>
-            Kết thúc
-          </Button>
-        </Box>
+        <>
+          {joinState ? (
+            <Box
+              height={`calc(100% - ${(listFileWrapRef.current?.offsetHeight ?? 59) + 71}px)`}
+              display="flex"
+              justifyContent="center"
+              alignItems="center"
+              flexDirection="column"
+            >
+              <div className="local-player-wrapper">
+                <MediaPlayer videoTrack={localVideoTrack} audioTrack={undefined} />
+              </div>
+              {remoteUsers.map((user) => (
+                <div className="remote-player-wrapper" key={user.uid}>
+                  <p className="remote-player-text">{`remoteVideo(${user.uid})`}</p>
+                  <MediaPlayer videoTrack={user.videoTrack} audioTrack={user.audioTrack} />
+                </div>
+              ))}
+              <Box mt="10px">
+                <Button onClick={onEndedCall} fullWidth>
+                  Kết thúc
+                </Button>
+              </Box>
+            </Box>
+          ) : (
+            <CallIncoming onCancel={handleCancelcall} onAccept={handleAcceptedCall} />
+          )}
+        </>
       ) : (
         <Box
           className={classes.messages}

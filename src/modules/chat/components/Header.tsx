@@ -38,9 +38,6 @@ const Header = ({ onVideoCall, disabled }: HeaderProps) => {
         </Box>
       </Box>
       <Box display="flex" alignItems="center" style={{ pointerEvents: disabled ? 'none' : 'auto' }}>
-        <Box mr={2} display="flex" alignItems="center" justifyContent="center">
-          <PhoneIcon />
-        </Box>
         <Box display="flex" alignItems="center" justifyContent="center" onClick={onVideoCall}>
           <VideocamIcon />
         </Box>

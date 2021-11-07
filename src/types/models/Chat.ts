@@ -6,6 +6,7 @@ export interface Message {
   roomId: string;
   text: string;
   type: string;
+  channel: string;
 }
 
 export interface Chat {
