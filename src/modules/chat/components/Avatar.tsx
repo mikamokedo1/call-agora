@@ -8,8 +8,8 @@ interface StyleProps {
 }
 const useStyles = makeStyles<Theme, StyleProps>(() => ({
   avatar: {
-    width: ({ size }) => (size === 'big' ? '55px' : '40px'),
-    height: ({ size }) => (size === 'big' ? '55px' : '40px'),
+    width: ({ size }) => (size === 'big' ? '45px' : '40px'),
+    height: ({ size }) => (size === 'big' ? '45px' : '40px'),
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
