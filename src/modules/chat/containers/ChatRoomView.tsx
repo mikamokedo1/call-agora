@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import Box from '@material-ui/core/Box';
 import { makeStyles } from '@material-ui/core/styles';
 import { supabase } from 'src/shared/supabaseClient';
@@ -32,14 +32,17 @@ const useStyles = makeStyles(() => ({
 const client = AgoraRTC.createClient({ codec: 'h264', mode: 'rtc' });
 
 const ChatRoomView = () => {
-  const listFileWrapRef = React.useRef<HTMLDivElement>(null);
+  const listFileWrapRef = useRef<HTMLDivElement>(null);
   const userIdSupbase = useSelector(userIdSupbaseSelector);
   const [messageList, setMessagesList] = useState<Message[]>([]);
   const [onCall, setOnCall] = useState(false);
   const classes = useStyles();
   const { localAudioTrack, localVideoTrack, leave, join, joinState, remoteUsers } = useAgora(client);
   const [channelCall, setChannelCall] = useState('');
-
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isOnBottom, setIsOnBottom] = useState(false);
+  const [unviewedMessageCount, setUnviewedMessageCount] = useState(0);
+  const [newIncomingMessageTrigger, setNewIncomingMessageTrigger] = useState(null);
   const renderToken = (isPublisher: boolean, channel: string, uid: number) => {
     const appID = APP_ID;
     const appCertificate = 'a4251e593b9e44a9b990770f4c6682b3';
@@ -66,7 +69,6 @@ const ChatRoomView = () => {
   const handleAcceptedCall = () => {
     const uid = Math.floor(Math.random() * 100000);
     join(APP_ID, channelCall, renderToken(true, channelCall, uid), uid);
-    console.log({ APP_ID, channelCall, uid });
   };
   const handleCancelcall = async () => {
     await supabase.from('messages').insert([
@@ -80,20 +82,22 @@ const ChatRoomView = () => {
     setChannelCall('');
   };
 
-  useEffect(() => {
-    scrollToLastMessage(false, 0, 'chatview');
-  }, [messageList]);
+  // useEffect(() => {
+  //   scrollToLastMessage(false, 0, 'chatview');
+  // }, [messageList]);
 
   useEffect(() => {
     const fetchMessages = async () => {
       const { data } = await supabase.from('messages').select().range(0, 49).order('id', { ascending: false });
-      setMessagesList(data);
+      setMessagesList(data.reverse());
+      scrollToBottom();
     };
     fetchMessages();
     const mySubscription = supabase
       .from('messages')
       .on('*', (payload) => {
         setMessagesList((state) => [...state, payload.new]);
+        setNewIncomingMessageTrigger(payload.new);
         if (payload.new.type === 'videoCall' && payload.new.created_by !== userIdSupbase) {
           handleCallComing(payload.new);
         }
@@ -137,6 +141,36 @@ const ChatRoomView = () => {
       },
     ]);
   };
+  const onScroll = async ({ target }) => {
+    if (target.scrollHeight - target.scrollTop <= target.clientHeight + 1) {
+      setUnviewedMessageCount(0);
+      setIsOnBottom(true);
+    } else {
+      setIsOnBottom(false);
+    }
+    //* Load more messages when reaching top
+    if (scrollRef?.current?.scrollTop === 1) {
+      const { data, error } = await supabase
+        .from('messages')
+        .select()
+        .range(messageList.length, messageList.length + 20)
+        .order('id', { ascending: false });
+      if (error) {
+        return;
+      }
+      setMessagesList((prevMessages) => [...prevMessages, ...data.reverse()]);
+    }
+    //* This is a fix if user quickly scrolls to top
+    if (scrollRef?.current?.scrollTop === 0) scrollRef.current.scrollTop = 20;
+  };
+  useEffect(() => {
+    scrollToBottom();
+  }, [newIncomingMessageTrigger]);
+
+  const scrollToBottom = () => {
+    if (!scrollRef.current) return;
+    scrollRef.current.scrollTop = scrollRef.current.scrollHeight;
+  };
 
   return (
     <Box className={classes.wrap}>
@@ -171,10 +205,12 @@ const ChatRoomView = () => {
           )}
         </>
       ) : (
-        <Box
+        <div
           className={classes.messages}
-          height={`calc(100% - ${(listFileWrapRef.current?.offsetHeight ?? 59) + 71}px)`}
+          style={{ height: `calc(100% - ${(listFileWrapRef.current?.offsetHeight ?? 59) + 71}px)` }}
           id="chatview"
+          ref={scrollRef}
+          onScroll={onScroll}
         >
           {messageList.map((item) => {
             if (item.type === 'text') {
@@ -190,7 +226,7 @@ const ChatRoomView = () => {
               <MessageBubble isOut={item.created_by === userIdSupbase} text={item.type} created_at={item.created_at} />
             );
           })}
-        </Box>
+        </div>
       )}
 
       <div ref={listFileWrapRef}>
