@@ -51,26 +51,6 @@ export const onJwtSignIn = (body: { username: string; password: string }) => {
       if (res.data) {
         localStorage.setItem('token', res.data.accessToken);
         dispatch(setJWTToken(res.data.accessToken));
-        const decoded: JWTdecode = jwt_decode(res.data.accessToken);
-        const { user, error } = await supabase.auth.signIn({
-          email: decoded.email,
-          password: decoded.email,
-        });
-        if (error) {
-          const { user } = await supabase.auth.signUp({
-            email: decoded.email,
-            password: decoded.email,
-          });
-          dispatch({
-            type: 'USER_ID_SUPBASE',
-            payload: user?.id,
-          });
-        } else {
-          dispatch({
-            type: 'USER_ID_SUPBASE',
-            payload: user?.id,
-          });
-        }
       } else {
         dispatch(fetchError(get(res, 'result.message')));
       }
@@ -97,12 +77,36 @@ export const onJwtSignIn = (body: { username: string; password: string }) => {
 //   }
 // };
 
-export const setJWTToken = (token: string): AppActions => ({
-  type: SET_AUTH_TOKEN,
-  payload: {
-    token,
-  },
-});
+export const setJWTToken = (token: string) => {
+  return async (dispatch: Dispatch<AppActions>) => {
+    dispatch({
+      type: SET_AUTH_TOKEN,
+      payload: {
+        token,
+      },
+    });
+    const decoded: JWTdecode = jwt_decode(token);
+    const { user, error } = await supabase.auth.signIn({
+      email: decoded.email,
+      password: decoded.email,
+    });
+    if (error) {
+      const { user } = await supabase.auth.signUp({
+        email: decoded.email,
+        password: decoded.email,
+      });
+      dispatch({
+        type: 'USER_ID_SUPBASE',
+        payload: user?.id,
+      });
+    } else {
+      dispatch({
+        type: 'USER_ID_SUPBASE',
+        payload: user?.id,
+      });
+    }
+  };
+};
 
 // const getUserObject = (authUser: any): AuthUser => {
 //   return {
